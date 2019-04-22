@@ -55,3 +55,6 @@ export const RESET_FORM = 'RESET_FORM';
 export const CREATE_MODE = 'CREATE_MODE';
 
 export const GET_USER_BY_ID = 'GET_USER_BY_ID';
+export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
+export const GET_USER_ERROR = 'GET_USER_ERROR';
+export const RESET_SELECTED_USER = 'RESET_SELECTED_USER';

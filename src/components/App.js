@@ -21,7 +21,7 @@ class App extends Component {
                     <Route exact path="/register" component={ Register } />
                     <Route exact path="/login" component={ Login } />
                     <Route path="/stories" component={ Story } />
-                    <Route path="/profile" component={ Profile } />
+                    <Route path="/profile/:id" component={ Profile } />
                 </div>
 
             </BrowserRouter>
