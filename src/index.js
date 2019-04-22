@@ -12,7 +12,7 @@ import reducer from "./reducers";
 import {SET_CURRENT_USER} from "./actions/types";
 import { setCurrentUser } from './actions/authentication';
 import jwt_decode from "jwt-decode";
-
+import fontawesome from "@fortawesome/fontawesome-free/js/all";
 
 const store = createStore(
     reducer,

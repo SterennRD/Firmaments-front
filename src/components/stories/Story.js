@@ -8,6 +8,7 @@ import StoryInfoForm from "./StoryInfoForm";
 import StoryInfoFormEdit from "../../containers/StoryInfoFormContainer";
 import StoryTable from "./StoryTable";
 import ChapterForm from "./ChapterForm";
+import Chapter from "../../containers/ChapterContainer";
 import ChapterFormEdit from "../../containers/ChapterFormContainer";
 
 
@@ -68,6 +69,12 @@ class Story extends Component {
                                                   location={this.props.location}
                                                   history={this.props.history}
                                                   //initialValues={this.props.chapter.selectedChapter}
+                       />}
+                />
+                {/* See a chapter */}
+                <Route exact path={this.props.match.url + '/:id/chapter/:idchapter/'}
+                       render={(props) => <Chapter
+                           {...props}
                        />}
                 />
             </div>

@@ -36,6 +36,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.8.1",
     "react-redux": "^6.0.1",
     "redux": "^4.0.1"
   }
