@@ -20,11 +20,13 @@ class Chapter extends Component {
         const { selectedChapter, loading, error } = this.props.chapter;
         let nbComments = '';
         let nbRead = '';
-        if (selectedChapter.comments) {
-            nbComments = selectedChapter.comments.length
-        }
-        if (selectedChapter.read) {
-            nbRead = selectedChapter.read.length
+        if (selectedChapter) {
+            if (selectedChapter.comments) {
+                nbComments = selectedChapter.comments.length
+            }
+            if (selectedChapter.read) {
+                nbRead = selectedChapter.read.length
+            }
         }
 
         if (loading) {
@@ -36,6 +38,7 @@ class Chapter extends Component {
         }
         return (
             <div>
+                <button onClick={this.props.history.goBack}>Retour</button>
                 <h1>{selectedChapter.title}</h1>
                 <div>{nbComments} <i className="fas fa-comment"></i> {nbRead} <i className="far fa-eye"></i></div>
                 {selectedChapter.content}
