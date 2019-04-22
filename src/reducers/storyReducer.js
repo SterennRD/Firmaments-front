@@ -1,5 +1,6 @@
 import {
     GET_STORY_FROM_USER, GET_STORY_FROM_ID, GET_STORY_SUCCESS, GET_STORY_ERROR, RESET_SELECTED_STORY,
+    GET_LAST_STORIES, GET_LAST_STORIES_SUCCESS, GET_LAST_STORIES_ERROR, RESET_LAST_STORIES,
     CREATE_STORY, CREATE_STORY_SUCCESS, CREATE_STORY_FAILURE, RESET_NEW_STORY,
     DELETE_STORY, DELETE_STORY_SUCCESS, DELETE_STORY_FAILURE, RESET_DELETED_STORY,
     EDIT_STORY, EDIT_STORY_SUCCESS, EDIT_STORY_FAILURE, RESET_EDIT_STORY,
@@ -39,6 +40,16 @@ export default function(state = INITIAL_STATE, action) {
             return { ...state, selectedStory: {story: null, error:error, loading:false}};
         case RESET_SELECTED_STORY:
             return { ...state, selectedStory: {story: null, error:null, loading: false}};
+
+        case GET_LAST_STORIES:
+            return { ...state, storyList:{...state.storyList, loading: true}};
+        case GET_LAST_STORIES_SUCCESS:
+            return { ...state, storyList: {stories: action.payload, error:null, loading: false}};
+        case GET_LAST_STORIES_ERROR:
+            error = action.payload || {message: action.payload.message};//2nd one is network or server down errors
+            return { ...state, storyList: {stories: null, error:error, loading:false}};
+        case RESET_LAST_STORIES:
+            return { ...state, storyList: {stories: null, error:null, loading: false}};
 
         case CREATE_STORY:
             console.log("Je passe dans create story reducer")

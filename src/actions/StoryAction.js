@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
     GET_STORY_FROM_USER, GET_STORY_FROM_ID, GET_STORY_SUCCESS, GET_STORY_ERROR, RESET_SELECTED_STORY,
+    GET_LAST_STORIES, GET_LAST_STORIES_SUCCESS, GET_LAST_STORIES_ERROR, RESET_LAST_STORIES,
     DELETE_STORY, DELETE_STORY_FAILURE, DELETE_STORY_SUCCESS, RESET_DELETED_STORY,
     GET_CHAPTER_BY_ID, GET_CHAPTER_SUCCESS, GET_CHAPTER_ERROR, RESET_SELECTED_CHAPTER,
     CREATE_STORY, CREATE_STORY_SUCCESS, CREATE_STORY_FAILURE, RESET_NEW_STORY,
@@ -351,5 +352,27 @@ export const createChapter = (props, id, tokenFromStorage) => dispatch => {
 export const resetNewChapter = () => {
     return {
         type: RESET_NEW_CHAPTER
+    }
+}
+
+export const getLastStories = () => dispatch => {
+    dispatch({ type: GET_LAST_STORIES });
+    axios.get(`${ROOT_URL}/last/posted`)
+        .then((response) => {
+            if (response.status === 200){
+                dispatch({type: GET_LAST_STORIES_SUCCESS, payload: response.data})
+            } else {
+                console.log(response)
+                dispatch({type: GET_LAST_STORIES_ERROR, payload: response.data})
+            }
+        })
+        .catch((error) => {
+            dispatch({type: GET_LAST_STORIES_ERROR, payload: error})
+        })
+}
+
+export const resetLastStories = () => {
+    return {
+        type: RESET_LAST_STORIES
     }
 }
