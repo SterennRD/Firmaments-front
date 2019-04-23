@@ -196,6 +196,7 @@ export const editStory = (props, tokenFromStorage) => dispatch => {
     console.log("j'édite une histoire")
     console.log(props)
     console.log(props._id)
+    console.log(tokenFromStorage)
     dispatch({type: EDIT_STORY})
     axios({
         method: 'post',
@@ -215,6 +216,7 @@ export const editStory = (props, tokenFromStorage) => dispatch => {
             }
         })
         .catch((error) => {
+            console.log(error)
             dispatch({type: EDIT_STORY_FAILURE, payload: error})
         })
 }
@@ -359,6 +361,8 @@ export const getLastStories = () => dispatch => {
     dispatch({ type: GET_LAST_STORIES });
     axios.get(`${ROOT_URL}/last/posted`)
         .then((response) => {
+            console.log("la response get last stories")
+            console.log(response)
             if (response.status === 200){
                 dispatch({type: GET_LAST_STORIES_SUCCESS, payload: response.data})
             } else {

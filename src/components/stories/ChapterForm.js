@@ -8,6 +8,13 @@ import validate from './validate'
 import { createStory, getStoryById, editChapter, createChapter } from '../../actions/StoryAction';
 import {status, rating, category} from "./constants";
 import connect from "react-redux/es/connect/connect";
+import renderWysiwyg from "../forms/RenderWysiwyg";
+import Editor from 'react-medium-editor';
+// load theme styles with webpack
+require('medium-editor/dist/css/medium-editor.css');
+require('medium-editor/dist/css/themes/default.css');
+
+
 
 
 //For any field errors upon submission (i.e. not instant check)
@@ -69,6 +76,11 @@ const handleMode = (mode) => {
 }
 
 class ChapterForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state= { text: ''}
+    }
+
     componentWillUnmount() {
         this.props.resetMe();
         const {mode} = this.props;
@@ -97,11 +109,13 @@ class ChapterForm extends Component {
         }
 
         if (mode === 'create' && !this.props.stories.selectedStory.story) {
+            console.log("recherche de l'histoire")
             this.props.getStoryById(id)
         }
 
 
         if (mode === 'edit') {
+            console.log("recherche du chapitre")
             this.props.getChapterById(id, idChapter)
         }
     }
@@ -117,7 +131,9 @@ class ChapterForm extends Component {
             return <span></span>
         }
     }
-
+    handleChange(text, medium) {
+        this.setState({text: text});
+    }
 
     render() {
         const {handleSubmit, submitting, pristine, previousPage, mode } = this.props;
@@ -191,12 +207,23 @@ class ChapterForm extends Component {
                         type="text"
                         component={ renderField }
                         label="Titre *" />
-                    <Field
+                    {/*<Field
                         name="content"
                         component={ renderTextArea }
                         label="Contenu *"
                         placeholder="Contenu de l'histoire"
+                    />*/}
+                    <Field
+                        name="content"
+                        component={ renderWysiwyg }
+                        onChange={this.handleChange.bind(this)}
+                        label="Contenu *"
+                        placeholder="Contenu de l'histoire"
                     />
+                    {/*<Editor
+                        text={this.state.text}
+                        onChange={this.handleChange.bind(this)}
+                    />*/}
 
                     {buttons}
 
