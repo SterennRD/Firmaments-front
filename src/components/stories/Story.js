@@ -14,6 +14,7 @@ import ChapterFormEdit from "../../containers/ChapterFormContainer";
 
 class Story extends Component {
     render() {
+        const { stories } = this.props.stories;
         return (
             <div>
                 {/* Create a story */}
@@ -32,7 +33,7 @@ class Story extends Component {
                                                     location={this.props.location}
                                                     match={this.props.match}
                                                     history={this.props.history}
-                                                    initialValues={this.props.stories.selectedStory.story}
+                                                    initialValues={stories.selectedStory.story}
                        />}
                 />
                 {/* List of stories */}
@@ -43,21 +44,21 @@ class Story extends Component {
                 {/* See details of story */}
                 <Route exact path={this.props.match.url + '/see/:id'}
                        render={(props) => <StoryDetails {...this.props}
-                                                        story={this.props.stories.stories.find(s => s._id === props.match.params.id )}
+                                                        story={stories.stories.find(s => s._id === props.match.params.id )}
                        />}
                 />
 
                 {/* Table of content */}
                 <Route exact path={this.props.match.url + '/toc/:id'}
                        render={(props) => <StoryTable {...this.props}
-                                                 story={this.props.stories.stories.find(s => s._id === props.match.params.id )}
+                                                 story={stories.stories.find(s => s._id === props.match.params.id )}
                        />}
                 />
                 {/* Create a chapter */}
                 <Route exact path={this.props.match.url + '/:id/chapter/new'}
                        render={() => <ChapterForm {...this.props}
                             mode="create"
-                            story={this.props.stories.selectedStory.story}
+                            story={stories.selectedStory.story}
                        />}
                 />
                 {/* Edit a chapter */}

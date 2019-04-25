@@ -51,7 +51,7 @@ class Home extends Component {
                         <h3><Link to={'/stories/see/' + story._id}>{story.title}</Link> <span className="badge badge-primary">{story.rating ? story.rating.label : null}</span></h3>
                         <h4>Par {story.author ? story.author.username : "auteur"}</h4>
                         <p>{story.description}</p>
-                        <div>{story.likes.length} <i className="fas fa-heart"></i> {story.nb_favorites} <i className="fas fa-star"></i> {story.nb_comments} <i className="fas fa-comment"></i></div>
+                        <div>{story.nb_likes} <i className="fas fa-heart"></i> {story.nb_favorites} <i className="fas fa-star"></i> {story.nb_comments} <i className="fas fa-comment"></i></div>
                     </div>
                 )
             })
