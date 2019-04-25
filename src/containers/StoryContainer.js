@@ -5,7 +5,8 @@ import {
     getStory, deleteStory, getStoryById, resetSelectedStory, resetDeletedStory,
     createStory, createStoryFailure, createStorySuccess, resetNewStory,
     editStory, resetEditStory,
-    editMode, resetEditMode, createMode
+    editMode, resetEditMode, createMode,
+    resetStoryFromUser
 } from "../actions/StoryAction";
 import {initialize} from 'redux-form'
 
@@ -34,7 +35,8 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(resetSelectedStory());
             dispatch(resetEditMode());
             dispatch(resetEditStory());
-            dispatch(resetDeletedStory())
+            dispatch(resetDeletedStory());
+            dispatch(resetStoryFromUser());
         },
         editMode: () => {
             dispatch(editMode());

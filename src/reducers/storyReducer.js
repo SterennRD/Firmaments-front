@@ -1,4 +1,5 @@
 import {
+    GET_ALL_STORIES, GET_ALL_STORIES_SUCCESS, GET_ALL_STORIES_ERROR, RESET_ALL_STORIES,
     GET_STORY_FROM_USER, GET_STORY_FROM_USER_SUCCESS, GET_STORY_FROM_USER_ERROR, RESET_STORY_FROM_USER,
     GET_STORY_FROM_ID, GET_STORY_SUCCESS, GET_STORY_ERROR, RESET_SELECTED_STORY,
     GET_LAST_STORIES, GET_LAST_STORIES_SUCCESS, GET_LAST_STORIES_ERROR, RESET_LAST_STORIES,
@@ -22,6 +23,16 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
     let error;
     switch(action.type) {
+
+        case GET_ALL_STORIES:
+            return { ...state, storyList: {...state.stories, loading: true} };
+        case GET_ALL_STORIES_SUCCESS:
+            return { ...state, storyList: { stories: action.payload, loading: false, error: null}}
+        case GET_ALL_STORIES_ERROR:
+            error = action.payload || {message: action.payload.message};
+            return { ...state, storyList: {stories: null, error:error, loading:false}};
+        case RESET_ALL_STORIES:
+            return { ...state, storyList: {stories: null, error:null, loading: false}};
 
         case GET_STORY_FROM_USER:
             //console.log(action.payload)

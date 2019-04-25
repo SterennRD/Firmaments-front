@@ -51,7 +51,7 @@ class Home extends Component {
                         <StoryCard
                             id={story._id}
                             title={story.title}
-                            author={story.author.username_display}
+                            author={story.author}
                             description={story.description}
                             rating={story.rating.label}
                             categories={story.category}
@@ -71,7 +71,7 @@ class Home extends Component {
                     <div className="row">
                         {lastStories}
                     </div>
-                    <Link to="">Voir plus</Link>
+                    <Link to={'/stories/all'}>Voir plus</Link>
                 </div>
             </div>
         );

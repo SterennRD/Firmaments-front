@@ -8,7 +8,7 @@ const StoryCard = ({
     return (
         <div key={id}>
             <h3><Link to={'/stories/see/' + id}>{title}</Link> <span className="badge badge-primary">{rating}</span></h3>
-            <h4>Par {author}</h4>
+            <h4>Par <Link to={'/profile/' + author._id }>{author.username_display}</Link></h4>
             <p>{description}</p>
             <div>{category}</div>
             <div>{nb_likes} <i className="fas fa-heart"></i> {nb_favorites} <i className="fas fa-star"></i> {nb_comments} <i className="fas fa-comment"></i></div>

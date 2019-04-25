@@ -10,6 +10,7 @@ import StoryTable from "./StoryTable";
 import ChapterForm from "./ChapterForm";
 import Chapter from "../../containers/ChapterContainer";
 import ChapterFormEdit from "../../containers/ChapterFormContainer";
+import StoryAll from "../../containers/StoryAllContainer";
 
 
 class Story extends Component {
@@ -39,6 +40,11 @@ class Story extends Component {
                 {/* List of stories */}
                 <Route exact path={this.props.match.url}
                        render={() => <StoryList {...this.props}
+                       />}
+                />
+                {/* List of all stories */}
+                <Route exact path={this.props.match.url + '/all'}
+                       render={() => <StoryAll {...this.props}
                        />}
                 />
                 {/* See details of story */}
