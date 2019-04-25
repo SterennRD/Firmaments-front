@@ -30,6 +30,9 @@ class Profile extends Component {
             <div>
                 <h1>{user.username_display}</h1>
                 <h2>@{user.username}</h2>
+                <div>{user.followers.length} followers</div>
+                <div>{user.following.length} abonnement{user.followers.length > 1 ? 's' : ''}</div>
+                <div>{user.stories.length} histoire{user.stories.length > 1 ? 's' : ''}</div>
             </div>
         );
     }

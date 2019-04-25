@@ -33,7 +33,7 @@ class Story extends Component {
                                                     location={this.props.location}
                                                     match={this.props.match}
                                                     history={this.props.history}
-                                                    initialValues={stories.selectedStory.story}
+
                        />}
                 />
                 {/* List of stories */}

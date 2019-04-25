@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from "react-router-dom";
-
+import StoryCard from './stories/StoryCard';
 
 class Home extends Component {
     fetchData() {
@@ -47,11 +47,18 @@ class Home extends Component {
             lastStories = storyList.stories.map((story) => {
 
                 return (
-                    <div key={story._id} className="col-sm-3">
-                        <h3><Link to={'/stories/see/' + story._id}>{story.title}</Link> <span className="badge badge-primary">{story.rating ? story.rating.label : null}</span></h3>
-                        <h4>Par {story.author ? story.author.username : "auteur"}</h4>
-                        <p>{story.description}</p>
-                        <div>{story.nb_likes} <i className="fas fa-heart"></i> {story.nb_favorites} <i className="fas fa-star"></i> {story.nb_comments} <i className="fas fa-comment"></i></div>
+                    <div className="col-sm-3">
+                        <StoryCard
+                            id={story._id}
+                            title={story.title}
+                            author={story.author.username_display}
+                            description={story.description}
+                            rating={story.rating.label}
+                            categories={story.category}
+                            nb_likes={story.nb_likes}
+                            nb_favorites={story.nb_favorites}
+                            nb_comments={story.nb_comments}
+                        />
                     </div>
                 )
             })

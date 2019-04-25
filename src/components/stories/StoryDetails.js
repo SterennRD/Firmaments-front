@@ -57,20 +57,26 @@ class StoryDetails extends Component {
 
         let status = ''
         if (story.status) {
-            status = <li>Statut: {story.status.label}</li>
+            status = story.status.label
+        }
+        let categories = ''
+        if (story.category) {
+            categories = story.category.map( c => <span key={c.label}>{c.label}</span>)
         }
 
         return (
             <div>
                 Les détails
                 <div>{isAuthenticated && isMyStory ? edit : ''}</div>
-                <Link to={this.props.match.url}>Retour</Link>
+                <button onClick={this.props.history.goBack}>Retour</button>
                 <ul>
                     <li>Titre : {story.title}</li>
                     <li>Couverture</li>
                     <li>Auteur: {story.author.username}</li>
                     <li>Description: {story.description}</li>
-                    {status}
+                    <li>Catégories: {categories}</li>
+                    <li>Statut: {status}</li>
+
 
                 </ul>
 
