@@ -28,7 +28,6 @@ class StoryAll extends Component {
     render() {
         const {stories, loading, error} = this.props.stories.storyList;
 
-
         if (loading) {
             return <div className="container">Loading...</div>;
         } else if(error) {
@@ -40,19 +39,21 @@ class StoryAll extends Component {
         let storyList;
 
         if (stories.result) {
-            console.log(stories.result)
             storyList = stories.result.map(s => <div key={s._id}>{s.title}</div>)
         }
+
+        const totalPages = Math.ceil(stories.totalResults / stories.resultsPerPage);
 
         return (
             <div>
                 All stories
+                Page {stories.page} sur {totalPages}
                 {storyList}
                 <Pagination
                     activePage={this.state.activePage}
                     activeClass="active"
                     itemsCountPerPage={2}
-                    totalItemsCount={stories.totalRecords}
+                    totalItemsCount={stories.totalResults}
                     pageRangeDisplayed={5}
                     onChange={this.handlePageChange.bind(this)}
                 />
