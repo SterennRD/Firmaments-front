@@ -45,9 +45,15 @@ class StoryList extends Component {
 
         const {isAuthenticated} = this.props.auth;
         const {user} = this.props.auth.user;
-        const {stories} = this.props.stories;
+        const {stories, loading, error} = this.props.stories.stories;
 
-
+        if (loading) {
+            return <div className="container">Loading...</div>;
+        } else if(error) {
+            return  <div className="alert alert-danger">{error.message}</div>
+        } else if(!stories) {
+            return <span />
+        }
 
         let storiesList = ''
         if (stories.length > 0) {

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
-    GET_STORY_FROM_USER, GET_STORY_FROM_ID, GET_STORY_SUCCESS, GET_STORY_ERROR, RESET_SELECTED_STORY,
+    GET_STORY_FROM_USER, GET_STORY_FROM_USER_SUCCESS, GET_STORY_FROM_USER_ERROR, RESET_STORY_FROM_USER,
+    GET_STORY_FROM_ID, GET_STORY_SUCCESS, GET_STORY_ERROR, RESET_SELECTED_STORY,
     GET_LAST_STORIES, GET_LAST_STORIES_SUCCESS, GET_LAST_STORIES_ERROR, RESET_LAST_STORIES,
     DELETE_STORY, DELETE_STORY_FAILURE, DELETE_STORY_SUCCESS, RESET_DELETED_STORY,
     GET_CHAPTER_BY_ID, GET_CHAPTER_SUCCESS, GET_CHAPTER_ERROR, RESET_SELECTED_CHAPTER,
@@ -18,13 +19,20 @@ const jwt = require('jsonwebtoken');
 const ROOT_URL = window.location.href.indexOf('localhost') > 0 ? 'http://localhost:3000/stories' : '/stories';
 
 export const getStory = (user) => dispatch => {
-    axios.get(`${ROOT_URL}/user/`+ user)
-        .then(res => {
-            dispatch(listStories(res));
+    dispatch({type: GET_STORY_FROM_USER})
+    axios.get(`${ROOT_URL}/user/${user}`)
+        .then(function(response) {
+            console.log(response)
+            if (response.status === 200){
+                dispatch({type: GET_STORY_FROM_USER_SUCCESS, payload: response.data})
+            } else {
+                dispatch({type: GET_STORY_FROM_USER_ERROR, payload: response.data})
+            }
         })
-        .catch(err => {
-            console.log(err)
-        });
+        .catch(function(error) {
+            dispatch({type: GET_STORY_FROM_USER_ERROR, payload: error.data})
+        })
+
     //socket.emit('my other event', { my: 'data' });
 }
 

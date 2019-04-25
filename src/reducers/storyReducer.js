@@ -1,5 +1,6 @@
 import {
-    GET_STORY_FROM_USER, GET_STORY_FROM_ID, GET_STORY_SUCCESS, GET_STORY_ERROR, RESET_SELECTED_STORY,
+    GET_STORY_FROM_USER, GET_STORY_FROM_USER_SUCCESS, GET_STORY_FROM_USER_ERROR, RESET_STORY_FROM_USER,
+    GET_STORY_FROM_ID, GET_STORY_SUCCESS, GET_STORY_ERROR, RESET_SELECTED_STORY,
     GET_LAST_STORIES, GET_LAST_STORIES_SUCCESS, GET_LAST_STORIES_ERROR, RESET_LAST_STORIES,
     CREATE_STORY, CREATE_STORY_SUCCESS, CREATE_STORY_FAILURE, RESET_NEW_STORY,
     DELETE_STORY, DELETE_STORY_SUCCESS, DELETE_STORY_FAILURE, RESET_DELETED_STORY,
@@ -9,7 +10,7 @@ import {
 } from '../actions/types';
 
 const INITIAL_STATE = {
-    stories: [],
+    stories: {stories: [], error:null, loading: false},
     postsList: {posts: [], error:null, loading: false},
     storyList: {stories: [], error:null, loading: false},
     newStory:{story:null, error: null, loading: false},
@@ -24,7 +25,15 @@ export default function(state = INITIAL_STATE, action) {
 
         case GET_STORY_FROM_USER:
             //console.log(action.payload)
-            return { ...state, stories: action.payload.data };
+            return { ...state, stories: {...state.stories, loading: true} };
+        case GET_STORY_FROM_USER_SUCCESS:
+            return { ...state, stories: { stories: action.payload, loading: false, error: null}}
+        case GET_STORY_FROM_USER_ERROR:
+            error = action.payload || {message: action.payload.message};//2nd one is network or server down errors
+            return { ...state, stories: {stories: null, error:error, loading:false}};
+        case RESET_STORY_FROM_USER:
+            return { ...state, stories: {stories: null, error:null, loading: false}};
+
         case GET_STORY_FROM_ID:
             console.log("Je passe dans get story by id")
             console.log(action.payload)
