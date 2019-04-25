@@ -16,7 +16,7 @@ class Navbar extends Component {
         const {isAuthenticated, user} = this.props.auth;
         console.log('authenticated navbar')
         console.log(this.props.auth)
-        const authLinks = (
+        const authLinks = isAuthenticated ? (
             <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
                     <Link className="nav-link" to={"/profile/" + user._id}>{user.username}</Link>
@@ -30,7 +30,7 @@ class Navbar extends Component {
                     </a>
                 </li>
             </ul>
-        )
+        ) : null;
       const guestLinks = (
         <ul className="navbar-nav ml-auto">
             <li className="nav-item">

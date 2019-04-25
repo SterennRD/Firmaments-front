@@ -72,7 +72,7 @@ class Story extends Component {
                        />}
                 />
                 {/* See a chapter */}
-                <Route exact path={this.props.match.url + '/:id/chapter-:idchapter/'}
+                <Route exact path={this.props.match.url + '/:id-:idchapter/'}
                        render={(props) => <Chapter
                            {...props}
                        />}

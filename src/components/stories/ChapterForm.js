@@ -8,8 +8,16 @@ import validate from './validate'
 import { createStory, getStoryById, editChapter, createChapter } from '../../actions/StoryAction';
 import {status, rating, category} from "./constants";
 import connect from "react-redux/es/connect/connect";
+
+
+import { createEditorStateWithText } from 'draft-js-plugins-editor';
+
+
+
+import draftToHtml from "draftjs-to-html";
+import {convertToRaw} from "draft-js";
+
 import renderWysiwyg from "../forms/RenderWysiwyg";
-import Editor from 'react-medium-editor';
 // load theme styles with webpack
 require('medium-editor/dist/css/medium-editor.css');
 require('medium-editor/dist/css/themes/default.css');
@@ -78,7 +86,7 @@ const handleMode = (mode) => {
 class ChapterForm extends Component {
     constructor(props) {
         super(props);
-        this.state= { text: ''}
+        this.state= { text: '', editorState: ''}
     }
 
     componentWillUnmount() {
@@ -133,6 +141,34 @@ class ChapterForm extends Component {
     }
     handleChange(text, medium) {
         this.setState({text: text});
+    }
+
+    state = {
+        editorState: createEditorStateWithText("coucou"),
+    };
+    onChange = (editorState) => {
+        this.setState({
+            editorState,
+        });
+    };
+
+    focus = () => {
+        this.editor.focus();
+    };
+
+    onEditorStateChange = (editorState) => {
+        console.log("change edit")
+        console.log(editorState)
+
+        this.setState({
+            editorState,
+        });
+        console.log(this.props)
+    };
+    changeValue(editorState) {
+        const value = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+        console.log(value)
+        this.props.input.onChange(value);
     }
 
     render() {
@@ -213,13 +249,26 @@ class ChapterForm extends Component {
                         label="Contenu *"
                         placeholder="Contenu de l'histoire"
                     />*/}
-                    <Field
+                    {/*<Field
                         name="content"
                         component={ renderWysiwyg }
                         onChange={this.handleChange.bind(this)}
                         label="Contenu *"
                         placeholder="Contenu de l'histoire"
+                    />*/}
+                    {/*<Field
+                        name="content"
+                        component={ WysiwygEditor }
+                        label="Contenu *"
+                        placeholder="Contenu de l'histoire"
+                    />*/}
+                    <Field
+                        name="content"
+                        component={ renderWysiwyg }
+                        label="Contenu *"
+                        placeholder="Contenu de l'histoire"
                     />
+
                     {/*<Editor
                         text={this.state.text}
                         onChange={this.handleChange.bind(this)}
