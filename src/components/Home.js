@@ -47,7 +47,7 @@ class Home extends Component {
             lastStories = storyList.stories.map((story) => {
 
                 return (
-                    <div className="col-sm-3">
+                    <div key={story._id} className="col-sm-3">
                         <StoryCard
                             id={story._id}
                             title={story.title}

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link, Route} from "react-router-dom";
 import Like from "../../containers/LikeContainer";
+import moment from "moment/min/moment-with-locales.min";
 
 class StoryDetails extends Component {
 
@@ -43,6 +44,9 @@ class StoryDetails extends Component {
     }
 
     render() {
+        // INITIALISATION DE LA LOCALE POUR MOMENT JS
+        moment.locale('fr');
+
         const {isAuthenticated, user} = this.props.auth;
         const { story, loading, error, like } = this.props.stories.selectedStory;
 
@@ -85,9 +89,20 @@ class StoryDetails extends Component {
 
             }
         }
+        const chapters = story.chapters.map(c => <div key={c._id}>{c.title}</div>)
 
         const result = story.likes.find( e => e.user === user._id );
         console.log("result: " + result)
+        let last_comments;
+        if (story.last_comments.length > 0) {
+            last_comments = story.last_comments.map( c => (
+                <div key={c._id}>
+                    Par {c.author.username_display}
+                    <div>{moment(c.created_at).format('LLL')}</div>
+                    <p>{c.content}</p>
+                </div>
+            ))
+        }
         return (
             <div>
                 Les détails
@@ -105,7 +120,12 @@ class StoryDetails extends Component {
 
 
                 </ul>
-
+                <hr />
+                <h2>Table des matières</h2>
+                {chapters}
+                <hr />
+                <h2>Derniers commentaires</h2>
+                {last_comments}
             </div>
         );
 
