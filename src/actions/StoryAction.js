@@ -11,7 +11,8 @@ import {
     EDIT_STORY, EDIT_STORY_SUCCESS, EDIT_STORY_FAILURE, RESET_EDIT_STORY,
     EDIT_CHAPTER, EDIT_CHAPTER_SUCCESS, EDIT_CHAPTER_FAILURE, RESET_EDIT_CHAPTER,
     VALIDATE_POST_FIELDS,VALIDATE_POST_FIELDS_SUCCESS, VALIDATE_POST_FIELDS_FAILURE, RESET_POST_FIELDS,
-    LOAD, EDIT_MODE, EDIT_MODE_RESET, RESET_FORM, CREATE_MODE
+    LOAD, EDIT_MODE, EDIT_MODE_RESET, RESET_FORM, CREATE_MODE,
+    LIKE_STORY, LIKE_STORY_SUCCESS, LIKE_STORY_ERROR
 } from './types';
 const jwt = require('jsonwebtoken');
 
@@ -419,4 +420,31 @@ export const resetLastStories = () => {
     return {
         type: RESET_LAST_STORIES
     }
+}
+
+export const likeStory = (id, idUser, tokenFromStorage) => dispatch => {
+
+    dispatch({type: LIKE_STORY})
+    console.log("dispatch like")
+    console.log(id)
+    console.log(idUser)
+    axios({
+        method: 'post',
+        data: {id: idUser},
+        url: `${ROOT_URL}/like/${id}`,
+        headers: {
+            'x-access-token': tokenFromStorage
+        }
+    })
+        .then((response) => {
+            if (response.status === 200){
+                dispatch({type: LIKE_STORY_SUCCESS, payload: response.data})
+            } else {
+                dispatch({type: LIKE_STORY_ERROR, payload: response.data})
+            }
+        })
+        .catch((error) => {
+            dispatch({type: LIKE_STORY_ERROR, payload: error})
+        })
+
 }

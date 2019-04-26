@@ -8,6 +8,7 @@ import {
     EDIT_STORY, EDIT_STORY_SUCCESS, EDIT_STORY_FAILURE, RESET_EDIT_STORY,
     VALIDATE_POST_FIELDS, VALIDATE_POST_FIELDS_SUCCESS, VALIDATE_POST_FIELDS_FAILURE, RESET_POST_FIELDS,
     LOAD, EDIT_MODE, EDIT_MODE_RESET, CREATE_MODE,
+    LIKE_STORY, LIKE_STORY_SUCCESS, LIKE_STORY_ERROR,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -15,9 +16,10 @@ const INITIAL_STATE = {
     postsList: {posts: [], error:null, loading: false},
     storyList: {stories: [], error:null, loading: false},
     newStory:{story:null, error: null, loading: false},
-    selectedStory:{story:null, error:null, loading: false},
+    selectedStory:{story:null, error:null, loading: false, like: {loading: false, error: null, likes: []}},
     deletedStory: {story: null, error:null, loading: false},
     editStory: {story: null, error:null, loading: false, success: false},
+    likeList: {likes: [], error:null, loading: false},
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -52,7 +54,7 @@ export default function(state = INITIAL_STATE, action) {
         case GET_STORY_SUCCESS:
             console.log("get story success")
             console.log(action.payload)
-            return { ...state, selectedStory: {story: action.payload, error:null, loading: false}};
+            return { ...state, selectedStory: {story: action.payload, error:null, loading: false}, likeList: {...state.likeList, likes: action.payload.likes}};
         case GET_STORY_ERROR:
             console.log("get story error")
             console.log(action.payload)
@@ -132,6 +134,15 @@ export default function(state = INITIAL_STATE, action) {
             return {...state, editMode: false}
         case CREATE_MODE:
             return { ...state, selectedStory: {story: action.payload, error:null, loading: false}};
+
+        case LIKE_STORY:
+            return {...state, likeList: {...state.likeList, loading: true, error: null}}
+        case LIKE_STORY_SUCCESS:
+            return {...state, likeList: {likes: action.payload, loading: false, error: null}}
+        case LIKE_STORY_ERROR:
+            error = action.payload || {message: action.payload.message};
+            return {...state, likeList: {...state.likeList, loading: false, error: error}}
+
 
         default:
             return state;

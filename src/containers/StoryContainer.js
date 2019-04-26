@@ -6,7 +6,7 @@ import {
     createStory, createStoryFailure, createStorySuccess, resetNewStory,
     editStory, resetEditStory,
     editMode, resetEditMode, createMode,
-    resetStoryFromUser
+    resetStoryFromUser, likeStory
 } from "../actions/StoryAction";
 import {initialize} from 'redux-form'
 
@@ -47,6 +47,9 @@ const mapDispatchToProps = (dispatch) => {
         editStory: (props, token) => {
             console.log("je passe dans le dispatch edit sotry")
             dispatch(editStory(props, token))
+        },
+        likeStory: (id, idUser, token) => {
+            dispatch(likeStory(id, idUser, token))
         }
     }
 };

@@ -50,7 +50,7 @@ class Story extends Component {
                 {/* See details of story */}
                 <Route exact path={this.props.match.url + '/see/:id'}
                        render={(props) => <StoryDetails {...this.props}
-                                                        story={stories.stories.find(s => s._id === props.match.params.id )}
+                                                        //story={stories.stories.find(s => s._id === props.match.params.id )}
                        />}
                 />
 

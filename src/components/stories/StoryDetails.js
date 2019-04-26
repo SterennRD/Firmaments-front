@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link, Route} from "react-router-dom";
+import Like from "../../containers/LikeContainer";
 
 class StoryDetails extends Component {
 
@@ -8,6 +9,7 @@ class StoryDetails extends Component {
         this.state = {
             story: {}
         }
+
     }
 
     fetchData(id) {
@@ -25,11 +27,24 @@ class StoryDetails extends Component {
         const url =this.props.history.location.pathname;
         const id = url.split('/').pop();
         this.fetchData(id);
+        if (this.props.auth.isAuthenticated) {
+
+        }
+    }
+
+    handleLike(id) {
+        console.log(id)
+        let idUser = this.props.auth.user._id;
+        let token = localStorage.getItem('jwtToken');
+        if (!idUser || idUser == undefined) {
+        } else {
+            this.props.likeStory(id, idUser, token)
+        }
     }
 
     render() {
-        const {isAuthenticated} = this.props.auth;
-        const { story, loading, error } = this.props.stories.selectedStory;
+        const {isAuthenticated, user} = this.props.auth;
+        const { story, loading, error, like } = this.props.stories.selectedStory;
 
         let isMyStory = false;
         if (story && story.author._id === this.props.auth.user._id) {
@@ -38,7 +53,6 @@ class StoryDetails extends Component {
 
         console.log("détails")
         console.log(this.props)
-        console.log(story)
 
         const url =this.props.history.location.pathname;
         const id = url.split('/').pop();
@@ -64,12 +78,24 @@ class StoryDetails extends Component {
             categories = story.category.map( c => <span key={c.label}>{c.label}</span>)
         }
 
+
+
+        if (like) {
+            if (like.loading) {
+
+            }
+        }
+
+        const result = story.likes.find( e => e.user === user._id );
+        console.log("result: " + result)
         return (
             <div>
                 Les détails
                 <div>{isAuthenticated && isMyStory ? edit : ''}</div>
                 <button onClick={this.props.history.goBack}>Retour</button>
+                <Like {...this.props}/>
                 <ul>
+                    <li>{story._id}</li>
                     <li>Titre : {story.title}</li>
                     <li>Couverture</li>
                     <li>Auteur: {story.author.username}</li>
