@@ -90,8 +90,8 @@ export default function(state = INITIAL_STATE, action) {
         case DELETE_STORY:
             return {...state, deletedStory: {...state.deletedStory, loading: true}}
         case DELETE_STORY_SUCCESS:
-            let filterStories = state.stories.filter(item => item._id !== action.payload._id);
-            return {...state, deletedStory: {story:action.payload, error:null, loading: false}, stories: filterStories}
+            let filterStories = state.stories.stories.filter(item => item._id !== action.payload._id);
+            return {...state, deletedStory: {story:action.payload, error:null, loading: false}, stories: {... state.stories, stories: filterStories}}
         case DELETE_STORY_FAILURE:
             error = action.payload || {message: action.payload.message};//2nd one is network or server down errors
             return {...state, deletedStory: {story:null, error:error, loading: false}}

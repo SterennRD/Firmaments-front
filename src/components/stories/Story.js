@@ -57,7 +57,7 @@ class Story extends Component {
                 {/* Table of content */}
                 <Route exact path={this.props.match.url + '/toc/:id'}
                        render={(props) => <StoryTable {...this.props}
-                                                 story={stories.stories.find(s => s._id === props.match.params.id )}
+                                                 //story={stories.stories.find(s => s._id === props.match.params.id )}
                        />}
                 />
                 {/* Create a chapter */}
