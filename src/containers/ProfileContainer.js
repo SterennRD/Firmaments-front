@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Profile from '../components/user/Profile';
 import {
-getUserById, resetSelectedUser
+getUserById, resetSelectedUser, followUser
 } from "../actions/UserActions";
 
 const mapDispatchToProps = (dispatch) => {
@@ -12,6 +12,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         resetMe: () => {
             dispatch(resetSelectedUser());
+        },
+        followUser: (id, follow, token) => {
+            dispatch(followUser(id, follow, token))
         }
     }
 };

@@ -1,11 +1,13 @@
 import {
     GET_USER_BY_ID, GET_USER_SUCCESS, GET_USER_ERROR,
-    ME_FROM_TOKEN, ME_FROM_TOKEN_SUCCESS, ME_FROM_TOKEN_FAILURE, RESET_TOKEN
+    ME_FROM_TOKEN, ME_FROM_TOKEN_SUCCESS, ME_FROM_TOKEN_FAILURE, RESET_TOKEN,
+    FOLLOW_USER, FOLLOW_USER_ERROR, FOLLOW_USER_SUCCESS
 } from '../actions/types';
 
 const INITIAL_STATE = {
     user: null, status:null, error:null, loading: false, isAuthenticated: false,
-    selectedUser: {user: null, status:null, error:null, loading: false}
+    selectedUser: {user: null, status:null, error:null, loading: false},
+    followedUsers: { users: [], loading: false, error: null}
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -28,6 +30,11 @@ export default function(state = INITIAL_STATE, action) {
             return { ...state, user: null, status:'storage', error:error, loading: false};
         case RESET_TOKEN:// remove token from storage make loading = false
             return { ...state, user: null, status:'storage', error:null, loading: false};
+
+        case FOLLOW_USER:
+            return { ...state, followedUsers: {...state.followedUsers, loading: true}}
+        case FOLLOW_USER_SUCCESS:
+            return {...state, user: {...state.user, following: action.payload}, followedUsers: {user: action.payload, loading: false, error: null}}
 
         default:
             return state;

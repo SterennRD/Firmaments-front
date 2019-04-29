@@ -31,14 +31,22 @@ export function resetSelectedUser() {
     }
 };
 
-export const followUser = (id) => {
+export const followUser = (id, follow, tokenFromStorage) => {
 
     return function(dispatch) {
         dispatch({type: FOLLOW_USER});
 
-        axios.get(`${ROOT_URL}/follow/${id}`)
+        axios({
+            method: 'post',
+            url: `${ROOT_URL}/follow/${id}/${follow}`,
+            headers: {
+                'x-access-token': tokenFromStorage
+            }
+        })
             .then(function(response) {
+                console.log(response)
                 if (response.status === 200){
+                    dispatch({type: FOLLOW_USER_SUCCESS, payload: response.data.following})
                 } else {
                 }
             })
