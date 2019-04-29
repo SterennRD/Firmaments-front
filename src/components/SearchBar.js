@@ -7,10 +7,14 @@ class SearchBar extends Component {
         super(props);
         this.state = {
             searchText: '',
-            results: []
+            results: [],
+            nbResults: 0,
+            showResults: true
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+        this.handleFocus = this.handleFocus.bind(this);
     }
 
     handleChange(event) {
@@ -33,7 +37,10 @@ class SearchBar extends Component {
         this.props.history.push('/')
     }
     handleBlur() {
-        this.setState({results: []})
+        this.setState({showResults: false})
+    }
+    handleFocus() {
+        this.setState({showResults: true})
     }
 
     fetchData(text) {
@@ -45,7 +52,7 @@ class SearchBar extends Component {
             .then((response) => {
                 console.log(response.data)
                 if (response.status === 200){
-                    this.setState({results: response.data.result})
+                    this.setState({results: response.data.result, nbResults: response.data.totalResults})
                 } else {
                 }
             })
@@ -56,6 +63,7 @@ class SearchBar extends Component {
 
     render() {
         let results;
+        let resultsLink;
         console.log(this.state.results)
         if (this.state.results.length > 0) {
             results = this.state.results.map( e => (
@@ -66,12 +74,27 @@ class SearchBar extends Component {
                 )
             )
         }
+        if (this.state.nbResults > 0) {
+            resultsLink = (
+                    <div className="d-flex justify-content-space-between">
+                        <Link to={'/stories/see/'}>Voir les {this.state.nbResults} résultats</Link>
+                    </div>
+                )
+        }
         return (
-            <div>
+            <div className="navbar-nav ml-auto">
 
-                <input onBlur={this.handleBlur} type="text" autocomplete="off" name="search-bar" value={this.state.searchText} onChange={this.handleChange}/>
-                <button onClick={this.handleSearch.bind(this)}>Recherche</button>
-                {results}
+                <input onFocus={this.handleFocus} onBlur={this.handleBlur} type="text" autocomplete="off" name="search-bar" value={this.state.searchText} onChange={this.handleChange}/>
+                <button onClick={this.handleSearch}>Recherche</button>
+                { this.state.showResults ? (
+                    <div className="d-flex flex-column">
+                        {results}
+                        {resultsLink}
+                    </div>
+                ) : (
+                    null
+                )}
+
             </div>
         );
     }
