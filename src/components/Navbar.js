@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../actions/authentication';
 import { withRouter } from 'react-router-dom';
+import SearchBar from "./SearchBar";
 
 class Navbar extends Component {
 
@@ -52,6 +53,7 @@ class Navbar extends Component {
                         <Link to='/stories/new' className="nav-link">Créer</Link>
                     </li>
                 </ul>
+                <SearchBar {...this.props} />
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     {isAuthenticated ? authLinks : guestLinks}
                 </div>
