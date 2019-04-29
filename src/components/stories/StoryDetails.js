@@ -97,7 +97,7 @@ class StoryDetails extends Component {
         if (story.last_comments.length > 0) {
             last_comments = story.last_comments.map( c => (
                 <div key={c._id}>
-                    Par {c.author.username_display}
+                    Par {c.author.username_display} sur {c.title}
                     <div>{moment(c.created_at).format('LLL')}</div>
                     <p>{c.content}</p>
                 </div>
@@ -125,7 +125,7 @@ class StoryDetails extends Component {
                 {chapters}
                 <hr />
                 <h2>Derniers commentaires</h2>
-                {last_comments}
+                {story.last_comments.length > 0 ? last_comments : "Aucun commentaire"}
             </div>
         );
 
