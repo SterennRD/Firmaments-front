@@ -10,9 +10,10 @@ import thunk from 'redux-thunk'
 import App from './components/App';
 import reducer from "./reducers";
 import {SET_CURRENT_USER} from "./actions/types";
-import { setCurrentUser } from './actions/authentication';
+import { setCurrentUser} from './actions/authentication';
 import jwt_decode from "jwt-decode";
 import fontawesome from "@fortawesome/fontawesome-free/js/all";
+import {meFromToken} from "./actions/users";
 
 const store = createStore(
     reducer,
@@ -22,7 +23,8 @@ const store = createStore(
 const token = localStorage.getItem('jwtToken');
 
 if (token) {
-    store.dispatch(setCurrentUser(jwt_decode(token)))
+    //store.dispatch(setCurrentUser(jwt_decode(token)))
+    store.dispatch(meFromToken(token))
 }
 
 ReactDOM.render(

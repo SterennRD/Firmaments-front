@@ -16,8 +16,15 @@ class Profile extends Component {
         console.log("profil")
         console.log(this.props)
 
-        const {isAuthenticated} = this.props.auth;
-        const { user, loading, error } = this.props.user;
+        const { isAuthenticated } = this.props.auth;
+        const { user, loading, error } = this.props.user.selectedUser;
+        let isMyProfile = false;
+
+        if (user) {
+            if ( this.props.auth.user._id === user._id ) {
+                isMyProfile = true;
+            }
+        }
 
         if (loading) {
             return <div className="container">Loading...</div>;
@@ -33,6 +40,7 @@ class Profile extends Component {
                 <div>{user.followers.length} followers</div>
                 <div>{user.following.length} abonnement{user.followers.length > 1 ? 's' : ''}</div>
                 <div>{user.stories.length} histoire{user.stories.length > 1 ? 's' : ''}</div>
+                { isMyProfile ? '' : <div>Vous ne suivez pas @{user.username} <button>Suivre</button></div>}
             </div>
         );
     }

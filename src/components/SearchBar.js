@@ -84,7 +84,7 @@ class SearchBar extends Component {
         return (
             <div className="navbar-nav ml-auto">
 
-                <input onFocus={this.handleFocus} onBlur={this.handleBlur} type="text" autocomplete="off" name="search-bar" value={this.state.searchText} onChange={this.handleChange}/>
+                <input onFocus={this.handleFocus} onBlur={this.handleBlur} type="text" autoComplete="off" name="search-bar" value={this.state.searchText} onChange={this.handleChange}/>
                 <button onClick={this.handleSearch}>Recherche</button>
                 { this.state.showResults ? (
                     <div className="d-flex flex-column">

@@ -78,3 +78,13 @@ export const RESET_SELECTED_USER = 'RESET_SELECTED_USER';
 export const LIKE_STORY = 'LIKE_STORY';
 export const LIKE_STORY_SUCCESS = 'LIKE_STORY_SUCCESS';
 export const LIKE_STORY_ERROR = 'LIKE_STORY_ERROR';
+
+export const FOLLOW_USER = 'FOLLOW_USER';
+export const FOLLOW_USER_SUCCESS = 'FOLLOW_USER_SUCCESS';
+export const FOLLOW_USER_ERROR = 'FOLLOW_USER_ERROR';
+
+//Get current user(me) from token in localStorage
+export const ME_FROM_TOKEN = 'ME_FROM_TOKEN';
+export const ME_FROM_TOKEN_SUCCESS = 'ME_FROM_TOKEN_SUCCESS';
+export const ME_FROM_TOKEN_FAILURE = 'ME_FROM_TOKEN_FAILURE';
+export const RESET_TOKEN = 'RESET_TOKEN';
