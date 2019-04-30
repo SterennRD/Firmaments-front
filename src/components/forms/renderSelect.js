@@ -6,7 +6,9 @@ const renderSelect = ({ input, label, type, meta: { touched, error, invalid, war
     const renderSelectOptions = (option) => (
         <option key={option.id} value={option.id}>{option.label}</option>
     )
-    let category = [
+    let newValue = input.value.id;
+
+    /*let category = [
         {value: 1, label: 'Action'},
         {value: 2, label: 'Autobiographie'},
         {value: 3, label: 'Aventure'},
@@ -28,7 +30,7 @@ const renderSelect = ({ input, label, type, meta: { touched, error, invalid, war
         {value: 19, label: 'Thriller'},
         {value: 20, label: 'Tragédie'},
         {value: 21, label: 'Young adult'}
-    ];
+    ];*/
     let categories = options.map(e => ({
         label: e.label,
         value: e.id
@@ -41,31 +43,25 @@ const renderSelect = ({ input, label, type, meta: { touched, error, invalid, war
     const noOptionsMessage = () => {
         return "Vous ne pouvez pas choisir plus de 3 catégories"
     }
-    const defaulte = input.value;
-    let selectedCategory = [];
+    //const defaulte = input.value;
+    /*let selectedCategory = [];
     if (selected) {
         selectedCategory = categories.filter( el => {
             return input.value.some( f => {
                 return f.id === el.value
             });
         })
-    }
+    }*/
     if (multiple) {
         return (
             <div className={`form-group ${touched && invalid ? 'has-error' : ''}`}>
                 <label htmlFor={input.name}>{label} </label>
+
                 <Select
                     {...input}
                     isMulti
-
-                    /*defaultValue={[input.value.map(e => ({
-                        label: e.label,
-                        value: e.id
-                    }))]}*/
                     onChange={(value) => {
-                        console.log(input.value)
                         input.onChange(value)
-                        /*input.onChange(value.map(v=> v.value))*/
                     }}
                     value={input.value}
                     onBlur={() => input.onBlur(input.value)}
@@ -84,9 +80,11 @@ const renderSelect = ({ input, label, type, meta: { touched, error, invalid, war
         )
     }
     else {
+        if (newValue) input.value = newValue;
         return (
                 <div className={`form-group ${touched && invalid ? 'has-error' : ''}`}>
                     <label htmlFor={input.name}>{label} </label>
+
                     <select className="form-control" id={input.name} {...input} onBlur={() => input.onBlur(input.value)}>
                         {options.map(renderSelectOptions)}
                     </select>

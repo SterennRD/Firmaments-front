@@ -26,7 +26,7 @@ class SearchBar extends Component {
         if (nbLetters >= 2) {
             this.fetchData(event.target.value)
         } else {
-            this.setState({results: []})
+            this.setState({results: [], nbResults: 0})
         }
         if (this.state.searchText !== '') {
             //this.fetchData(this.state.searchText)

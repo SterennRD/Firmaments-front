@@ -16,7 +16,7 @@ class Like extends Component {
         const {isAuthenticated, user} = this.props.auth;
         const { loading, error, likes } = this.props.stories.likeList;
         const { story } = this.props.stories.selectedStory;
-        const faved = likes.findIndex(item => item.user === user._id);
+        const faved = isAuthenticated ? likes.findIndex(item => item.user === user._id) : null;
         return (
             <div>
                 { faved !== -1 ? 'vous aimez' : 'vous aimez pas'}

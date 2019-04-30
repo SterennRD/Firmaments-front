@@ -9,6 +9,7 @@ class Profile extends Component {
         this.props.resetMe();
     }
     componentDidMount() {
+
         const id =this.props.match.params.id;
         this.fetchData(id);
     }

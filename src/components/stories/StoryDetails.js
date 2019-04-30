@@ -47,11 +47,11 @@ class StoryDetails extends Component {
         // INITIALISATION DE LA LOCALE POUR MOMENT JS
         moment.locale('fr');
 
-        const {isAuthenticated, user} = this.props.auth;
+        const {isAuthenticated, user, loadingUser } = this.props.auth;
         const { story, loading, error, like } = this.props.stories.selectedStory;
 
         let isMyStory = false;
-        if (story && story.author._id === this.props.auth.user._id) {
+        if (!loadingUser && story && story.author._id === this.props.auth.user._id) {
             isMyStory = true;
         }
 
@@ -91,7 +91,7 @@ class StoryDetails extends Component {
         }
         const chapters = story.chapters.map(c => <div key={c._id}>{c.title}</div>)
 
-        const result = story.likes.find( e => e.user === user._id );
+        const result = !loadingUser ? story.likes.find( e => e.user === user._id ) : null;
         console.log("result: " + result)
         let last_comments;
         if (story.last_comments.length > 0) {
