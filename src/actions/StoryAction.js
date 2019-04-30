@@ -237,17 +237,18 @@ export const editStory = (props, tokenFromStorage) => dispatch => {
     console.log("j'édite une histoire")
     console.log(props)
 
+    var postData = JSON.stringify(props);
+
     let formData = new FormData()
     if (props.cover) {
         console.log(props.cover[0])
         formData.append('cover', props.cover[0])
     }
+    formData.append("postData",postData );
 
-    formData.append('title', props.title)
-    formData.append('description', props.description)
-    formData.append('rating', props.rating)
-    formData.append('status', props.status)
-    formData.append('category', props.category)
+    /*for ( var key in props ) {
+        formData.append(key, props[key]);
+    }*/
     console.log(formData)
 
     for(var pair of formData.entries()) {
@@ -261,8 +262,7 @@ export const editStory = (props, tokenFromStorage) => dispatch => {
         data: formData,
         url: `${ROOT_URL}/edit/${props._id}`,
         headers: {
-            'x-access-token': tokenFromStorage,
-            'Content-Type' : "multipart/form-data"
+            'x-access-token': tokenFromStorage
         }
     })
         .then((response) => {

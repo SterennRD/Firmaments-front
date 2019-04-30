@@ -20,7 +20,7 @@ class Like extends Component {
         return (
             <div>
                 { faved !== -1 ? 'vous aimez' : 'vous aimez pas'}
-                <button id={story._id} onClick={(e) => this.handleLike(e.target.id)}>Aimer <i className="fa fa-heart"></i></button>
+                <button id={story._id} onClick={(e) => this.handleLike(e.target.id)}>Aimer <i id={story._id} className="fa fa-heart"></i></button>
             </div>
         );
     }

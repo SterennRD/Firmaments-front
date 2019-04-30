@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link, Route} from "react-router-dom";
 import Like from "../../containers/LikeContainer";
 import moment from "moment/min/moment-with-locales.min";
-
+const ROOT_URL = window.location.href.indexOf('localhost') > 0 ? 'http://localhost:3000/images/uploads/' : '/images/uploads/';
 class StoryDetails extends Component {
 
     constructor(props) {
@@ -51,7 +51,7 @@ class StoryDetails extends Component {
         const { story, loading, error, like } = this.props.stories.selectedStory;
 
         let isMyStory = false;
-        if (!loadingUser && story && story.author._id === this.props.auth.user._id) {
+        if (isAuthenticated && story && story.author._id === this.props.auth.user._id) {
             isMyStory = true;
         }
 
@@ -91,7 +91,7 @@ class StoryDetails extends Component {
         }
         const chapters = story.chapters.map(c => <div key={c._id}>{c.title}</div>)
 
-        const result = !loadingUser ? story.likes.find( e => e.user === user._id ) : null;
+        const result = isAuthenticated ? story.likes.find( e => e.user === user._id ) : null;
         console.log("result: " + result)
         let last_comments;
         if (story.last_comments.length > 0) {
@@ -106,6 +106,7 @@ class StoryDetails extends Component {
         return (
             <div>
                 Les détails
+                { story.cover ? <img src={ROOT_URL + story.cover} className="w-25"/> : <div>Pas d'image</div>}
                 <div>{isAuthenticated && isMyStory ? edit : ''}</div>
                 <button onClick={this.props.history.goBack}>Retour</button>
                 <Like {...this.props}/>

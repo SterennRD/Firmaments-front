@@ -13,6 +13,7 @@ const renderWysiwyg = ({ input, label, placeholder, type, meta: { touched, error
 
             <Editor
                 {...input}
+                onBlur={null}
                 text={input.value}
                 options={{ placeholder: placeHolder,
                     toolbar: {
