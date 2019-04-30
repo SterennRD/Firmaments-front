@@ -44,9 +44,10 @@ export const followUser = (id, follow, tokenFromStorage) => {
             }
         })
             .then(function(response) {
+                console.log("FOLLOW")
                 console.log(response)
                 if (response.status === 200){
-                    dispatch({type: FOLLOW_USER_SUCCESS, payload: response.data.following})
+                    dispatch({type: FOLLOW_USER_SUCCESS, payload: response.data})
                 } else {
                 }
             })

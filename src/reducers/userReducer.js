@@ -7,7 +7,7 @@ import {
 const INITIAL_STATE = {
     user: null, status:null, error:null, loading: false, isAuthenticated: false,
     selectedUser: {user: null, status:null, error:null, loading: false},
-    followedUsers: { users: [], loading: false, error: null}
+    followedUsers: { loading: false, error: null}
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -34,7 +34,7 @@ export default function(state = INITIAL_STATE, action) {
         case FOLLOW_USER:
             return { ...state, followedUsers: {...state.followedUsers, loading: true}}
         case FOLLOW_USER_SUCCESS:
-            return {...state, user: {...state.user, following: action.payload}, followedUsers: {user: action.payload, loading: false, error: null}}
+            return {...state, user: {...state.user, following: action.payload.user}, selectedUser: {...state.selectedUser, user: { ...state.selectedUser.user, followers: action.payload.followersList}}, followedUsers: {loading: false, error: null}}
 
         default:
             return state;

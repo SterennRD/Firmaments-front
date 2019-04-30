@@ -12,9 +12,6 @@ const mapDispatchToProps = (dispatch) => {
         },
         resetMe: () => {
             dispatch(resetSelectedUser());
-        },
-        followUser: (id, follow, token) => {
-            dispatch(followUser(id, follow, token))
         }
     }
 };

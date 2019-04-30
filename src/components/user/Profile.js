@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import FollowButton from "./FollowButton";
+import FollowButton from "../../containers/FollowContainer";
 
 class Profile extends Component {
     fetchData(id) {
@@ -23,13 +23,11 @@ class Profile extends Component {
         const currentUser = this.props.auth.user;
         const { user, loading, error } = this.props.user.selectedUser;
         let isMyProfile = false;
-        let faved;
 
         if (user && currentUser) {
             if ( this.props.auth.user._id === user._id ) {
                 isMyProfile = true;
             }
-            faved = currentUser.following.findIndex(item => item._id === user._id);
         }
 
         if (loading) {
@@ -42,7 +40,6 @@ class Profile extends Component {
 
         return (
             <div>
-                { faved !== -1 ? 'vous aimez' : 'vous aimez pas'}
                 <h1>{user.username_display}</h1>
                 <h2>@{user.username}</h2>
                 <div>{user.followers.length} followers</div>
