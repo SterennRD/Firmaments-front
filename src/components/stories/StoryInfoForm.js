@@ -12,6 +12,7 @@ import validate from './validate'
 import {status, rating, category} from "./constants";
 
 import {editStory, resetForm} from "../../actions/StoryAction";
+import renderFile from "../forms/renderFile";
 
 //For any field errors upon submission (i.e. not instant check)
 const validateAndCreatePost = (values, dispatch)  => {
@@ -20,9 +21,19 @@ const validateAndCreatePost = (values, dispatch)  => {
         values.category[i].value ? arrCat.push(parseInt(values.category[i].value)) : arrCat.push(parseInt(values.category[i].id))
     }
     const selectedCategory = category.filter( el => arrCat.includes(el.id));
-    const selectedRating = rating.find( el => el.id === parseInt(values.rating));
-    const selectedStatus = status.find( el => el.id === parseInt(values.status));
+    const selectedRating = values.rating.id ? values.rating : rating.find( el => el.id === parseInt(values.rating));
+    const selectedStatus = values.status.id ? values.status : status.find( el => el.id === parseInt(values.status));
     const newValues = {...values, rating: selectedRating, status: selectedStatus};
+
+    // Delete useless values
+    delete newValues.chapters;
+    delete newValues.author;
+    delete newValues.last_comments;
+    delete newValues.nb_likes;
+    delete newValues.nb_comments;
+    delete newValues.nb_favorites;
+    delete newValues.likes;
+
     console.log("ENVOI ENVOI ENVOI")
     console.log(values)
     console.log('les valeurs envoyées')
@@ -197,12 +208,18 @@ class StoryInfoForm extends Component {
                 { this.renderEdit(editStory) }
                 <div><button onClick={this.props.history.goBack}>Go Back</button></div>
                 <h2>{ mode === 'edit' ? edit : 'Create' }</h2>
-                <form onSubmit={ mode === 'edit' ? handleSubmit(validateAndCreatePost) : handleSubmit }>
+                <form onSubmit={ mode === 'edit' ? handleSubmit(validateAndCreatePost) : handleSubmit } encType="multipart/form-data">
                     <Field
                         name="title"
                         type="text"
                         component={ renderField }
                         label="Titre *" />
+                    <Field
+                        name="cover"
+                        type="file"
+                        component={ renderFile }
+                        dataAllowedFileExtensions="jpg png bmp"
+                        label="Couverture" />
                     <Field
                         name="description"
                         component={ renderTextArea }

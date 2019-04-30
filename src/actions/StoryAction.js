@@ -236,15 +236,33 @@ export function resetNewStory() {
 export const editStory = (props, tokenFromStorage) => dispatch => {
     console.log("j'édite une histoire")
     console.log(props)
-    console.log(props._id)
-    console.log(tokenFromStorage)
+
+    let formData = new FormData()
+    if (props.cover) {
+        console.log(props.cover[0])
+        formData.append('cover', props.cover[0])
+    }
+
+    formData.append('title', props.title)
+    formData.append('description', props.description)
+    formData.append('rating', props.rating)
+    formData.append('status', props.status)
+    formData.append('category', props.category)
+    console.log(formData)
+
+    for(var pair of formData.entries()) {
+        console.log(pair[0]+', '+pair[1]);
+    }
+
+
     dispatch({type: EDIT_STORY})
     axios({
         method: 'post',
-        data: props,
+        data: formData,
         url: `${ROOT_URL}/edit/${props._id}`,
         headers: {
-            'x-access-token': tokenFromStorage
+            'x-access-token': tokenFromStorage,
+            'Content-Type' : "multipart/form-data"
         }
     })
         .then((response) => {

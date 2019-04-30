@@ -6,14 +6,15 @@ import Editor from 'react-medium-editor';
 
 const renderWysiwyg = ({ input, label, placeholder, type, meta: { touched, error, invalid, warning } }) => {
 
-    const placeHolder = input.value ? false : { text: placeholder };
+    const placeHolder = input.value !== "" ? false : { text: placeholder };
+
     return ( <div className={`form-group ${touched && invalid ? 'has-error' : ''}`}>
         <label className="control-label">{label}</label>
 
             <Editor
                 {...input}
                 text={input.value}
-                options={{ placeholder:  placeHolder,
+                options={{ placeholder: placeHolder,
                     toolbar: {
                     buttons: [
                         'bold',

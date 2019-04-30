@@ -58,6 +58,7 @@ class Home extends Component {
                             nb_likes={story.nb_likes}
                             nb_favorites={story.nb_favorites}
                             nb_comments={story.nb_comments}
+                            status={story.status.label}
                         />
                     </div>
                 )

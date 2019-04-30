@@ -15,7 +15,7 @@ import StoryAll from "../../containers/StoryAllContainer";
 
 class Story extends Component {
     render() {
-        const { stories } = this.props.stories;
+        const { stories } = this.props;
         return (
             <div>
                 {/* Create a story */}

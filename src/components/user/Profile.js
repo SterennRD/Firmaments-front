@@ -5,6 +5,12 @@ class Profile extends Component {
     fetchData(id) {
         this.props.getUserById(id)
     }
+    componentDidUpdate(prevProps) {
+        if (prevProps.match.params.id !== this.props.match.params.id) {
+            this.fetchData(this.props.match.params.id);
+        }
+    }
+
     componentWillUnmount() {
         this.props.resetMe();
     }
@@ -38,13 +44,15 @@ class Profile extends Component {
         } else if(!user) {
             return <span />
         }
+        const profileImage = <div className="rounded-circle">i</div>
 
         return (
             <div>
                 <h1>{user.username_display}</h1>
                 <h2>@{user.username}</h2>
+                {user.image ? 'image de profil' : profileImage}
                 <div>{user.followers.length} followers</div>
-                <div>{user.following.length} abonnement{user.followers.length > 1 ? 's' : ''}</div>
+                <div>{user.following.length} abonnement{user.following.length > 1 ? 's' : ''}</div>
                 <div>{user.stories.length} histoire{user.stories.length > 1 ? 's' : ''}</div>
                 { isMyProfile ? '' : <FollowButton {...this.props} />}
             </div>
