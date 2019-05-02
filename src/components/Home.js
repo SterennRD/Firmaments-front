@@ -87,6 +87,7 @@ class Home extends Component {
         const modal = <StoryModal
             hideModal={this.hideModal.bind(this)}
             story={this.state.story}
+            auth={this.props.auth}
         />;
 
         return (

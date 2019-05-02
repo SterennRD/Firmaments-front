@@ -1,10 +1,23 @@
 import React, {Component} from 'react';
 import '../style/story-modal.scss';
 import {Link} from "react-router-dom";
+import ReadingListsTooltip from "../../containers/ReadingListsTooltipContainer";
 const ROOT_URL = window.location.href.indexOf('localhost') > 0 ? 'http://localhost:3000/images/uploads/' : '/images/uploads/';
 
 class StoryModal extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showTooltip: false,
+        }
+        this.handleTooltip = this.handleTooltip.bind(this)
+    }
+
+    handleTooltip() {
+        this.setState({ showTooltip: true })
+    }
     render() {
+        const { isAuthenticated } = this.props.auth;
         const {story} = this.props;
         const category = story.category.map(c => <span key={c.label}>{c.label}</span>)
         const cover = story.cover ? <img src={ROOT_URL + story.cover} className="w-25"/> : <div><i className="fas fa-book"></i> </div>;
@@ -21,7 +34,10 @@ class StoryModal extends Component {
                         <p>{story.description}</p>
                         <div>
                             <button>Lire</button>
-                            <button>Ajouter à une liste de lecture</button>
+                            <div onClick={this.handleTooltip} className="btn btn-primary">
+                                Ajouter à une liste de lecture
+                                {isAuthenticated && this.state.showTooltip ? <ReadingListsTooltip id={story._id} /> : null}
+                            </div>
                         </div>
                     </div>
                     <div className="storyModal__info_status">{story.status.label}</div>
