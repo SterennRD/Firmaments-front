@@ -90,7 +90,7 @@ export const addToReadingList = (id, idStory, tokenFromStorage) => dispatch => {
         .then((response) => {
             console.log("add to list", response)
             if (response.status === 200){
-                dispatch({type: ADD_TO_READING_LIST_SUCCESS, payload: response.data.reading_lists})
+                dispatch({type: ADD_TO_READING_LIST_SUCCESS, payload: response.data})
             } else {
                 dispatch({type: ADD_TO_READING_LIST_ERROR, payload: response.data})
             }

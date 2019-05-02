@@ -53,7 +53,7 @@ export default function(state = INITIAL_STATE, action) {
             }
             return {...state, userReadingLists: { ...state.userReadingLists } }
         case ADD_TO_READING_LIST_SUCCESS:
-            return {...state, userReadingLists: { ...state.userReadingLists, readingLists: action.payload }}
+            return {...state, userReadingLists: { ...state.userReadingLists, readingLists: action.payload.user.reading_lists }}
         case ADD_TO_READING_LIST_ERROR:
             return {...state, userReadingLists: { ...state.userReadingLists, error: action.payload }}
 

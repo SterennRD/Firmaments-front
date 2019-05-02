@@ -9,6 +9,7 @@ import {
     VALIDATE_POST_FIELDS, VALIDATE_POST_FIELDS_SUCCESS, VALIDATE_POST_FIELDS_FAILURE, RESET_POST_FIELDS,
     LOAD, EDIT_MODE, EDIT_MODE_RESET, CREATE_MODE,
     LIKE_STORY, LIKE_STORY_SUCCESS, LIKE_STORY_ERROR,
+    ADD_TO_READING_LIST, ADD_TO_READING_LIST_SUCCESS, ADD_TO_READING_LIST_ERROR,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -142,6 +143,24 @@ export default function(state = INITIAL_STATE, action) {
         case LIKE_STORY_ERROR:
             error = action.payload || {message: action.payload.message};
             return {...state, likeList: {...state.likeList, loading: false, error: error}}
+
+        case ADD_TO_READING_LIST_SUCCESS:
+            let newState = state;
+            if (state.storyList.stories) {
+                console.log("je mets à jour l'histoire")
+                console.log(action.payload)
+
+                for (var i in state.storyList.stories) {
+                    if (state.storyList.stories[i]._id == action.payload.story._id) {
+                        state.storyList.stories[i].nb_favorites = action.payload.story.nb_favorites;
+                        break
+                    }
+                }
+                console.log(action.payload.story.nb_favorites, state.storyList.stories)
+
+                return {...state, storyList: {...state.storyList, stories: state.storyList.stories}}
+            }
+            return {...state}
 
 
         default:
