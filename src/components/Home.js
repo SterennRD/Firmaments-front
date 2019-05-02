@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
 import {Link} from "react-router-dom";
 import StoryCard from './stories/StoryCard';
+import StoryModal from "./stories/StoryModal";
 
 class Home extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showModal: false,
+            story: {}
+        }
+        this.handleModal = this.handleModal.bind(this)
+    }
+
     fetchData() {
         console.log("je lance le get last stories")
         this.props.getLastStories()
@@ -13,6 +23,11 @@ class Home extends Component {
     componentDidMount() {
         console.log("component monté")
         this.fetchData();
+    }
+
+    handleModal(story) {
+        console.log(story)
+        this.setState({ showModal: true, story: story })
     }
 
     calcAge(dateString) {
@@ -47,7 +62,7 @@ class Home extends Component {
             lastStories = storyList.stories.map((story) => {
 
                 return (
-                    <div key={story._id} className="col-sm-3">
+                    <div key={story._id} className="col-sm-3" onClick={e => this.handleModal(story)}>
                         <StoryCard
                             id={story._id}
                             title={story.title}
@@ -64,10 +79,16 @@ class Home extends Component {
                 )
             })
         }
+
+        const modal = <StoryModal
+            story={this.state.story}
+        />;
+
         return (
             <div>
                 {hello}
                 <h2>Dernières histoires</h2>
+                { this.state.showModal ? modal : null }
                 <div className="container">
                     <div className="row">
                         {lastStories}

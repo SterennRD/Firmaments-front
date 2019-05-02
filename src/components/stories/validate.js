@@ -6,6 +6,9 @@ const validate = values => {
     if (!values.description || values.description.trim() === '') {
         errors.description = 'Entrez une description';
     }
+    if (values.description && values.description.length > 350) {
+        errors.description = 'trop long !';
+    }
     if (!values.category || !values.category.length > 0) {
         errors.category = 'Choisissez une catégorie';
     }

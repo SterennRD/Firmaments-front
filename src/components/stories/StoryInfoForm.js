@@ -202,6 +202,8 @@ class StoryInfoForm extends Component {
         if (editStory.loading) {
             return <div>Chargement... </div>
         }
+        console.log("this.props.form.values.description.trim()")
+        console.log(this.props.form)
         return (
             <div className='container'>
                 { this.renderError(newPost) }

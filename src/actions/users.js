@@ -22,7 +22,9 @@ export const meFromToken = (tokenFromStorage) => (dispatch) => {
         }
     })
         .then(res => {
-            console.log(res)
+            console.log("me from token", res)
+            const { token } = res.data;
+            localStorage.setItem('jwtToken', token);
             dispatch({type: ME_FROM_TOKEN_SUCCESS, payload: res.data.user})
         })
         .catch(err => {
