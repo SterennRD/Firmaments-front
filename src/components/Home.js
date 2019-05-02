@@ -30,6 +30,10 @@ class Home extends Component {
         this.setState({ showModal: true, story: story })
     }
 
+    hideModal() {
+        this.setState({ showModal: false, story: {} })
+    }
+
     calcAge(dateString) {
         var birthday = +new Date(dateString);
         return ((Date.now() - birthday) / (31557600000));
@@ -81,6 +85,7 @@ class Home extends Component {
         }
 
         const modal = <StoryModal
+            hideModal={this.hideModal.bind(this)}
             story={this.state.story}
         />;
 

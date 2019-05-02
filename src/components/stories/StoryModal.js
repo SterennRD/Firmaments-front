@@ -7,6 +7,7 @@ class StoryModal extends Component {
             <div>
                 Modal
                 {story.title}
+                <button onClick={this.props.hideModal}>Cacher</button>
             </div>
         );
     }
