@@ -204,6 +204,11 @@ class StoryInfoForm extends Component {
         }
         console.log("this.props.form.values.description.trim()")
         console.log(this.props.form)
+
+        const maxLength = max => value =>
+            value && value.length > max ? `Must be ${max} characters or less` : undefined
+        const maxLength350 = maxLength(350)
+
         return (
             <div className='container'>
                 { this.renderError(newPost) }
@@ -227,6 +232,8 @@ class StoryInfoForm extends Component {
                         component={ renderTextArea }
                         label="Description *"
                         placeholder="Description de l'histoire"
+                        validate={[ maxLength350 ]}
+                        showMax={350}
                     />
                     <Field
                         name="category"

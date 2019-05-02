@@ -1,11 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 
 
-const renderField = ({ input, label, placeholder, type, meta: { touched, error, invalid, warning } }) => (
+
+const renderField = ({ input, label, placeholder, type, meta: { touched, error, invalid, warning }, showMax}) => (
     <div className={`form-group ${touched && invalid ? 'has-error' : ''}`}>
         <label  className="control-label">{label}</label>
         <div>
             <textarea {...input} className="form-control"  placeholder={placeholder} type={type}/>
+            {showMax ? input.value.length + "/" + showMax : null}
             <div className="help-block">
                 {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
             </div>
