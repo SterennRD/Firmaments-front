@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {Link} from "react-router-dom";
+
 import FollowButton from "../../containers/FollowContainer";
 import StoryCard from "../stories/StoryCard";
 import StoryModal from "../stories/StoryModal";
@@ -96,7 +98,7 @@ class Profile extends Component {
             reading_lists = user.reading_lists.map(rl => (
                 <div key={rl._id} className="border row">
                     {rl.title}
-                    <div>{rl.stories.map(s => <div key={s._id}>{s.title} par {s.author.username_display}</div>)}</div>
+                    <div>{rl.stories.map(s => <div key={s._id}><Link to={"/stories/see/" + s._id}>{s.title}</Link> par {s.author.username_display}</div>)}</div>
                 </div>
             ))
         } else {

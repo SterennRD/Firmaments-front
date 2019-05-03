@@ -6,6 +6,7 @@ import Login from "./Login";
 import Register from "./Register";
 import Story from "../containers/StoryContainer";
 import Profile from "../containers/ProfileContainer";
+import User from "./user/User";
 
 
 class App extends Component {
@@ -21,7 +22,7 @@ class App extends Component {
                     <Route exact path="/register" component={ Register } />
                     <Route exact path="/login" component={ Login } />
                     <Route path="/stories" component={ Story } />
-                    <Route path="/profile/:id" component={ Profile } />
+                    <Route path="/user" component={ User } />
                 </div>
 
             </BrowserRouter>
