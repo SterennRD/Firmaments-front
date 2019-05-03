@@ -53,6 +53,16 @@ export default function(state = INITIAL_STATE, action) {
             }
             return {...state, userReadingLists: { ...state.userReadingLists } }
         case ADD_TO_READING_LIST_SUCCESS:
+            if (state.selectedUser.user) {
+                let newState = state.selectedUser.user
+                for (var i in newState.stories) {
+                    if (newState.stories[i]._id == action.payload.story._id) {
+                        newState.stories[i].nb_favorites = action.payload.story.nb_favorites;
+                        break
+                    }
+                }
+                return {...state, selectedUser: {...state.selectedUser, user: {...state.selectedUser.user, stories: newState.stories}},userReadingLists: { ...state.userReadingLists, readingLists: action.payload.user.reading_lists }}
+            }
             return {...state, userReadingLists: { ...state.userReadingLists, readingLists: action.payload.user.reading_lists }}
         case ADD_TO_READING_LIST_ERROR:
             return {...state, userReadingLists: { ...state.userReadingLists, error: action.payload }}

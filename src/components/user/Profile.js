@@ -1,7 +1,17 @@
 import React, {Component} from 'react';
 import FollowButton from "../../containers/FollowContainer";
+import StoryCard from "../stories/StoryCard";
+import StoryModal from "../stories/StoryModal";
 
 class Profile extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showModal: false,
+            story: {}
+        }
+        this.handleModal = this.handleModal.bind(this)
+    }
     fetchData(id) {
         this.props.getUserById(id)
     }
@@ -20,6 +30,13 @@ class Profile extends Component {
         this.fetchData(id);
     }
 
+    handleModal(story) {
+        console.log(story)
+        this.setState({ showModal: true, story: story })
+    }
+    hideModal() {
+        this.setState({ showModal: false, story: {} })
+    }
 
 
     render() {
@@ -46,15 +63,48 @@ class Profile extends Component {
         }
         const profileImage = <div className="rounded-circle">i</div>
 
+        let stories;
+        if (user.stories.length > 0) {
+            stories = user.stories.map(story => (
+                <div key={story._id} className="col-sm-3" onClick={e => this.handleModal(story)}>
+                    <StoryCard
+                        id={story._id}
+                        title={story.title}
+                        author={story.author}
+                        description={story.description}
+                        rating={story.rating.label}
+                        categories={story.category}
+                        nb_likes={story.nb_likes}
+                        nb_favorites={story.nb_favorites}
+                        nb_comments={story.nb_comments}
+                        status={story.status.label}
+                    />
+                </div>
+            ))
+        }
+        const modal = <StoryModal
+            hideModal={this.hideModal.bind(this)}
+            story={this.state.story}
+            auth={this.props.auth}
+        />;
+
         return (
             <div>
+                { this.state.showModal ? modal : null }
                 <h1>{user.username_display}</h1>
                 <h2>@{user.username}</h2>
                 {user.image ? 'image de profil' : profileImage}
                 <div>{user.followers.length} followers</div>
                 <div>{user.following.length} abonnement{user.following.length > 1 ? 's' : ''}</div>
-                <div>{user.stories.length} histoire{user.stories.length > 1 ? 's' : ''}</div>
+                <div>{user.nb_stories} histoire{user.stories.length > 1 ? 's' : ''}</div>
                 { isMyProfile ? '' : <FollowButton {...this.props} />}
+                <hr />
+                <h2>Histoires de {user.username_display}</h2>
+                <div className="container">
+                    <div className="row">
+                        {stories}
+                    </div>
+                </div>
             </div>
         );
     }
