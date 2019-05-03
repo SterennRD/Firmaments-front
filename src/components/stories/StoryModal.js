@@ -11,10 +11,19 @@ class StoryModal extends Component {
             showTooltip: false,
         }
         this.handleTooltip = this.handleTooltip.bind(this)
+        //this.hideTooltip = this.hideTooltip.bind(this)
     }
 
     handleTooltip() {
-        this.setState({ showTooltip: true })
+        if (this.state.showTooltip) {
+            this.setState({ showTooltip: false })
+        } else {
+            this.setState({ showTooltip: true })
+        }
+    }
+    hideTooltip() {
+        this.setState({ showTooltip: false })
+        console.log("je cache")
     }
     render() {
         const { isAuthenticated } = this.props.auth;
@@ -34,8 +43,8 @@ class StoryModal extends Component {
                         <p>{story.description}</p>
                         <div>
                             <button>Lire</button>
-                            <div onClick={this.handleTooltip} className="btn btn-primary">
-                                Ajouter à une liste de lecture
+                            <div className="btn btn-primary">
+                                <div onClick={this.handleTooltip}>Ajouter à une liste de lecture</div>
                                 {isAuthenticated && this.state.showTooltip ? <ReadingListsTooltip id={story._id} /> : null}
                             </div>
                         </div>
