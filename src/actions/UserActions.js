@@ -103,7 +103,6 @@ export const addToReadingList = (id, idStory, tokenFromStorage) => dispatch => {
 
 export const createReadingList = (data, id, idStory, tokenFromStorage) => dispatch => {
     dispatch({type: CREATE_READING_LIST})
-    console.log("data", data)
     axios({
         method: 'post',
         data: {title:data},
@@ -113,14 +112,13 @@ export const createReadingList = (data, id, idStory, tokenFromStorage) => dispat
         }
     })
         .then((response) => {
-            console.log("new reading list", response)
             if (response.status === 200){
-                //dispatch({type: ADD_TO_READING_LIST_SUCCESS, payload: response.data})
+                dispatch({type: CREATE_READING_LIST_SUCCESS, payload: response.data})
             } else {
-                //dispatch({type: ADD_TO_READING_LIST_ERROR, payload: response.data})
+                dispatch({type: CREATE_READING_LIST_ERROR, payload: response.data})
             }
         })
         .catch((error) => {
-            //dispatch({type: ADD_TO_READING_LIST_ERROR, payload: error})
+            dispatch({type: CREATE_READING_LIST_ERROR, payload: error})
         })
 }

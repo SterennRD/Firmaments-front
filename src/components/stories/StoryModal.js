@@ -43,8 +43,8 @@ class StoryModal extends Component {
                         <p>{story.description}</p>
                         <div>
                             <button>Lire</button>
-                            <div className="btn btn-primary">
-                                <div onClick={this.handleTooltip}>Ajouter à une liste de lecture</div>
+                            <div className="storyModal__rl">
+                                <div className="btn btn-primary" onClick={this.handleTooltip}>Ajouter à une liste de lecture</div>
                                 {isAuthenticated && this.state.showTooltip ? <ReadingListsTooltip id={story._id} /> : null}
                             </div>
                         </div>

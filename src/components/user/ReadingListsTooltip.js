@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {category} from "../stories/constants";
+import "../style/readinglist-tooltip.scss";
 
 class ReadingListsTooltip extends Component {
     constructor(props) {
@@ -44,33 +45,39 @@ class ReadingListsTooltip extends Component {
             const title = this.state.title;
             console.log("créer une liste de lecture")
             this.props.createReadingList(title, id, idStory, token)
+            this.setState({ title: '' })
         } else {
             alert("connectez-vous !")
         }
     }
 
     render() {
-        const { user, userReadingLists } = this.props.user;
+        const { user, userReadingLists, newReadingList } = this.props.user;
         const id = this.props.id;
         let list;
-        if (userReadingLists.readingLists) {
 
+        if (userReadingLists.readingLists) {
             list = userReadingLists.readingLists.map(e => {
                 //e.stories.filter( el => el.includes(id))
                 const inList = e.stories.includes(id)
+                const classList = inList ? 'in-list' : 'not-in-list'
                 const check = <span><i className="fas fa-check"></i></span>
                 const load = <span><i className="fas fa-spinner fa-spin"></i></span>
-                return <div className={ inList ? 'in-list' : 'not-in-list'} id={e._id} onClick={e => this.handleAdd(e.target.id)} key={e._id}>{e.title} { inList ? check : null} {e.loading ? load : null}</div>
+                return <div className={"rl-tooltip__item rl-tooltip__item--" + classList } id={e._id} onClick={e => this.handleAdd(e.target.id)} key={e._id}>{e.title} <span>{ inList ? check : null} {e.loading ? load : null}</span></div>
             })
         }
-        return (
-            <div>
-                Reading list de {user.username}
-                {list}
-                <form onSubmit={this.handleSubmit}>
+
+        const form = (
+            <form onSubmit={this.handleSubmit}>
                 <input type="text" name="title" value={this.state.title} onChange={this.handleChange} placeholder="Créer une liste de lecture" />
                 <button type="submit">Créer</button>
-                </form>
+            </form>
+        );
+
+        return (
+            <div className="rl-tooltip">
+                <div className="rl-tooltip__list">{list}</div>
+                <div className="rl-tooltip__form">{newReadingList.loading ? 'chargement' : form}</div>
             </div>
         );
     }

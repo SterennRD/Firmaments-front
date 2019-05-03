@@ -72,7 +72,8 @@ export default function(state = INITIAL_STATE, action) {
         case CREATE_READING_LIST:
             return {...state, newReadingList: {...state.newReadingList, loading: true}}
         case CREATE_READING_LIST_SUCCESS:
-            return {...state, newReadingList: { loading: false, readingList: action.payload, error: null}}
+            console.log("je passe dans create rl success")
+            return {...state, newReadingList: { loading: false, readingList: action.payload, error: null}, userReadingLists: { ...state.userReadingLists, readingLists: action.payload.reading_lists }}
         case CREATE_READING_LIST_ERROR:
             return {...state, newReadingList: { loading: false, error: action.payload, readingList: null}}
         case RESET_NEW_READING_LIST:
