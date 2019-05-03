@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import ReadingListsTooltip from '../components/user/ReadingListsTooltip';
 import {
     getReadingLists,
-    addToReadingList
+    addToReadingList,
+    createReadingList
 } from "../actions/UserActions";
 import {
 
@@ -17,6 +18,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         addToReadingList: (id, idStory, token) => {
             dispatch(addToReadingList(id, idStory, token))
+        },
+        createReadingList: (data, id, idStory, token) => {
+            dispatch(createReadingList(data, id, idStory, token))
         }
     }
 };

@@ -4,6 +4,7 @@ import {
     FOLLOW_USER, FOLLOW_USER_SUCCESS, FOLLOW_USER_ERROR,
     GET_READING_LISTS, GET_READING_LISTS_SUCCESS, GET_READING_LISTS_ERROR, RESET_READING_LISTS,
     ADD_TO_READING_LIST, ADD_TO_READING_LIST_SUCCESS, ADD_TO_READING_LIST_ERROR,
+    CREATE_READING_LIST, CREATE_READING_LIST_SUCCESS, CREATE_READING_LIST_ERROR, RESET_NEW_READING_LIST,
 } from './types';
 
 const ROOT_URL = window.location.href.indexOf('localhost') > 0 ? 'http://localhost:3000/users' : '/users';
@@ -97,5 +98,29 @@ export const addToReadingList = (id, idStory, tokenFromStorage) => dispatch => {
         })
         .catch((error) => {
             dispatch({type: ADD_TO_READING_LIST_ERROR, payload: error})
+        })
+}
+
+export const createReadingList = (data, id, idStory, tokenFromStorage) => dispatch => {
+    dispatch({type: CREATE_READING_LIST})
+    console.log("data", data)
+    axios({
+        method: 'post',
+        data: {title:data},
+        url: `${ROOT_URL}/new/readinglist/${id}/${idStory}`,
+        headers: {
+            'x-access-token': tokenFromStorage
+        }
+    })
+        .then((response) => {
+            console.log("new reading list", response)
+            if (response.status === 200){
+                //dispatch({type: ADD_TO_READING_LIST_SUCCESS, payload: response.data})
+            } else {
+                //dispatch({type: ADD_TO_READING_LIST_ERROR, payload: response.data})
+            }
+        })
+        .catch((error) => {
+            //dispatch({type: ADD_TO_READING_LIST_ERROR, payload: error})
         })
 }

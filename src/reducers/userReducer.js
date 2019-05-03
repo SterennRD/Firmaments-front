@@ -4,13 +4,15 @@ import {
     FOLLOW_USER, FOLLOW_USER_ERROR, FOLLOW_USER_SUCCESS,
     GET_READING_LISTS, GET_READING_LISTS_SUCCESS, GET_READING_LISTS_ERROR, RESET_READING_LISTS,
     ADD_TO_READING_LIST, ADD_TO_READING_LIST_SUCCESS, ADD_TO_READING_LIST_ERROR,
+    CREATE_READING_LIST, CREATE_READING_LIST_SUCCESS, CREATE_READING_LIST_ERROR, RESET_NEW_READING_LIST,
 } from '../actions/types';
 
 const INITIAL_STATE = {
     user: null, status:null, error:null, loading: false, isAuthenticated: false,
     selectedUser: {user: null, status:null, error:null, loading: false},
     followedUsers: { loading: false, error: null},
-    userReadingLists: { loading: false, error: null, readingLists: []}
+    userReadingLists: { loading: false, error: null, readingLists: []},
+    newReadingList: {loading: false, error: null, readingList: null}
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -66,6 +68,15 @@ export default function(state = INITIAL_STATE, action) {
             return {...state, userReadingLists: { ...state.userReadingLists, readingLists: action.payload.user.reading_lists }}
         case ADD_TO_READING_LIST_ERROR:
             return {...state, userReadingLists: { ...state.userReadingLists, error: action.payload }}
+
+        case CREATE_READING_LIST:
+            return {...state, newReadingList: {...state.newReadingList, loading: true}}
+        case CREATE_READING_LIST_SUCCESS:
+            return {...state, newReadingList: { loading: false, readingList: action.payload, error: null}}
+        case CREATE_READING_LIST_ERROR:
+            return {...state, newReadingList: { loading: false, error: action.payload, readingList: null}}
+        case RESET_NEW_READING_LIST:
+            return {...state, newReadingList: { loading: false, error: null, readingList: null}}
 
         default:
             return state;

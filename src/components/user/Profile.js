@@ -81,12 +81,27 @@ class Profile extends Component {
                     />
                 </div>
             ))
+        } else {
+            stories = <div>Pas d'histoires !</div>
         }
+
         const modal = <StoryModal
             hideModal={this.hideModal.bind(this)}
             story={this.state.story}
             auth={this.props.auth}
         />;
+
+        let reading_lists;
+        if (user.reading_lists.length > 0) {
+            reading_lists = user.reading_lists.map(rl => (
+                <div key={rl._id} className="border row">
+                    {rl.title}
+                    <div>{rl.stories.map(s => <div key={s._id}>{s.title} par {s.author.username_display}</div>)}</div>
+                </div>
+            ))
+        } else {
+            reading_lists = <div>Pas d'histoires !</div>
+        }
 
         return (
             <div>
@@ -105,6 +120,10 @@ class Profile extends Component {
                         {stories}
                     </div>
                 </div>
+                <hr />
+                <h2>Listes de lectures de {user.username_display}</h2>
+                {user.nb_readinglists} listes de lecture
+                <div className="container">{reading_lists}</div>
             </div>
         );
     }
