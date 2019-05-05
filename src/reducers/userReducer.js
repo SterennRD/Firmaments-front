@@ -3,6 +3,7 @@ import {
     ME_FROM_TOKEN, ME_FROM_TOKEN_SUCCESS, ME_FROM_TOKEN_FAILURE, RESET_TOKEN,
     FOLLOW_USER, FOLLOW_USER_ERROR, FOLLOW_USER_SUCCESS,
     GET_READING_LISTS, GET_READING_LISTS_SUCCESS, GET_READING_LISTS_ERROR, RESET_READING_LISTS,
+    GET_READING_LIST, GET_READING_LIST_SUCCESS, GET_READING_LIST_ERROR, RESET_READING_LIST,
     ADD_TO_READING_LIST, ADD_TO_READING_LIST_SUCCESS, ADD_TO_READING_LIST_ERROR,
     CREATE_READING_LIST, CREATE_READING_LIST_SUCCESS, CREATE_READING_LIST_ERROR, RESET_NEW_READING_LIST,
 } from '../actions/types';
@@ -12,6 +13,7 @@ const INITIAL_STATE = {
     selectedUser: {user: null, status:null, error:null, loading: false},
     followedUsers: { loading: false, error: null},
     userReadingLists: { loading: false, error: null, readingLists: []},
+    selectedReadingList: { loading: false, error: null, readingList: null},
     newReadingList: {loading: false, error: null, readingList: null}
 };
 
@@ -47,6 +49,13 @@ export default function(state = INITIAL_STATE, action) {
             return {...state, userReadingLists: {...state.userReadingLists, loading: true}}
         case GET_READING_LISTS_SUCCESS:
             return {...state, userReadingLists: { readingLists: action.payload, loading: false, error: null}}
+
+        case GET_READING_LIST:
+            return {...state, selectedReadingList: {...state.selectedReadingList, loading: true}}
+        case GET_READING_LIST_SUCCESS:
+            return {...state, selectedReadingList: { loading: false, error: null, readingList: action.payload}}
+        case RESET_READING_LIST:
+            return {...state, selectedReadingList: { loading: false, error: null, readingList: null }}
 
         case ADD_TO_READING_LIST:
             for (var i in state.userReadingLists.readingLists) {

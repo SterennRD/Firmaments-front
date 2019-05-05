@@ -3,6 +3,7 @@ import {
     GET_USER_BY_ID, GET_USER_SUCCESS, GET_USER_ERROR, RESET_SELECTED_USER,
     FOLLOW_USER, FOLLOW_USER_SUCCESS, FOLLOW_USER_ERROR,
     GET_READING_LISTS, GET_READING_LISTS_SUCCESS, GET_READING_LISTS_ERROR, RESET_READING_LISTS,
+    GET_READING_LIST, GET_READING_LIST_SUCCESS, GET_READING_LIST_ERROR, RESET_READING_LIST,
     ADD_TO_READING_LIST, ADD_TO_READING_LIST_SUCCESS, ADD_TO_READING_LIST_ERROR,
     CREATE_READING_LIST, CREATE_READING_LIST_SUCCESS, CREATE_READING_LIST_ERROR, RESET_NEW_READING_LIST,
 } from './types';
@@ -122,3 +123,29 @@ export const createReadingList = (data, id, idStory, tokenFromStorage) => dispat
             dispatch({type: CREATE_READING_LIST_ERROR, payload: error})
         })
 }
+
+export const getReadingList = (id) => {
+
+    return function(dispatch) {
+        dispatch({type: GET_READING_LIST});
+        axios({
+            method: 'get',
+            url: `${ROOT_URL}/reading-lists/details/${id}`,
+        })
+            .then(function(response) {
+                console.log("get reading list", response)
+                if (response.status === 200){
+                    dispatch({type: GET_READING_LIST_SUCCESS, payload: response.data})
+                } else {
+                }
+            })
+            .catch(function(error) {
+            })
+    }
+};
+
+export function resetSelectedReadingList() {
+    return {
+        type: RESET_READING_LIST
+    }
+};

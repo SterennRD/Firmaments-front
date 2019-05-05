@@ -98,7 +98,7 @@ class Profile extends Component {
             reading_lists = user.reading_lists.map(rl => (
                 <div key={rl._id} className="border row">
                     {/*<Link onClick={() => this.props.history.push('/reading-lists/' + rl._id)}>{rl.title}</Link>*/}
-                    <Link to={"/reading-lists/" + rl._id}>{rl.title}</Link>
+                    <Link to={"/user/reading-list/" + rl._id}>{rl.title}</Link>
                     <div>{rl.stories.map(s => <div key={s._id}><Link to={"/stories/see/" + s._id}>{s.title}</Link> par {s.author.username_display}</div>)}</div>
                 </div>
             ))
