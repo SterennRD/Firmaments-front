@@ -7,7 +7,19 @@ class User extends Component {
         return (
             <div>
                 {/* See profile */}
-                <Route path={this.props.match.url + '/:id'} component={ Profile } />
+                <Route exact path={this.props.match.url + '/profile/:id'}
+                       render={ (props) => <Profile
+                           id={props.match.params.id}
+                       /> } />
+
+                {/* See all stories */}
+                <Route path={this.props.match.url + '/profile/:id/stories'} component={ Profile } />
+
+                {/* See all reading lists */}
+                <Route path={this.props.match.url + '/reading-lists/:id'} component={ Profile } />
+
+                {/* See reading list */}
+                <Route path={this.props.match.url + '/reading-lists/:id'} component={ Profile } />
             </div>
         );
     }

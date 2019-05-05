@@ -1,5 +1,5 @@
 import {
-    GET_USER_BY_ID, GET_USER_SUCCESS, GET_USER_ERROR,
+    GET_USER_BY_ID, GET_USER_SUCCESS, GET_USER_ERROR, RESET_SELECTED_USER,
     ME_FROM_TOKEN, ME_FROM_TOKEN_SUCCESS, ME_FROM_TOKEN_FAILURE, RESET_TOKEN,
     FOLLOW_USER, FOLLOW_USER_ERROR, FOLLOW_USER_SUCCESS,
     GET_READING_LISTS, GET_READING_LISTS_SUCCESS, GET_READING_LISTS_ERROR, RESET_READING_LISTS,
@@ -25,6 +25,8 @@ export default function(state = INITIAL_STATE, action) {
             return {...state, selectedUser: {loading: false, user: action.payload, error: null}}
         case GET_USER_ERROR:
             return {...state, selectedUser: {loading: false, error: action.payload, user: null}}
+        case RESET_SELECTED_USER:
+            return {...state, selectedUser: {loading: false, error: null, user: null}}
 
         case ME_FROM_TOKEN:// loading currentUser("me") from jwttoken in local/session storage storage,
             return { ...state, user: null, status:'storage', error:null, loading: true};

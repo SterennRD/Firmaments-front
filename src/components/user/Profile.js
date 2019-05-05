@@ -18,8 +18,8 @@ class Profile extends Component {
         this.props.getUserById(id)
     }
     componentDidUpdate(prevProps) {
-        if (prevProps.match.params.id !== this.props.match.params.id) {
-            this.fetchData(this.props.match.params.id);
+        if (prevProps.id !== this.props.id) {
+            this.fetchData(this.props.id);
         }
     }
 
@@ -28,7 +28,7 @@ class Profile extends Component {
     }
     componentDidMount() {
 
-        const id =this.props.match.params.id;
+        const id =this.props.id;
         this.fetchData(id);
     }
 
@@ -63,12 +63,12 @@ class Profile extends Component {
         } else if(!user) {
             return <span />
         }
-        const profileImage = <div className="rounded-circle">i</div>
+        const profileImage = <div className="rounded-circle"><i className="fas fa-user"></i></div>
 
         let stories;
         if (user.stories.length > 0) {
             stories = user.stories.map(story => (
-                <div key={story._id} className="col-sm-3" onClick={e => this.handleModal(story)}>
+                <div key={story._id} className="col-sm-4" onClick={e => this.handleModal(story)}>
                     <StoryCard
                         id={story._id}
                         title={story.title}
@@ -94,10 +94,11 @@ class Profile extends Component {
         />;
 
         let reading_lists;
-        if (user.reading_lists.length > 0) {
+        if (user.reading_lists) {
             reading_lists = user.reading_lists.map(rl => (
                 <div key={rl._id} className="border row">
-                    {rl.title}
+                    {/*<Link onClick={() => this.props.history.push('/reading-lists/' + rl._id)}>{rl.title}</Link>*/}
+                    <Link to={"/reading-lists/" + rl._id}>{rl.title}</Link>
                     <div>{rl.stories.map(s => <div key={s._id}><Link to={"/stories/see/" + s._id}>{s.title}</Link> par {s.author.username_display}</div>)}</div>
                 </div>
             ))
@@ -113,7 +114,7 @@ class Profile extends Component {
                 {user.image ? 'image de profil' : profileImage}
                 <div>{user.followers.length} followers</div>
                 <div>{user.following.length} abonnement{user.following.length > 1 ? 's' : ''}</div>
-                <div>{user.nb_stories} histoire{user.stories.length > 1 ? 's' : ''}</div>
+                <div>{user.nb_stories} histoire{user.nb_stories > 1 ? 's' : ''}</div>
                 { isMyProfile ? '' : <FollowButton {...this.props} />}
                 <hr />
                 <h2>Histoires de {user.username_display}</h2>
@@ -121,6 +122,7 @@ class Profile extends Component {
                     <div className="row">
                         {stories}
                     </div>
+                    {user.nb_stories > 6 ? <Link to={"/profile/" + user._id + "/stories"}>Voir plus</Link> : null}
                 </div>
                 <hr />
                 <h2>Listes de lectures de {user.username_display}</h2>

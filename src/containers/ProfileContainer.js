@@ -11,6 +11,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(getUserById(id));
         },
         resetMe: () => {
+            console.log("je reset l'user")
             dispatch(resetSelectedUser());
         }
     }
