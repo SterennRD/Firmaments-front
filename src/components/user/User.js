@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link, Route} from "react-router-dom";
 import Profile from "../../containers/ProfileContainer";
 import ReadingListDetail from "../../containers/ReadingListDetailContainer";
+import ReadingListForm from "../../containers/ReadingListFormContainer";
 
 class User extends Component {
     render() {
@@ -18,6 +19,9 @@ class User extends Component {
 
                 {/* See reading list */}
                 <Route path={this.props.match.url + '/reading-list/:id'} component={ ReadingListDetail } />
+
+                {/* Edit reading list */}
+                <Route path={this.props.match.url + '/reading-list/:id/edit'} component={ ReadingListForm } />
             </div>
         );
     }

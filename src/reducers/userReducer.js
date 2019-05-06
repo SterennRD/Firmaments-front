@@ -14,7 +14,8 @@ const INITIAL_STATE = {
     followedUsers: { loading: false, error: null},
     userReadingLists: { loading: false, error: null, readingLists: []},
     selectedReadingList: { loading: false, error: null, readingList: null},
-    newReadingList: {loading: false, error: null, readingList: null}
+    newReadingList: {loading: false, error: null, readingList: null},
+    editReadingList: {loading: false, error: null, readingList: null}
 };
 
 export default function(state = INITIAL_STATE, action) {

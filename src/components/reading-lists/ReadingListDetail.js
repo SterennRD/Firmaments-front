@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {Link} from "react-router-dom";
+
 import StoryCard from "../stories/StoryCard";
 import StoryModal from "../stories/StoryModal";
 
@@ -31,6 +33,13 @@ class ReadingListDetail extends Component {
     render() {
         console.log("rl", this.props)
         const { readingList, loading, error } = this.props.user.selectedReadingList;
+        let isMyRl = false;
+
+        if (this.props.auth.isAuthenticated) {
+            if ( this.props.auth.user._id === readingList.owner ) {
+                isMyRl = true;
+            }
+        }
 
         let stories;
         if (readingList) {
@@ -67,6 +76,7 @@ class ReadingListDetail extends Component {
         />;
         return (
             <div>
+                { isMyRl ? <Link to={this.props.match.url + "/edit"}>éditer</Link> : null }
                 { this.state.showModal ? modal : null }
                 <h1>{ readingList.title }</h1>
                 <h2>{readingList.stories.length} histoire{readingList.stories.length > 1 ? 's' : null}</h2>
