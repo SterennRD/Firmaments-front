@@ -37,12 +37,12 @@ class StoryModal extends Component {
                     <div className="storyModal__cover">{cover}</div>
                     <div className="storyModal__info">
                         <div className="storyModal__stats">{story.nb_likes} <i className="fas fa-heart"></i> {story.nb_favorites} <i className="fas fa-star"></i> {story.nb_comments} <i className="fas fa-comment"></i></div>
-                        <h2>{story.title} <span className="badge badge-primary">{story.rating.label}</span></h2>
-                        <div>Par {story.author.username_display}</div>
+                        <h2><Link to={"/stories/see/" + story._id}>{story.title}</Link> <span className="badge badge-primary">{story.rating.label}</span></h2>
+                        <div>Par <Link to={"/user/profile/" + story.author._id}>{story.author.username_display}</Link></div>
                         <div>{category}</div>
                         <p>{story.description}</p>
                         <div>
-                            <button>Lire</button>
+                            <Link to={"/stories/see/" + story._id} className="btn btn-primary">Lire</Link>
                             <div className="storyModal__rl">
                                 <div className="btn btn-primary" onClick={this.handleTooltip}>Ajouter à une liste de lecture</div>
                                 {isAuthenticated && this.state.showTooltip ? <ReadingListsTooltip id={story._id} /> : null}
