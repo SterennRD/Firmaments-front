@@ -24,6 +24,7 @@ export default function(state = INITIAL_STATE, action) {
         case GET_USER_BY_ID:
             return {...state, selectedUser: { ...state.selectedUser, loading: true}}
         case GET_USER_SUCCESS:
+            console.log("get user success", action.payload)
             return {...state, selectedUser: {loading: false, user: action.payload, error: null}}
         case GET_USER_ERROR:
             return {...state, selectedUser: {loading: false, error: action.payload, user: null}}
@@ -66,7 +67,7 @@ export default function(state = INITIAL_STATE, action) {
             }
             return {...state, userReadingLists: { ...state.userReadingLists } }
         case ADD_TO_READING_LIST_SUCCESS:
-            if (state.selectedUser.user) {
+            /*if (state.selectedUser.user) {
                 let newState = state.selectedUser.user
                 for (var i in newState.stories) {
                     if (newState.stories[i]._id == action.payload.story._id) {
@@ -75,7 +76,16 @@ export default function(state = INITIAL_STATE, action) {
                     }
                 }
                 return {...state, selectedUser: {...state.selectedUser, user: {...state.selectedUser.user, stories: newState.stories}},userReadingLists: { ...state.userReadingLists, readingLists: action.payload.user.reading_lists }}
+            }*/
+            let newState = state.userReadingLists.readingLists
+            for (var i in newState.stories) {
+                if (newState.stories[i]._id == action.payload.story._id) {
+                    newState.stories[i].nb_favorites = action.payload.story.nb_favorites;
+                    break
+                }
             }
+            console.log("avant", action.payload)
+            console.log("après",newState)
             return {...state, userReadingLists: { ...state.userReadingLists, readingLists: action.payload.user.reading_lists }}
         case ADD_TO_READING_LIST_ERROR:
             return {...state, userReadingLists: { ...state.userReadingLists, error: action.payload }}

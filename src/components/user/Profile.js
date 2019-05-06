@@ -28,7 +28,7 @@ class Profile extends Component {
     }
     componentDidMount() {
 
-        const id =this.props.id;
+        const id =this.props.match.params.id;
         this.fetchData(id);
     }
 
@@ -99,7 +99,7 @@ class Profile extends Component {
                 <div key={rl._id} className="border row">
                     {/*<Link onClick={() => this.props.history.push('/reading-lists/' + rl._id)}>{rl.title}</Link>*/}
                     <Link to={"/user/reading-list/" + rl._id}>{rl.title}</Link>
-                    <div>{rl.stories.map(s => <div key={s._id}><Link to={"/stories/see/" + s._id}>{s.title}</Link> par {s.author.username_display}</div>)}</div>
+                    <div>{rl.stories ? rl.stories.map(s => <div key={s._id}><Link to={"/stories/see/" + s._id}>{s.title}</Link> par {s.author.username_display}</div>) : null}</div>
                 </div>
             ))
         } else {

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import StoryCard from "../stories/StoryCard";
+import StoryModal from "../stories/StoryModal";
 
 class ReadingListDetail extends Component {
     constructor(props) {
@@ -58,11 +59,22 @@ class ReadingListDetail extends Component {
         } else if(!readingList) {
             return <span />
         }
+
+        const modal = <StoryModal
+            hideModal={this.hideModal.bind(this)}
+            story={this.state.story}
+            auth={this.props.auth}
+        />;
         return (
             <div>
+                { this.state.showModal ? modal : null }
                 <h1>{ readingList.title }</h1>
                 <h2>{readingList.stories.length} histoire{readingList.stories.length > 1 ? 's' : null}</h2>
-                {stories}
+                <div className="container">
+                    <div className="row">
+                        {stories}
+                    </div>
+                </div>
             </div>
         );
     }
