@@ -26,7 +26,6 @@ class ReadingListsTooltip extends Component {
 
     handleChange(e) {
         this.setState({[e.target.name]: e.target.value})
-        console.log(this.state.title)
     }
 
     handleAdd(id) {
@@ -43,7 +42,6 @@ class ReadingListsTooltip extends Component {
             const idStory = this.props.id;
             const token = localStorage.getItem('jwtToken');
             const title = this.state.title;
-            console.log("créer une liste de lecture")
             this.props.createReadingList(title, id, idStory, token)
             this.setState({ title: '' })
         } else {
@@ -59,7 +57,7 @@ class ReadingListsTooltip extends Component {
         if (userReadingLists.readingLists) {
             list = userReadingLists.readingLists.map(e => {
                 //e.stories.filter( el => el.includes(id))
-                const inList = e.stories.includes(id)
+                const inList = e.stories.some(e => e._id === id)
                 const classList = inList ? 'in-list' : 'not-in-list'
                 const check = <span><i className="fas fa-check"></i></span>
                 const load = <span><i className="fas fa-spinner fa-spin"></i></span>

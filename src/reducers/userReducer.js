@@ -78,23 +78,38 @@ export default function(state = INITIAL_STATE, action) {
                 return {...state, selectedUser: {...state.selectedUser, user: {...state.selectedUser.user, stories: newState.stories}},userReadingLists: { ...state.userReadingLists, readingLists: action.payload.user.reading_lists }}
             }*/
             let newState = state.userReadingLists.readingLists
-            for (var i in newState.stories) {
-                if (newState.stories[i]._id == action.payload.story._id) {
-                    newState.stories[i].nb_favorites = action.payload.story.nb_favorites;
+            for (let i = 0; i < newState.length; i++) {
+                console.log(newState[i]._id)
+                console.log("action", action.payload.user._id)
+                if (newState[i]._id == action.payload.user._id) {
+                    newState[i] = action.payload.user
                     break
                 }
             }
-            console.log("avant", action.payload)
+            console.log("données reçues", action.payload)
+            console.log("avant", state.userReadingLists.readingLists)
             console.log("après",newState)
-            return {...state, userReadingLists: { ...state.userReadingLists, readingLists: action.payload.user.reading_lists }}
+            if (state.selectedReadingList.readingList.stories) {
+                for (var i in state.selectedReadingList.readingList.stories) {
+                    if (state.selectedReadingList.readingList.stories[i]._id == action.payload.story._id) {
+                        state.selectedReadingList.readingList.stories[i].nb_favorites = action.payload.story.nb_favorites;
+                        break
+                    }
+                }
+                return {...state, selectedReadingList: {...state.selectedReadingList, readingList: {...state.selectedReadingList.readingList, stories: state.selectedReadingList.readingList.stories}}, userReadingLists: { ...state.userReadingLists, readingLists: newState }}
+            }
+
+            return {...state, userReadingLists: { ...state.userReadingLists, readingLists: newState }}
         case ADD_TO_READING_LIST_ERROR:
             return {...state, userReadingLists: { ...state.userReadingLists, error: action.payload }}
 
         case CREATE_READING_LIST:
             return {...state, newReadingList: {...state.newReadingList, loading: true}}
         case CREATE_READING_LIST_SUCCESS:
-            console.log("je passe dans create rl success")
-            return {...state, newReadingList: { loading: false, readingList: action.payload, error: null}, userReadingLists: { ...state.userReadingLists, readingLists: action.payload.reading_lists }}
+            console.log("je passe dans create rl success", action.payload)
+            newState = state.userReadingLists
+            newState.readingLists.push(action.payload.readingList)
+            return {...state, newReadingList: { loading: false, readingList: action.payload, error: null}, userReadingLists: { ...state.userReadingLists, newState }}
         case CREATE_READING_LIST_ERROR:
             return {...state, newReadingList: { loading: false, error: action.payload, readingList: null}}
         case RESET_NEW_READING_LIST:

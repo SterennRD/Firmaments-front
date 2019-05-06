@@ -113,6 +113,7 @@ export const createReadingList = (data, id, idStory, tokenFromStorage) => dispat
         }
     })
         .then((response) => {
+            console.log("create list", response)
             if (response.status === 200){
                 dispatch({type: CREATE_READING_LIST_SUCCESS, payload: response.data})
             } else {
