@@ -67,16 +67,7 @@ export default function(state = INITIAL_STATE, action) {
             }
             return {...state, userReadingLists: { ...state.userReadingLists } }
         case ADD_TO_READING_LIST_SUCCESS:
-            /*if (state.selectedUser.user) {
-                let newState = state.selectedUser.user
-                for (var i in newState.stories) {
-                    if (newState.stories[i]._id == action.payload.story._id) {
-                        newState.stories[i].nb_favorites = action.payload.story.nb_favorites;
-                        break
-                    }
-                }
-                return {...state, selectedUser: {...state.selectedUser, user: {...state.selectedUser.user, stories: newState.stories}},userReadingLists: { ...state.userReadingLists, readingLists: action.payload.user.reading_lists }}
-            }*/
+
             let newState = state.userReadingLists.readingLists
             for (let i = 0; i < newState.length; i++) {
                 console.log(newState[i]._id)
@@ -86,7 +77,7 @@ export default function(state = INITIAL_STATE, action) {
                     break
                 }
             }
-            console.log("données reçues", action.payload)
+            console.log("données reçues", action.payload.user)
             console.log("avant", state.userReadingLists.readingLists)
             console.log("après",newState)
             if (state.selectedReadingList.readingList.stories) {
@@ -108,7 +99,7 @@ export default function(state = INITIAL_STATE, action) {
         case CREATE_READING_LIST_SUCCESS:
             console.log("je passe dans create rl success", action.payload)
             newState = state.userReadingLists
-            newState.readingLists.push(action.payload.readingList)
+            newState.readingLists.unshift(action.payload.readingList)
             return {...state, newReadingList: { loading: false, readingList: action.payload, error: null}, userReadingLists: { ...state.userReadingLists, newState }}
         case CREATE_READING_LIST_ERROR:
             return {...state, newReadingList: { loading: false, error: action.payload, readingList: null}}

@@ -18,8 +18,8 @@ class Profile extends Component {
         this.props.getUserById(id)
     }
     componentDidUpdate(prevProps) {
-        if (prevProps.id !== this.props.id) {
-            this.fetchData(this.props.id);
+        if (prevProps.match.params.id !== this.props.match.params.id) {
+            this.fetchData(this.props.match.params.id);
         }
     }
 
