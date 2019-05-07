@@ -80,6 +80,7 @@ class ReadingListDetail extends Component {
                 { this.state.showModal ? modal : null }
                 <h1>{ readingList.title }</h1>
                 <h2>{readingList.stories.length} histoire{readingList.stories.length > 1 ? 's' : null}</h2>
+                {readingList.description ? <p>{readingList.description}</p> : null}
                 <div className="container">
                     <div className="row">
                         {stories}

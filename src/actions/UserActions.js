@@ -153,8 +153,25 @@ export function resetSelectedReadingList() {
 };
 
 
-export function editReadingList() {
-    return function (dispatch) {
-        dispatch({type: EDIT_READING_LIST})
+export const editReadingList = (data, token) => {
+
+    return function(dispatch) {
+        dispatch({type: EDIT_READING_LIST});
+        axios({
+            method: 'post',
+            data: data,
+            url: `${ROOT_URL}/reading-lists/details/${data._id}/edit`,
+        })
+            .then(function(response) {
+                console.log("edit reading list", response)
+                if (response.status === 200){
+                    //dispatch({type: EDIT_READING_LIST_SUCCESS, payload: response.data})
+                } else {
+                    //dispatch({type: EDIT_READING_LIST_ERROR, payload: response.data})
+                }
+            })
+            .catch(function(error) {
+                //dispatch({type: EDIT_READING_LIST_ERROR, payload: error})
+            })
     }
 };

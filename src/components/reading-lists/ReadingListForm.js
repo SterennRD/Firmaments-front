@@ -10,10 +10,12 @@ import renderSelect from "../forms/renderSelect";
 import {category, rating, status} from "../stories/constants";
 import {editReadingList} from "../../actions/UserActions";
 import validate from './validate'
+import {editStory} from "../../actions/StoryAction";
 
 const validateAndCreatePost = (values, dispatch)  => {
     console.log(values)
-    editReadingList()
+    const token = localStorage.getItem('jwtToken');
+    return dispatch(editReadingList(values, token))
 };
 
 class ReadingListForm extends Component {

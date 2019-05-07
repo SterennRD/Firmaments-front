@@ -71,38 +71,28 @@ export default function(state = INITIAL_STATE, action) {
         case ADD_TO_READING_LIST_SUCCESS:
             console.log("je passe dans user reducer")
             let newState = state
-            console.log(newState.selectedReadingList.readingList)
-            if (newState.selectedReadingList.readingList) {
-                console.log("une rl est sélextionnée")
-            } else {
-                console.log("pas de rl")
-            }
-            console.log("premier for")
+
             if (newState.selectedReadingList.readingList) {
                 if (newState.selectedReadingList.readingList.stories) {
                     for (var i in newState.selectedReadingList.readingList.stories) {
-                        console.log("j'entre 1er for", newState.selectedReadingList.readingList.stories[i])
                         if (newState.selectedReadingList.readingList.stories[i]._id === action.payload.story._id) {
-                            console.log("correspondance")
                             newState.selectedReadingList.readingList.stories[i].nb_favorites = action.payload.story.nb_favorites;
                             break
                         }
                     }
                 }
             }
-            console.log("deuxième for")
+
             for (let i = 0; i < newState.userReadingLists.readingLists.length; i++) {
                 if (newState.userReadingLists.readingLists[i]._id == action.payload.user._id) {
-                    console.log("j'entre dans le if")
                     newState.userReadingLists.readingLists[i] = action.payload.user
                     break
                 }
             }
-            console.log("dernier for")
+
             if (newState.selectedUser.user) {
                 if (newState.selectedUser.user.stories) {
                     for (var i in newState.selectedUser.user.stories) {
-                        console.log("il y a un user sélectionné")
                         if (newState.selectedUser.user.stories[i]._id == action.payload.story._id) {
                             newState.selectedUser.user.stories[i].nb_favorites = action.payload.story.nb_favorites;
                             break
@@ -110,8 +100,6 @@ export default function(state = INITIAL_STATE, action) {
                     }
                 }
             }
-            console.log("Newstate", newState)
-            console.log("Oldstate", state)
             return {...newState}
             /*if (state.selectedUser.user.stories) {
                         console.log("il y a un user sélectionné")

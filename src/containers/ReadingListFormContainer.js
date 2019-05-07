@@ -10,8 +10,8 @@ const mapDispatchToProps = (dispatch) => {
         getReadingList: (id) => {
             dispatch(getReadingList(id))
         },
-        editReadingList: () => {
-            dispatch(editReadingList())
+        editReadingList: (data, token) => {
+            dispatch(editReadingList(data, token))
         },
         resetMe: () => {
 
