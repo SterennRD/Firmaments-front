@@ -147,26 +147,27 @@ export default function(state = INITIAL_STATE, action) {
             return {...state, likeList: {...state.likeList, loading: false, error: error}}
 
         case ADD_TO_READING_LIST_SUCCESS:
-            console.log("je mets à jour l'histoire")
+            console.log("je mets à jour l'histoire en passant dans story reducer")
+            console.log(action.payload)
             let newState = state;
-            if (state.storyList.stories === []) {
+            if (newState.storyList.stories === []) {
                 console.log("Pas d'histoires")
             }
-            if (state.storyList.stories) {
+            if (newState.storyList.stories) {
                 console.log("je mets à jour l'histoire")
                 console.log(action.payload)
 
-                for (var i in state.storyList.stories) {
-                    if (state.storyList.stories[i]._id == action.payload.story._id) {
-                        state.storyList.stories[i].nb_favorites = action.payload.story.nb_favorites;
+                for (var i in newState.storyList.stories) {
+                    if (newState.storyList.stories[i]._id == action.payload.story._id) {
+                        newState.storyList.stories[i].nb_favorites = action.payload.story.nb_favorites;
                         break
                     }
                 }
-                console.log(action.payload.story.nb_favorites, state.storyList.stories)
+                console.log(action.payload.story.nb_favorites, newState.storyList.stories)
 
-                return {...state, storyList: {...state.storyList, machin: 'truc', stories: state.storyList.stories}}
             }
-            return {...state}
+            newState = {...newState, storyList: {...newState.storyList, machin: 'truc', stories: newState.storyList.stories}}
+            return newState
         case EDIT_READING_LIST:
             console.log("story reducer")
             return {...state}

@@ -154,7 +154,7 @@ export function resetSelectedReadingList() {
 
 
 export function editReadingList() {
-    return {
-        type: EDIT_READING_LIST
+    return function (dispatch) {
+        dispatch({type: EDIT_READING_LIST})
     }
 };
