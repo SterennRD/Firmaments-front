@@ -11,6 +11,7 @@ import {category, rating, status} from "../stories/constants";
 import {editReadingList} from "../../actions/UserActions";
 import validate from './validate'
 import {editStory} from "../../actions/StoryAction";
+import Modal from "../forms/renderModal";
 
 const validateAndCreatePost = (values, dispatch)  => {
     console.log(values)
@@ -19,6 +20,13 @@ const validateAndCreatePost = (values, dispatch)  => {
 };
 
 class ReadingListForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { showModal: false, idModal: null}
+        this.handleDelete = this.handleDelete.bind(this)
+        this.handleDeleteConfirm = this.handleDeleteConfirm.bind(this)
+    }
+
     fetchData(id) {
         this.props.getReadingList(id)
     }
@@ -29,6 +37,20 @@ class ReadingListForm extends Component {
     componentDidMount() {
         let id = this.props.match.params.id;
         this.fetchData(id)
+    }
+    handleDelete(id) {
+        console.log("supprimer rl", id)
+        const token = localStorage.getItem('jwtToken');
+        this.props.deleteReadingList(id, token)
+        this.setState({showModal: false, idModal: null})
+    }
+    handleDeleteConfirm() {
+        console.log("suppr")
+        let id = this.props.match.params.id;
+        this.setState({showModal: true, idModal: id})
+    }
+    handleCancel() {
+        this.setState({showModal: false, idModal: null})
     }
     renderError(newPost) {
         if (newPost && newPost.error && newPost.error.message) {
@@ -71,10 +93,26 @@ class ReadingListForm extends Component {
             value && value.length > max ? `Must be ${max} characters or less` : undefined
         const maxLength350 = maxLength(350)
 
+        const modal = (
+            <Modal
+                title="Confirmer ?"
+                id={this.state.idModal}
+                explanation="Votre histoire sera supprimée"
+                yesButton="Oui, supprimer mon histoire"
+                noButton="Non, je veux garder mon histoire"
+                yesCallback={id => {
+                    this.handleDelete(id);
+                }}
+                noCallback={() => {
+                    this.handleCancel();
+                }}
+            />
+        );
+
         return (
             <div>
-                { this.renderError(editReadingList) }
                 { this.renderEdit(editReadingList) }
+                {this.state.showModal ? modal : null}
                 <h1>Editer</h1>
                 <form onSubmit={handleSubmit(validateAndCreatePost)} encType="multipart/form-data">
                     <Field
@@ -95,11 +133,15 @@ class ReadingListForm extends Component {
                         <Field name="private" id="private" component="input" type="checkbox"/>
                     </div>
                     <div>
-                            <button type="submit">
-                                Modifier
-                            </button>
+                        <button type="submit">
+                            Modifier
+                        </button>
+
                     </div>
                 </form>
+                <button onClick={this.handleDeleteConfirm}>
+                    Supprimer
+                </button>
             </div>
         );
     }

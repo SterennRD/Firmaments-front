@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ReadingListForm from '../components/reading-lists/ReadingListForm';
 import {
-    getReadingList, editReadingList, resetEditReadingList
+    getReadingList, editReadingList, resetEditReadingList, deleteReadingList
 } from "../actions/UserActions";
 
 const mapDispatchToProps = (dispatch) => {
@@ -16,6 +16,9 @@ const mapDispatchToProps = (dispatch) => {
         resetMe: () => {
             dispatch(resetEditReadingList())
         },
+        deleteReadingList: (id, token) => {
+            dispatch(deleteReadingList(id, token))
+        }
     }
 };
 

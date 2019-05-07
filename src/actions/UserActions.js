@@ -7,6 +7,7 @@ import {
     ADD_TO_READING_LIST, ADD_TO_READING_LIST_SUCCESS, ADD_TO_READING_LIST_ERROR,
     CREATE_READING_LIST, CREATE_READING_LIST_SUCCESS, CREATE_READING_LIST_ERROR, RESET_NEW_READING_LIST,
     EDIT_READING_LIST, EDIT_READING_LIST_SUCCESS, EDIT_READING_LIST_ERROR, RESET_EDIT_READING_LIST,
+    DELETE_READING_LIST, DELETE_READING_LIST_SUCCESS, DELETE_READING_LIST_ERROR, RESET_DELETE_READING_LIST,
 } from './types';
 
 const ROOT_URL = window.location.href.indexOf('localhost') > 0 ? 'http://localhost:3000/users' : '/users';
@@ -161,6 +162,9 @@ export const editReadingList = (data, token) => {
             method: 'post',
             data: data,
             url: `${ROOT_URL}/reading-lists/details/${data._id}/edit`,
+            headers: {
+                'x-access-token': token
+            }
         })
             .then(function(response) {
                 console.log("edit reading list", response)
@@ -178,5 +182,30 @@ export const editReadingList = (data, token) => {
 export function resetEditReadingList() {
     return {
         type: RESET_EDIT_READING_LIST
+    }
+};
+
+export const deleteReadingList = (id, token) => {
+
+    return function(dispatch) {
+        dispatch({type: DELETE_READING_LIST});
+        axios({
+            method: 'post',
+            url: `${ROOT_URL}/reading-lists/details/${id}/delete`,
+            headers: {
+                'x-access-token': token
+            }
+        })
+            .then(function(response) {
+                console.log("delete reading list", response)
+                if (response.status === 200){
+                    dispatch({type: DELETE_READING_LIST_SUCCESS, payload: response.data})
+                } else {
+                    dispatch({type: DELETE_READING_LIST_ERROR, payload: response.data})
+                }
+            })
+            .catch(function(error) {
+                dispatch({type: DELETE_READING_LIST_ERROR, payload: error})
+            })
     }
 };
