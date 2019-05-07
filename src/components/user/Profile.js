@@ -93,15 +93,26 @@ class Profile extends Component {
             auth={this.props.auth}
         />;
 
-        let reading_lists;
+        let reading_lists = user.reading_lists;
         if (user.reading_lists) {
-            reading_lists = user.reading_lists.map(rl => (
-                <div key={rl._id} className="border row">
+            let filtered_reading_lists = reading_lists.filter(e => {
+                let result = false;
+                if (e.private === false && !isMyProfile) {
+                    result = true
+                } else if (isMyProfile) {
+                    result = true
+                }
+                return result
+            })
+            reading_lists = filtered_reading_lists.map(rl => (
+                <div key={rl._id} className="border">
                     {/*<Link onClick={() => this.props.history.push('/reading-lists/' + rl._id)}>{rl.title}</Link>*/}
                     <Link to={"/user/reading-list/" + rl._id}>{rl.title}</Link>
+                    {rl.private ? 'privée' : null}
                     <div>{rl.stories ? rl.stories.map(s => <div key={s._id}><Link to={"/stories/see/" + s._id}>{s.title}</Link> par {s.author.username_display}</div>) : null}</div>
                 </div>
-            ))
+            ));
+
         } else {
             reading_lists = <div>Pas d'histoires !</div>
         }
@@ -115,7 +126,7 @@ class Profile extends Component {
                 <div>{user.followers.length} followers</div>
                 <div>{user.following.length} abonnement{user.following.length > 1 ? 's' : ''}</div>
                 <div>{user.nb_stories} histoire{user.nb_stories > 1 ? 's' : ''}</div>
-                { isMyProfile ? '' : <FollowButton {...this.props} />}
+                { isMyProfile ? null : isAuthenticated ? <FollowButton {...this.props} /> : null }
                 <hr />
                 <h2>Histoires de {user.username_display}</h2>
                 <div className="container">
@@ -126,7 +137,7 @@ class Profile extends Component {
                 </div>
                 <hr />
                 <h2>Listes de lectures de {user.username_display}</h2>
-                {user.nb_readinglists} listes de lecture
+                {user.reading_lists ? reading_lists.length : 0} listes de lecture
                 <div className="container">{reading_lists}</div>
             </div>
         );
