@@ -35,7 +35,7 @@ class ReadingListDetail extends Component {
         const { readingList, loading, error } = this.props.user.selectedReadingList;
         let isMyRl = false;
 
-        if (this.props.auth.isAuthenticated) {
+        if (this.props.auth.isAuthenticated && readingList) {
             if ( this.props.auth.user._id === readingList.owner ) {
                 isMyRl = true;
             }

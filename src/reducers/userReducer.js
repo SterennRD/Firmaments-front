@@ -6,6 +6,7 @@ import {
     GET_READING_LIST, GET_READING_LIST_SUCCESS, GET_READING_LIST_ERROR, RESET_READING_LIST,
     ADD_TO_READING_LIST, ADD_TO_READING_LIST_SUCCESS, ADD_TO_READING_LIST_ERROR,
     CREATE_READING_LIST, CREATE_READING_LIST_SUCCESS, CREATE_READING_LIST_ERROR, RESET_NEW_READING_LIST,
+    EDIT_READING_LIST, EDIT_READING_LIST_SUCCESS, EDIT_READING_LIST_ERROR,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -68,20 +69,19 @@ export default function(state = INITIAL_STATE, action) {
             }
             return {...state, userReadingLists: { ...state.userReadingLists } }
         case ADD_TO_READING_LIST_SUCCESS:
-
+            console.log("je passe dans user reducer")
             let newState = state.userReadingLists.readingLists
             for (let i = 0; i < newState.length; i++) {
-                console.log(newState[i]._id)
-                console.log("action", action.payload.user._id)
                 if (newState[i]._id == action.payload.user._id) {
                     newState[i] = action.payload.user
                     break
                 }
             }
-            console.log("données reçues", action.payload.user)
+            /*console.log("données reçues", action.payload.user)
             console.log("avant", state.userReadingLists.readingLists)
-            console.log("après",newState)
+            console.log("après",newState)*/
             if (state.selectedReadingList.readingList.stories) {
+                console.log("il y a une reading list sélectionnée")
                 for (var i in state.selectedReadingList.readingList.stories) {
                     if (state.selectedReadingList.readingList.stories[i]._id == action.payload.story._id) {
                         state.selectedReadingList.readingList.stories[i].nb_favorites = action.payload.story.nb_favorites;
@@ -106,6 +106,13 @@ export default function(state = INITIAL_STATE, action) {
             return {...state, newReadingList: { loading: false, error: action.payload, readingList: null}}
         case RESET_NEW_READING_LIST:
             return {...state, newReadingList: { loading: false, error: null, readingList: null}}
+
+        case EDIT_READING_LIST:
+            return {...state, editReadingList: {...state.editReadingList, loading: true}}
+        case EDIT_READING_LIST_SUCCESS:
+            return {...state, editReadingList: {loading: false, error: null, readingList: action.payload}}
+        case EDIT_READING_LIST_ERROR:
+            return {...state, editReadingList: {loading: false, error: action.payload, readingList: null}}
 
         default:
             return state;

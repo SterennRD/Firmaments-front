@@ -1,4 +1,5 @@
 import {
+
     GET_ALL_STORIES, GET_ALL_STORIES_SUCCESS, GET_ALL_STORIES_ERROR, RESET_ALL_STORIES,
     GET_STORY_FROM_USER, GET_STORY_FROM_USER_SUCCESS, GET_STORY_FROM_USER_ERROR, RESET_STORY_FROM_USER,
     GET_STORY_FROM_ID, GET_STORY_SUCCESS, GET_STORY_ERROR, RESET_SELECTED_STORY,
@@ -9,7 +10,8 @@ import {
     VALIDATE_POST_FIELDS, VALIDATE_POST_FIELDS_SUCCESS, VALIDATE_POST_FIELDS_FAILURE, RESET_POST_FIELDS,
     LOAD, EDIT_MODE, EDIT_MODE_RESET, CREATE_MODE,
     LIKE_STORY, LIKE_STORY_SUCCESS, LIKE_STORY_ERROR,
-    ADD_TO_READING_LIST, ADD_TO_READING_LIST_SUCCESS, ADD_TO_READING_LIST_ERROR,
+    ADD_TO_READING_LIST_SUCCESS,
+    EDIT_READING_LIST
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -145,7 +147,11 @@ export default function(state = INITIAL_STATE, action) {
             return {...state, likeList: {...state.likeList, loading: false, error: error}}
 
         case ADD_TO_READING_LIST_SUCCESS:
+            console.log("je mets à jour l'histoire")
             let newState = state;
+            if (state.storyList.stories === []) {
+                console.log("Pas d'histoires")
+            }
             if (state.storyList.stories) {
                 console.log("je mets à jour l'histoire")
                 console.log(action.payload)
@@ -158,8 +164,11 @@ export default function(state = INITIAL_STATE, action) {
                 }
                 console.log(action.payload.story.nb_favorites, state.storyList.stories)
 
-                return {...state, storyList: {...state.storyList, stories: state.storyList.stories}}
+                return {...state, storyList: {...state.storyList, machin: 'truc', stories: state.storyList.stories}}
             }
+            return {...state}
+        case EDIT_READING_LIST:
+            console.log("story reducer")
             return {...state}
 
 

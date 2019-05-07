@@ -6,6 +6,7 @@ import {
     GET_READING_LIST, GET_READING_LIST_SUCCESS, GET_READING_LIST_ERROR, RESET_READING_LIST,
     ADD_TO_READING_LIST, ADD_TO_READING_LIST_SUCCESS, ADD_TO_READING_LIST_ERROR,
     CREATE_READING_LIST, CREATE_READING_LIST_SUCCESS, CREATE_READING_LIST_ERROR, RESET_NEW_READING_LIST,
+    EDIT_READING_LIST, EDIT_READING_LIST_SUCCESS, EDIT_READING_LIST_ERROR,
 } from './types';
 
 const ROOT_URL = window.location.href.indexOf('localhost') > 0 ? 'http://localhost:3000/users' : '/users';
@@ -148,5 +149,12 @@ export const getReadingList = (id) => {
 export function resetSelectedReadingList() {
     return {
         type: RESET_READING_LIST
+    }
+};
+
+
+export function editReadingList() {
+    return {
+        type: EDIT_READING_LIST
     }
 };

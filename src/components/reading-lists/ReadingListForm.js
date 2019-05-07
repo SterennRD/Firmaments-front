@@ -8,11 +8,12 @@ import renderTextArea from '../forms/renderTextArea';
 import renderFile from "../forms/renderFile";
 import renderSelect from "../forms/renderSelect";
 import {category, rating, status} from "../stories/constants";
-import {editStory} from "../../actions/StoryAction";
+import {editReadingList} from "../../actions/UserActions";
 import validate from './validate'
 
 const validateAndCreatePost = (values, dispatch)  => {
     console.log(values)
+    editReadingList()
 };
 
 class ReadingListForm extends Component {
