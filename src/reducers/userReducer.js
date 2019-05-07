@@ -6,7 +6,7 @@ import {
     GET_READING_LIST, GET_READING_LIST_SUCCESS, GET_READING_LIST_ERROR, RESET_READING_LIST,
     ADD_TO_READING_LIST, ADD_TO_READING_LIST_SUCCESS, ADD_TO_READING_LIST_ERROR,
     CREATE_READING_LIST, CREATE_READING_LIST_SUCCESS, CREATE_READING_LIST_ERROR, RESET_NEW_READING_LIST,
-    EDIT_READING_LIST, EDIT_READING_LIST_SUCCESS, EDIT_READING_LIST_ERROR,
+    EDIT_READING_LIST, EDIT_READING_LIST_SUCCESS, EDIT_READING_LIST_ERROR, RESET_EDIT_READING_LIST,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -232,6 +232,8 @@ export default function(state = INITIAL_STATE, action) {
             return {...state, editReadingList: {loading: false, error: null, readingList: action.payload}}
         case EDIT_READING_LIST_ERROR:
             return {...state, editReadingList: {loading: false, error: action.payload, readingList: null}}
+        case RESET_EDIT_READING_LIST:
+            return {...state, editReadingList: {loading: false, error: null, readingList: null}}
 
         default:
             return state;

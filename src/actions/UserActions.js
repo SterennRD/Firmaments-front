@@ -6,7 +6,7 @@ import {
     GET_READING_LIST, GET_READING_LIST_SUCCESS, GET_READING_LIST_ERROR, RESET_READING_LIST,
     ADD_TO_READING_LIST, ADD_TO_READING_LIST_SUCCESS, ADD_TO_READING_LIST_ERROR,
     CREATE_READING_LIST, CREATE_READING_LIST_SUCCESS, CREATE_READING_LIST_ERROR, RESET_NEW_READING_LIST,
-    EDIT_READING_LIST, EDIT_READING_LIST_SUCCESS, EDIT_READING_LIST_ERROR,
+    EDIT_READING_LIST, EDIT_READING_LIST_SUCCESS, EDIT_READING_LIST_ERROR, RESET_EDIT_READING_LIST,
 } from './types';
 
 const ROOT_URL = window.location.href.indexOf('localhost') > 0 ? 'http://localhost:3000/users' : '/users';
@@ -165,13 +165,18 @@ export const editReadingList = (data, token) => {
             .then(function(response) {
                 console.log("edit reading list", response)
                 if (response.status === 200){
-                    //dispatch({type: EDIT_READING_LIST_SUCCESS, payload: response.data})
+                    dispatch({type: EDIT_READING_LIST_SUCCESS, payload: response.data})
                 } else {
-                    //dispatch({type: EDIT_READING_LIST_ERROR, payload: response.data})
+                    dispatch({type: EDIT_READING_LIST_ERROR, payload: response.data})
                 }
             })
             .catch(function(error) {
-                //dispatch({type: EDIT_READING_LIST_ERROR, payload: error})
+                dispatch({type: EDIT_READING_LIST_ERROR, payload: error})
             })
+    }
+};
+export function resetEditReadingList() {
+    return {
+        type: RESET_EDIT_READING_LIST
     }
 };

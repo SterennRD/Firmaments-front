@@ -22,6 +22,10 @@ class ReadingListForm extends Component {
     fetchData(id) {
         this.props.getReadingList(id)
     }
+    componentWillUnmount() {
+        console.log('DESTRUCTION DU STATE')
+        this.props.resetMe()
+    }
     componentDidMount() {
         let id = this.props.match.params.id;
         this.fetchData(id)
@@ -37,17 +41,21 @@ class ReadingListForm extends Component {
             return <span></span>
         }
     }
-    renderEdit(editStory) {
-        if (editStory && editStory.error && editStory.error.message) {
+    renderEdit(editReadingList) {
+        if (editReadingList && editReadingList.error && editReadingList.error.message) {
             return (
                 <div className="alert alert-danger">
-                    { editStory ? editStory.error.message : '' }
+                    { editReadingList ? editReadingList.error.message : '' }
                 </div>
             );
-        } else if (editStory && editStory.success) {
+        } else if (editReadingList.readingList) {
+            let url = this.props.match.url;
+            url = url.split('/');
+            url = url.splice(0,url.length-1).join('/')
             return (
                 <div className="alert alert-success">
-                    Histoire éditée !
+                    Liste de lecture éditée !
+                    <div><Link to={url} className="btn btn-primary">Retour à la liste de lecture</Link></div>
                 </div>
             );
         } else {

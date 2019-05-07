@@ -18,7 +18,7 @@ class User extends Component {
                 <Route path={this.props.match.url + '/reading-lists/:id'} component={ Profile } />
 
                 {/* See reading list */}
-                <Route path={this.props.match.url + '/reading-list/:id'} component={ ReadingListDetail } />
+                <Route exact path={this.props.match.url + '/reading-list/:id'} component={ ReadingListDetail } />
 
                 {/* Edit reading list */}
                 <Route path={this.props.match.url + '/reading-list/:id/edit'} component={ ReadingListForm } />
