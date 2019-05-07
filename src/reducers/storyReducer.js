@@ -19,6 +19,7 @@ const INITIAL_STATE = {
     postsList: {posts: [], error:null, loading: false},
     storyList: {stories: [], error:null, loading: false},
     newStory:{story:null, error: null, loading: false},
+    storySearch:{stories:[], error: null, loading: false},
     selectedStory:{story:null, error:null, loading: false, like: {loading: false, error: null, likes: []}},
     deletedStory: {story: null, error:null, loading: false},
     editStory: {story: null, error:null, loading: false, success: false},
@@ -30,14 +31,14 @@ export default function(state = INITIAL_STATE, action) {
     switch(action.type) {
 
         case GET_ALL_STORIES:
-            return { ...state, storyList: {...state.stories, loading: true} };
+            return { ...state, storySearch: {...state.stories, loading: true} };
         case GET_ALL_STORIES_SUCCESS:
-            return { ...state, storyList: { stories: action.payload, loading: false, error: null}}
+            return { ...state, storySearch: { stories: action.payload, loading: false, error: null}}
         case GET_ALL_STORIES_ERROR:
             error = action.payload || {message: action.payload.message};
-            return { ...state, storyList: {stories: null, error:error, loading:false}};
+            return { ...state, storySearch: {stories: null, error:error, loading:false}};
         case RESET_ALL_STORIES:
-            return { ...state, storyList: {stories: null, error:null, loading: false}};
+            return { ...state, storySearch: {stories: null, error:null, loading: false}};
 
         case GET_STORY_FROM_USER:
             //console.log(action.payload)
@@ -166,8 +167,20 @@ export default function(state = INITIAL_STATE, action) {
                 console.log(action.payload.story.nb_favorites, newState.storyList.stories)
 
             }
-            newState = {...newState, storyList: {...newState.storyList, machin: 'truc', stories: newState.storyList.stories}}
-            return newState
+            if (newState.storySearch.stories) {
+                console.log("je mets à jour l'histoire dans le search")
+                console.log(action.payload)
+
+                for (var i in newState.storySearch.stories.result) {
+                    if (newState.storySearch.stories.result[i]._id == action.payload.story._id) {
+                        newState.storySearch.stories.result[i].nb_favorites = action.payload.story.nb_favorites;
+                        break
+                    }
+                }
+
+            }
+            //newState = {...newState, storyList: {...newState.storyList, stories: newState.storyList.stories}}
+            return {...newState}
         case EDIT_READING_LIST:
             console.log("story reducer")
             return {...state}
