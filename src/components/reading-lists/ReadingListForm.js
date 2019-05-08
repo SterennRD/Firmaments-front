@@ -87,7 +87,7 @@ class ReadingListForm extends Component {
 
     render() {
         const {handleSubmit, submitting, mode} = this.props;
-        const { selectedReadingList, editReadingList } = this.props.user;
+        const { selectedReadingList, editReadingList, deletedReadingList } = this.props.user;
 
         const maxLength = max => value =>
             value && value.length > max ? `Must be ${max} characters or less` : undefined
@@ -108,6 +108,16 @@ class ReadingListForm extends Component {
                 }}
             />
         );
+
+        if (deletedReadingList.readingList) {
+            const url = this.props.auth.user._id;
+            return (
+                <div>
+                    Liste supprimée !
+                    <Link to={"/user/profile/" + url}>Retour</Link>
+                </div>
+            )
+        }
 
         return (
             <div>
