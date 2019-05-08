@@ -19,6 +19,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => ({
     auth: state.auth,
     chapter: state.chapter,
+    stories: state.stories
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chapter);

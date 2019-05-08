@@ -29,7 +29,7 @@ export default function(state = INITIAL_STATE, action) {
         case GET_CHAPTER_BY_ID:
             return { ...state, loading: true};
         case GET_CHAPTER_SUCCESS:
-            return { ...state, story: action.payload._id, selectedChapter: {...action.payload.selectedChapter, titleChapter: action.payload.selectedChapter.title}, error:null, loading: false};
+            return { ...state, story: action.payload, selectedChapter: {...action.payload.selectedChapter, titleChapter: action.payload.selectedChapter.title}, error:null, loading: false};
         case GET_CHAPTER_ERROR:
             error = action.payload || {message: action.payload.message};//2nd one is network or server down errors
             return { ...state, story: null, selectedChapter: null, error:error, loading:false};
