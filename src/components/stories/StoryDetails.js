@@ -89,7 +89,7 @@ class StoryDetails extends Component {
 
             }
         }
-        const chapters = story.chapters.map(c => <div key={c._id}>{c.title}</div>)
+        const chapters = story.chapters.map(c => <div key={c._id}><Link to={"/stories/" + story._id + "-" + c._id}>{c.title}</Link></div>)
 
         const result = isAuthenticated ? story.likes.find( e => e.user === user._id ) : null;
         console.log("result: " + result)
