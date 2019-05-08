@@ -19,6 +19,7 @@ const INITIAL_STATE = {
     error:null,
     loading: false,
     newChapter:{chapter:null, error: null, loading: false},
+    editChapter:{chapter:null, error: null, loading: false},
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -26,16 +27,10 @@ export default function(state = INITIAL_STATE, action) {
     switch(action.type) {
 
         case GET_CHAPTER_BY_ID:
-            //console.log("Je passe dans get story by id")
-            //console.log(action.payload)
             return { ...state, loading: true};
         case GET_CHAPTER_SUCCESS:
-            console.log("get chapter success")
-            console.log(action.payload)
             return { ...state, story: action.payload._id, selectedChapter: {...action.payload.selectedChapter, titleChapter: action.payload.selectedChapter.title}, error:null, loading: false};
         case GET_CHAPTER_ERROR:
-            console.log("get story error")
-            console.log(action.payload)
             error = action.payload || {message: action.payload.message};//2nd one is network or server down errors
             return { ...state, story: null, selectedChapter: null, error:error, loading:false};
         case RESET_SELECTED_CHAPTER:
@@ -58,16 +53,16 @@ export default function(state = INITIAL_STATE, action) {
         case EDIT_CHAPTER:
             console.log("Je passe dans edit chapter reducer")
             console.log(action.payload)
-            return {...state, loading: true}
+            return {...state, editChapter: {...state.editChapter, loading: true}}
         case EDIT_CHAPTER_SUCCESS:
             console.log("Je passe dans edit story success reducer")
             console.log(action.payload)
-            return { ...state, selectedChapter: {...action.payload, titleChapter: action.payload.title}, error:null, loading: false};
+            return { ...state, editChapter: {loading: false, error: null, chapter: action.payload},selectedChapter: {...action.payload, titleChapter: action.payload.title}};
         case EDIT_CHAPTER_FAILURE:
             error = action.payload || {message: action.payload.message};
-            return { ...state, story: null, selectedChapter: null, error:error, loading:false};
+            return { ...state, editChapter: {loading: false, error: error, chapter: null}};
         case RESET_EDIT_CHAPTER:
-            return { ...state, story: null, selectedChapter: null, error:null, loading: false};
+            return { ...state, story: null, editChapter: {loading: false, error: null, chapter: null}};
 
         default:
             return state;

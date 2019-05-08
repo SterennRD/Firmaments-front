@@ -128,11 +128,23 @@ class ChapterForm extends Component {
         }
     }
 
-    renderError(newPost) {
-        if (newPost && newPost.error && newPost.error.message) {
+    renderEdit(editChapter) {
+        if (editChapter && editChapter.error && editChapter.error.message) {
             return (
                 <div className="alert alert-danger">
-                    { newPost ? newPost.error.message : '' }
+                    { editChapter ? editChapter.error.message : '' }
+                </div>
+            );
+        } else if (editChapter.chapter) {
+            let id = this.props.storyID;
+            if (this.props.storyID === undefined || !this.props.storyID) {
+                id = this.props.location.pathname.split('/')[2];
+            }
+            let url = "/stories/toc/" + id;
+            return (
+                <div className="alert alert-success">
+                    Chapitre édité !
+                    <div><Link to={url} className="btn btn-primary">Retour à la table des matières</Link></div>
                 </div>
             );
         } else {
@@ -174,6 +186,7 @@ class ChapterForm extends Component {
     render() {
         const {handleSubmit, submitting, pristine, previousPage, mode } = this.props;
         const { story } = this.props.stories.selectedStory;
+        const { editChapter } = this.props.chapter;
         console.log("chapter")
         console.log(this.props)
         //console.log(this.props.match.params)
@@ -235,7 +248,7 @@ class ChapterForm extends Component {
 
         return (
             <div className='container'>
-
+                { this.renderEdit(editChapter) }
                 {title}
                 <form onSubmit={submit}>
                     <Field
