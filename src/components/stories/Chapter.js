@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import {generatePath} from 'react-router-dom';
+import moment from "moment/min/moment-with-locales.min";
+import {Link} from "react-router-dom";
+
 
 class Chapter extends Component {
     constructor(props) {
@@ -44,6 +47,7 @@ class Chapter extends Component {
         });
     }
     render() {
+        moment.locale('fr');
         console.log("le chapitre")
         console.log(this.props)
 
@@ -57,7 +61,9 @@ class Chapter extends Component {
                 nbComments = selectedChapter.comments.length
                 comments = selectedChapter.comments.map(c => (
                     <div key={c._id}>
-                        <div>{c.author.username_display}</div>
+                        <div>Par <Link to={"/user/profile/" + c._id}>{c.author.username_display}</Link></div>
+                        <div>{moment(c.created_at).format('LLL')}</div>
+                        <p>{c.content}</p>
                     </div>
                 ))
             }
