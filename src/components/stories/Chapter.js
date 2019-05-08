@@ -51,9 +51,15 @@ class Chapter extends Component {
         const { selectedChapter, loading, error, story } = this.props.chapter;
         let nbComments = '';
         let nbRead = '';
+        let comments;
         if (selectedChapter) {
             if (selectedChapter.comments) {
                 nbComments = selectedChapter.comments.length
+                comments = selectedChapter.comments.map(c => (
+                    <div key={c._id}>
+                        <div>{c.author.username_display}</div>
+                    </div>
+                ))
             }
             if (selectedChapter.read) {
                 nbRead = selectedChapter.read.length
@@ -84,6 +90,9 @@ class Chapter extends Component {
                 <hr />
                 { currentChapter > 0 ? <div onClick={this.handlePrev}>Chapitre précédent</div> : null}
                 { currentChapter + 1 < totalChapters ? <div onClick={this.handleNext}>Chapitre suivant</div> : null}
+                <hr />
+                <h2>Commentaires</h2>
+                {comments}
             </div>
         );
     }
