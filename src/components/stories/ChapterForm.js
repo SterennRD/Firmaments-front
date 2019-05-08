@@ -151,6 +151,28 @@ class ChapterForm extends Component {
             return <span></span>
         }
     }
+    renderNew(newChapter) {
+        if (newChapter && newChapter.error && newChapter.error.message) {
+            return (
+                <div className="alert alert-danger">
+                    { newChapter ? newChapter.error.message : '' }
+                </div>
+            );
+        } else if (newChapter.chapter) {
+            let id = this.props.storyID;
+            if (this.props.storyID === undefined || !this.props.storyID) {
+                id = this.props.location.pathname.split('/')[2];
+            }
+            let url = "/stories/toc/" + id;
+            return (
+                <div className="alert alert-success">
+                    Chapitre créé avec succès !
+                </div>
+            );
+        } else {
+            return <span></span>
+        }
+    }
     handleChange(text, medium) {
         this.setState({text: text});
     }
@@ -186,7 +208,7 @@ class ChapterForm extends Component {
     render() {
         const {handleSubmit, submitting, pristine, previousPage, mode } = this.props;
         const { story } = this.props.stories.selectedStory;
-        const { editChapter } = this.props.chapter;
+        const { editChapter, newChapter } = this.props.chapter;
         console.log("chapter")
         console.log(this.props)
         //console.log(this.props.match.params)
@@ -249,6 +271,7 @@ class ChapterForm extends Component {
         return (
             <div className='container'>
                 { this.renderEdit(editChapter) }
+                { this.renderNew(newChapter) }
                 {title}
                 <form onSubmit={submit}>
                     <Field
