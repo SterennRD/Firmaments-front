@@ -19,6 +19,7 @@ export const getUserById = (id) => {
 
         axios.get(`${ROOT_URL}/${id}`)
             .then(function(response) {
+                console.log("get user", response)
                 if (response.status === 200){
                     dispatch({type: GET_USER_SUCCESS, payload: response.data})
                 } else {
