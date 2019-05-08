@@ -8,6 +8,7 @@ class Chapter extends Component {
             currentChapter: ''
         }
         this.handleNext = this.handleNext.bind(this)
+        this.handlePrev = this.handlePrev.bind(this)
     }
 
     fetchData(id, idChapter) {
@@ -27,6 +28,13 @@ class Chapter extends Component {
         const id =this.props.match.params.id;
         const idChapter =this.props.match.params.idchapter;
         this.fetchData(id, idChapter);
+    }
+    handlePrev() {
+        let currentChapter = this.props.chapter.story.chapters.map(function(e) { return e._id; }).indexOf(this.props.chapter.selectedChapter._id);
+        let prevChapter = this.props.chapter.story.chapters[currentChapter - 1];
+        this.props.history.push({
+            pathname: generatePath(this.props.match.path, {id: this.props.match.params.id, idchapter: prevChapter._id})
+        });
     }
     handleNext() {
         let currentChapter = this.props.chapter.story.chapters.map(function(e) { return e._id; }).indexOf(this.props.chapter.selectedChapter._id);
@@ -74,8 +82,8 @@ class Chapter extends Component {
                 <div>{nbComments} <i className="fas fa-comment"></i> {nbRead} <i className="far fa-eye"></i></div>
                 <div dangerouslySetInnerHTML={{ __html: selectedChapter.content }} />
                 <hr />
-                { currentChapter > 0 ? 'Chapitre précédent' : null}
-                { currentChapter < totalChapters ? <div onClick={this.handleNext}>Chapitre suivant</div> : null}
+                { currentChapter > 0 ? <div onClick={this.handlePrev}>Chapitre précédent</div> : null}
+                { currentChapter + 1 < totalChapters ? <div onClick={this.handleNext}>Chapitre suivant</div> : null}
             </div>
         );
     }
