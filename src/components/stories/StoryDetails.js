@@ -103,6 +103,12 @@ class StoryDetails extends Component {
                 </div>
             ))
         }
+        const authorizations = (
+                <div>
+                    <div className={`alert alert-${story.annotation_authorized ? 'success' : 'danger'}`}>{story.annotation_authorized ? "Vous pouvez annoter l'histoire" : "Vous ne pouvez pas annoter l'histoire"}</div>
+                    <div className={`alert alert-${story.comment_authorized ? 'success' : 'danger'}`}>{story.comment_authorized ? "Vous pouvez commenter l'histoire" : "Vous ne pouvez pas commenter l'histoire"}</div>
+                </div>
+        )
         return (
             <div>
                 Les détails
@@ -121,6 +127,7 @@ class StoryDetails extends Component {
 
 
                 </ul>
+                <div>{isAuthenticated ? authorizations : null}</div>
                 <hr />
                 <h2>Table des matières</h2>
                 {chapters}

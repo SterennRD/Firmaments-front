@@ -7,7 +7,7 @@ import StoryForm from "./StoryFormWizard";
 import StoryInfoForm from "./StoryInfoForm";
 import StoryInfoFormEdit from "../../containers/StoryInfoFormContainer";
 import StoryTable from "./StoryTable";
-import ChapterForm from "./ChapterForm";
+import ChapterForm from "../../containers/ChapterFormContainer";
 import Chapter from "../../containers/ChapterContainer";
 import ChapterFormEdit from "../../containers/ChapterFormContainer";
 import StoryAll from "../../containers/StoryAllContainer";
