@@ -21,9 +21,10 @@ const validateAndCreatePost = (values, dispatch)  => {
         values.category[i].value ? arrCat.push(parseInt(values.category[i].value)) : arrCat.push(parseInt(values.category[i].id))
     }
     const selectedCategory = category.filter( el => arrCat.includes(el.id));
+    console.log("catégories sélectionnées", selectedCategory)
     const selectedRating = values.rating.id ? values.rating : rating.find( el => el.id === parseInt(values.rating));
     const selectedStatus = values.status.id ? values.status : status.find( el => el.id === parseInt(values.status));
-    const newValues = {...values, rating: selectedRating, status: selectedStatus};
+    const newValues = {...values, category: selectedCategory, rating: selectedRating, status: selectedStatus};
 
     // Delete useless values
     delete newValues.chapters;
