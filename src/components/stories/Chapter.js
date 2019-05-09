@@ -3,16 +3,20 @@ import {generatePath} from 'react-router-dom';
 import moment from "moment/min/moment-with-locales.min";
 import {Link} from "react-router-dom";
 import CommentForm from "../../containers/CommentFormContainer";
+import ManageScrollBar from "./ScrollBar";
+
 
 
 class Chapter extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentChapter: ''
+            currentChapter: '',
+            scrollY: 0
         }
         this.handleNext = this.handleNext.bind(this)
         this.handlePrev = this.handlePrev.bind(this)
+        this.handleScroll = this.handleScroll.bind(this)
     }
 
     fetchData(id, idChapter) {
@@ -32,6 +36,23 @@ class Chapter extends Component {
         const id =this.props.match.params.id;
         const idChapter =this.props.match.params.idchapter;
         this.fetchData(id, idChapter);
+        window.addEventListener('scroll', this.handleScroll);
+    }
+    handleScroll(event) {
+
+
+        // Annoying to compute doc height due to browser inconsistency
+        var winHeight = window.innerHeight;
+        var docHeight = document.getElementById('contenu').clientHeight;
+        var max = docHeight - winHeight;
+
+        var value = document.documentElement.scrollTop;
+
+        console.log("doc heigh", winHeight, "element height", docHeight, "max", max, "scroll", value)
+        this.setState({scrollY: value});
+        if (value > docHeight) {
+            console.log('fin du document')
+        }
     }
     handlePrev() {
         let currentChapter = this.props.chapter.story.chapters.map(function(e) { return e._id; }).indexOf(this.props.chapter.selectedChapter._id);
@@ -97,10 +118,11 @@ class Chapter extends Component {
 
         return (
             <div>
+                <ManageScrollBar className="scroll-bar"/>
                 <Link to={'/stories/toc/' + story._id}>Retour</Link>
                 <h1>{selectedChapter.title}</h1>
                 <div>{nbComments} <i className="fas fa-comment"></i> {nbRead} <i className="far fa-eye"></i> {readingTime} min <i className="far fa-clock"></i></div>
-                <div dangerouslySetInnerHTML={{ __html: selectedChapter.content }} />
+                <div id="contenu" dangerouslySetInnerHTML={{ __html: selectedChapter.content }} />
                 <hr />
                 { currentChapter > 0 ? <div onClick={this.handlePrev}>Chapitre précédent</div> : null}
                 { currentChapter + 1 < totalChapters ? <div onClick={this.handleNext}>Chapitre suivant</div> : null}
