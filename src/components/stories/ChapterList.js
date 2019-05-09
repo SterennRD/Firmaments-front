@@ -59,11 +59,11 @@ class ChapterList extends Component {
         );
 
         const chapters  = this.props.chapters.map(chapter => (
-            <div key={chapter._id}>
+            <div key={chapter._id} className="border mb-2">
                 <Link to={'/stories/'+ story._id + '-' + chapter._id } >{chapter.title}</Link> {chapter._id}
                 <div className="">{chapter.comments.length} <i className="fas fa-comment"></i></div>
                 <button id={chapter._id} onClick={(e) => this.handleDeleteConfirm(e.target.id)}>Supprimer</button>
-                <Link to={this.props.match.url + '/chapter/' + chapter._id + '/edit'} >Editer</Link>
+                <Link to={'/stories/'+ story._id +'/chapter/' + chapter._id + '/edit'} >Editer</Link>
                 {chapter.status ? <div>{chapter.status.label}</div> : null }
                 <button id={chapter._id} onClick={e => this.handleChangeStatus(e.target.id)}>Publier le chapitre</button>
             </div>

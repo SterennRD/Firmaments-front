@@ -72,7 +72,7 @@ const validateAndEditChapter = (values, dispatch, state)  => {
     delete newValues.titleChapter;
     console.log(newValues)
 
-    return dispatch(editChapter(newValues, state.chapter.story, localStorage.getItem('jwtToken')))
+    return dispatch(editChapter(newValues, state.chapter.story._id, localStorage.getItem('jwtToken')))
 }
 const handleMode = (mode) => {
     if (mode === 'create') {

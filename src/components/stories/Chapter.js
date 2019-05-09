@@ -57,6 +57,7 @@ class Chapter extends Component {
         let nbComments = '';
         let nbRead = '';
         let comments;
+        let readingTime;
         if (selectedChapter) {
             if (selectedChapter.comments && selectedChapter.comments.length > 0 ) {
                 nbComments = selectedChapter.comments.length
@@ -79,12 +80,15 @@ class Chapter extends Component {
             return <div className="container">Loading...</div>;
         } else if(error) {
             return  <div className="alert alert-danger">{error.message}</div>
-        } else if(!selectedChapter) {
+        } else if(!selectedChapter || !story) {
             return <span />
         }
         let currentChapter;
         let totalChapters;
         if (story) {
+            readingTime = Math.round(selectedChapter.content.split(' ').length / 300);
+            let nbWords = selectedChapter.content.split(' ').length;
+            console.log("nombre de mots :", nbWords, "temps de lecture: ", readingTime)
             currentChapter = story.chapters.map(function(e) { return e._id; }).indexOf(selectedChapter._id);
             totalChapters = story.chapters.length;
             console.log("current", currentChapter)
@@ -95,7 +99,7 @@ class Chapter extends Component {
             <div>
                 <Link to={'/stories/toc/' + story._id}>Retour</Link>
                 <h1>{selectedChapter.title}</h1>
-                <div>{nbComments} <i className="fas fa-comment"></i> {nbRead} <i className="far fa-eye"></i></div>
+                <div>{nbComments} <i className="fas fa-comment"></i> {nbRead} <i className="far fa-eye"></i> {readingTime} min <i className="far fa-clock"></i></div>
                 <div dangerouslySetInnerHTML={{ __html: selectedChapter.content }} />
                 <hr />
                 { currentChapter > 0 ? <div onClick={this.handlePrev}>Chapitre précédent</div> : null}

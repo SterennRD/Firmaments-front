@@ -70,9 +70,11 @@ export default function(state = INITIAL_STATE, action) {
 
         case EDIT_CHAPTER_SUCCESS:
             let newStateStatus = state;
-            for (let i in newStateStatus.selectedStory.story.chapters) {
-                if (newStateStatus.selectedStory.story.chapters[i]._id === action.payload._id) {
-                    newStateStatus.selectedStory.story.chapters[i].status = action.payload.status
+            if (newStateStatus.selectedStory.story) {
+                for (let i in newStateStatus.selectedStory.story.chapters) {
+                    if (newStateStatus.selectedStory.story.chapters[i]._id === action.payload._id) {
+                        newStateStatus.selectedStory.story.chapters[i].status = action.payload.status
+                    }
                 }
             }
             return {...newStateStatus}
