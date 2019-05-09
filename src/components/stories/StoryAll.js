@@ -46,12 +46,15 @@ class StoryAll extends Component {
         const {stories, loading, error} = this.props.stories.storySearch;
 
         let storySearch;
+        let totalPages;
 
         if (stories && stories.result) {
             storySearch = stories.result.map(s => <div key={s._id}>{s.title}</div>)
         }
 
-        const totalPages = Math.ceil(stories.totalResults / stories.resultsPerPage);
+        if (stories && stories.totalResults) {
+            totalPages = Math.ceil(stories.totalResults / stories.resultsPerPage);
+        }
         const modal = <StoryModal
             hideModal={this.hideModal.bind(this)}
             story={this.state.story}
