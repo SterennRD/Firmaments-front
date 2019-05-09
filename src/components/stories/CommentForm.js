@@ -3,7 +3,10 @@ import {Field, reduxForm} from "redux-form";
 import renderTextArea from '../forms/renderTextArea';
 import connect from "react-redux/es/connect/connect";
 import {addComment} from "../../actions/StoryAction";
+import io from 'socket.io-client';
+var socket = io.connect('http://localhost:4001');
 
+socket.on("essai", (msg) => console.info("je reçois la notif", msg));
 class CommentForm extends Component {
     constructor(props) {
         super(props);

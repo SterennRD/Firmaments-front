@@ -12,6 +12,7 @@ import {
     LIKE_STORY, LIKE_STORY_SUCCESS, LIKE_STORY_ERROR,
     ADD_TO_READING_LIST_SUCCESS,
     EDIT_READING_LIST,
+    EDIT_CHAPTER_SUCCESS,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -66,6 +67,15 @@ export default function(state = INITIAL_STATE, action) {
             return { ...state, selectedStory: {story: null, error:error, loading:false}};
         case RESET_SELECTED_STORY:
             return { ...state, selectedStory: {story: null, error:null, loading: false}};
+
+        case EDIT_CHAPTER_SUCCESS:
+            let newStateStatus = state;
+            for (let i in newStateStatus.selectedStory.story.chapters) {
+                if (newStateStatus.selectedStory.story.chapters[i]._id === action.payload._id) {
+                    newStateStatus.selectedStory.story.chapters[i].status = action.payload.status
+                }
+            }
+            return {...newStateStatus}
 
         case GET_LAST_STORIES:
             return { ...state, storyList:{...state.storyList, loading: true}};

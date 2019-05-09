@@ -492,7 +492,7 @@ export const addComment = (props, id, tokenFromStorage) => dispatch => {
                     message: 'Un nouveau commentaire a été posté',
                     user_from: user_from,
                     chapter_id: chapter
-                });
+                }, 'coucou');
             } else {
                 dispatch({type: ADD_COMMENT_ERROR, payload: response.data})
             }

@@ -1,13 +1,23 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import Modal from "../forms/renderModal";
+import {status, status_chapter} from "./constants";
+import {editChapter} from "../../actions/StoryAction";
 
 class ChapterList extends Component {
     constructor(props) {
         super(props);
         this.state = { showModal: false, idModal:null}
+        this.handleChangeStatus = this.handleChangeStatus.bind(this)
     }
 
+    handleChangeStatus(id) {
+        let selectedChapter = this.props.stories.selectedStory.story.chapters.find( el => el._id === id);
+        let newStatus;
+        !selectedChapter.status ? newStatus = status_chapter.find( el => el.id === 2) : selectedChapter.status.id === 1 ? newStatus = status_chapter.find( el => el.id === 2) : newStatus = status_chapter.find( el => el.id === 1);
+        selectedChapter = {...selectedChapter, status: newStatus};
+        this.props.editChapter(selectedChapter, this.props.stories.selectedStory.story._id, localStorage.getItem('jwtToken'))
+    }
     handleDelete(id) {
         const confirm = window.confirm("Voulez-vous vraiment supprimer l'histoire ?")
         console.log("je supprime");
@@ -27,6 +37,8 @@ class ChapterList extends Component {
         } else {
             story = this.props.story;
         }
+
+        const statusList = status_chapter.map(s => <option key={s.id} value={s.id}>{s.label}</option>)
 
         const modal = (
             <Modal
@@ -50,6 +62,8 @@ class ChapterList extends Component {
                 <div className="">{chapter.comments.length} <i className="fas fa-comment"></i></div>
                 <button id={chapter._id} onClick={(e) => this.handleDeleteConfirm(e.target.id)}>Supprimer</button>
                 <Link to={this.props.match.url + '/' + story._id + '/chapter/' + chapter._id + '/edit'} >Editer</Link>
+                {chapter.status ? <div>{chapter.status.label}</div> : null }
+                <button id={chapter._id} onClick={e => this.handleChangeStatus(e.target.id)}>Publier le chapitre</button>
             </div>
             )
         );

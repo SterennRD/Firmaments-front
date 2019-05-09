@@ -8,6 +8,10 @@ export const status = [
     {id: 2, label: 'Terminé'},
     {id: 3, label: 'Brouillon'}
 ];
+export const status_chapter = [
+    {id: 1, label: 'Brouillon'},
+    {id: 2, label: 'Publié'}
+];
 export const category = [
     {id: 1, label: 'Action'},
     {id: 2, label: 'Autobiographie'},

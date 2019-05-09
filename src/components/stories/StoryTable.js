@@ -8,8 +8,7 @@ class StoryTable extends Component {
     componentDidMount() {
         if (!this.props.story || this.props.story === undefined) {
             console.log("je fais appel à l'API")
-            const url =this.props.history.location.pathname;
-            const id = url.split('/').pop();
+            const id =this.props.match.params.id;
             this.props.getStoryById(id)
         }
     }

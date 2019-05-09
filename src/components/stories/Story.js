@@ -6,7 +6,7 @@ import {Link, Route} from "react-router-dom";
 import StoryForm from "./StoryFormWizard";
 import StoryInfoForm from "./StoryInfoForm";
 import StoryInfoFormEdit from "../../containers/StoryInfoFormContainer";
-import StoryTable from "./StoryTable";
+import StoryTable from "../../containers/StoryTableContainer";
 import ChapterForm from "../../containers/ChapterFormContainer";
 import Chapter from "../../containers/ChapterContainer";
 import ChapterFormEdit from "../../containers/ChapterFormContainer";
@@ -55,10 +55,7 @@ class Story extends Component {
                 />
 
                 {/* Table of content */}
-                <Route exact path={this.props.match.url + '/toc/:id'}
-                       render={(props) => <StoryTable {...this.props}
-                                                 //story={stories.stories.find(s => s._id === props.match.params.id )}
-                       />}
+                <Route exact path={this.props.match.url + '/toc/:id'} component={StoryTable}
                 />
                 {/* Create a chapter */}
                 <Route exact path={this.props.match.url + '/:id/chapter/new'}
