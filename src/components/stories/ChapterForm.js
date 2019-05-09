@@ -55,6 +55,7 @@ const validateAndAddChapter = (values, dispatch, state)  => {
     const newValues = {
         ...values,
         title: values.titleChapter,
+        status: {id: 1, label: 'Brouillon'}
     };
     delete newValues.titleChapter;
     console.log(newValues)
@@ -158,17 +159,6 @@ class ChapterForm extends Component {
                     { newChapter ? newChapter.error.message : '' }
                 </div>
             );
-        } else if (newChapter.chapter) {
-            let id = this.props.storyID;
-            if (this.props.storyID === undefined || !this.props.storyID) {
-                id = this.props.location.pathname.split('/')[2];
-            }
-            let url = "/stories/toc/" + id;
-            return (
-                <div className="alert alert-success">
-                    Chapitre créé avec succès !
-                </div>
-            );
         } else {
             return <span></span>
         }
@@ -232,6 +222,20 @@ class ChapterForm extends Component {
                     </button>
                 </div>
             );
+            const { loading, error, chapter } = this.props.chapter.newChapter;
+            if (chapter) {
+                let id = this.props.storyID;
+                if (this.props.storyID === undefined || !this.props.storyID) {
+                    id = this.props.location.pathname.split('/')[2];
+                }
+                let url = "/stories/toc/" + id;
+                return (
+                    <div className="alert alert-success">
+                        Chapitre créé avec succès !
+                        <div><Link to={url}>Retour</Link></div>
+                    </div>
+                );
+            }
             submit = handleSubmit(validateAndAddChapter)
         } else if (mode === 'edit') {
             const { loading, error } = this.props.chapter;

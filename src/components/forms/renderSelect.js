@@ -33,9 +33,8 @@ const renderSelect = ({ input, label, type, meta: { touched, error, invalid, war
     ];*/
     let categories = options.map(e => ({
         label: e.label,
-        value: e.id
+        value: e.value
     }));
-
 
     if (input.value.length >= 3) {
         categories = []

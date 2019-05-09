@@ -40,7 +40,7 @@ class StoryTable extends Component {
                     <h2>Table des matières</h2>
                 </div>
                 {story.title}
-                <Link to={this.props.match.url + '/' + story._id + '/chapter/new'} className="btn btn-primary">Ajouter un chapitre</Link>
+                <Link to={'/stories/' + story._id + '/chapter/new'} className="btn btn-primary">Ajouter un chapitre</Link>
                 <ChapterList {...this.props} chapters={story.chapters}/>
             </div>
         );
