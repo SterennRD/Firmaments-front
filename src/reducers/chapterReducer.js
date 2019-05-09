@@ -1,15 +1,8 @@
 import {
-    GET_CHAPTER_SUCCESS,
-    GET_CHAPTER_ERROR,
-    RESET_SELECTED_CHAPTER,
-    GET_CHAPTER_BY_ID,
-    EDIT_CHAPTER,
-    EDIT_CHAPTER_SUCCESS,
-    EDIT_CHAPTER_FAILURE,
-    RESET_EDIT_CHAPTER,
-    CREATE_CHAPTER,
-    CREATE_CHAPTER_SUCCESS,
-    CREATE_CHAPTER_FAILURE, RESET_NEW_CHAPTER,
+    GET_CHAPTER_SUCCESS, GET_CHAPTER_ERROR,RESET_SELECTED_CHAPTER, GET_CHAPTER_BY_ID,
+    EDIT_CHAPTER, EDIT_CHAPTER_SUCCESS, EDIT_CHAPTER_FAILURE, RESET_EDIT_CHAPTER,
+    CREATE_CHAPTER, CREATE_CHAPTER_SUCCESS, CREATE_CHAPTER_FAILURE, RESET_NEW_CHAPTER,
+    ADD_COMMENT, ADD_COMMENT_SUCCESS, ADD_COMMENT_ERROR, RESET_ADDED_COMMENT,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -20,6 +13,7 @@ const INITIAL_STATE = {
     loading: false,
     newChapter:{chapter:null, error: null, loading: false},
     editChapter:{chapter:null, error: null, loading: false},
+    newComment:{comment: null, error:null, loading: false}
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -63,6 +57,19 @@ export default function(state = INITIAL_STATE, action) {
             return { ...state, editChapter: {loading: false, error: error, chapter: null}};
         case RESET_EDIT_CHAPTER:
             return { ...state, story: null, editChapter: {loading: false, error: null, chapter: null}};
+
+        case ADD_COMMENT:
+            return {...state, newComment: {...state.newComment, loading: true}}
+        case ADD_COMMENT_SUCCESS:
+            let newState = state;
+            let comment = action.payload.comments[0]
+            newState.selectedChapter.comments.unshift(comment)
+            return { ...newState, newComment: {loading: false, error: null, comment: comment}};
+        case ADD_COMMENT_ERROR:
+            error = action.payload || {message: action.payload.message};
+            return { ...state, newComment: {loading: false, error: error, comment: null}};
+        case RESET_ADDED_COMMENT:
+            return { ...state, newComment: {loading: false, error: null, comment: null}};
 
         default:
             return state;

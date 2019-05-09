@@ -14,6 +14,7 @@ import {
     LOAD, EDIT_MODE, EDIT_MODE_RESET, RESET_FORM, CREATE_MODE,
     LIKE_STORY, LIKE_STORY_SUCCESS, LIKE_STORY_ERROR,
     ADD_TO_READING_LIST, ADD_TO_READING_LIST_SUCCESS, ADD_TO_READING_LIST_ERROR,
+    ADD_COMMENT, ADD_COMMENT_SUCCESS, ADD_COMMENT_ERROR, RESET_ADDED_COMMENT,
 } from './types';
 const jwt = require('jsonwebtoken');
 
@@ -468,3 +469,31 @@ export const likeStory = (id, idUser, tokenFromStorage) => dispatch => {
 
 }
 
+export const addComment = (props, id, tokenFromStorage) => dispatch => {
+
+    dispatch({type: ADD_COMMENT})
+    axios({
+        method: 'post',
+        data: props,
+        url: `${ROOT_URL}/chapter/${id}/add-comment`,
+        headers: {
+            'x-access-token': tokenFromStorage
+        }
+    })
+        .then((response) => {
+            if (response.status === 200){
+                dispatch({type: ADD_COMMENT_SUCCESS, payload: response.data})
+            } else {
+                dispatch({type: ADD_COMMENT_ERROR, payload: response.data})
+            }
+        })
+        .catch((error) => {
+            dispatch({type: ADD_COMMENT_ERROR, payload: error})
+        })
+
+}
+export const resetAddedComment = () => {
+    return {
+        type: RESET_ADDED_COMMENT
+    }
+}

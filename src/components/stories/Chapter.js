@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {generatePath} from 'react-router-dom';
 import moment from "moment/min/moment-with-locales.min";
 import {Link} from "react-router-dom";
+import CommentForm from "../../containers/CommentFormContainer";
 
 
 class Chapter extends Component {
@@ -57,7 +58,7 @@ class Chapter extends Component {
         let nbRead = '';
         let comments;
         if (selectedChapter) {
-            if (selectedChapter.comments) {
+            if (selectedChapter.comments && selectedChapter.comments.length > 0 ) {
                 nbComments = selectedChapter.comments.length
                 comments = selectedChapter.comments.map(c => (
                     <div key={c._id}>
@@ -66,6 +67,8 @@ class Chapter extends Component {
                         <p>{c.content}</p>
                     </div>
                 ))
+            } else {
+                comments = <div>Pas de commentaires</div>
             }
             if (selectedChapter.read) {
                 nbRead = selectedChapter.read.length
@@ -87,6 +90,7 @@ class Chapter extends Component {
             console.log("current", currentChapter)
             console.log("total", totalChapters)
         }
+
         return (
             <div>
                 <button onClick={this.props.history.goBack}>Retour</button>
@@ -98,6 +102,7 @@ class Chapter extends Component {
                 { currentChapter + 1 < totalChapters ? <div onClick={this.handleNext}>Chapitre suivant</div> : null}
                 <hr />
                 <h2>Commentaires</h2>
+                <CommentForm/>
                 {comments}
             </div>
         );
