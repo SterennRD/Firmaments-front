@@ -93,7 +93,7 @@ class Chapter extends Component {
 
         return (
             <div>
-                <button onClick={this.props.history.goBack}>Retour</button>
+                <Link to={'/stories/toc/' + story._id}>Retour</Link>
                 <h1>{selectedChapter.title}</h1>
                 <div>{nbComments} <i className="fas fa-comment"></i> {nbRead} <i className="far fa-eye"></i></div>
                 <div dangerouslySetInnerHTML={{ __html: selectedChapter.content }} />

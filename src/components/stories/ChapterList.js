@@ -10,7 +10,9 @@ class ChapterList extends Component {
         this.state = { showModal: false, idModal:null}
         this.handleChangeStatus = this.handleChangeStatus.bind(this)
     }
-
+    componentWillUnmount() {
+        this.props.resetMe()
+    }
     handleChangeStatus(id) {
         let selectedChapter = this.props.stories.selectedStory.story.chapters.find( el => el._id === id);
         let newStatus;
@@ -58,10 +60,10 @@ class ChapterList extends Component {
 
         const chapters  = this.props.chapters.map(chapter => (
             <div key={chapter._id}>
-                <Link to={this.props.match.url + '/' + story._id + '-' + chapter._id } >{chapter.title}</Link> {chapter._id}
+                <Link to={'/stories/'+ story._id + '-' + chapter._id } >{chapter.title}</Link> {chapter._id}
                 <div className="">{chapter.comments.length} <i className="fas fa-comment"></i></div>
                 <button id={chapter._id} onClick={(e) => this.handleDeleteConfirm(e.target.id)}>Supprimer</button>
-                <Link to={this.props.match.url + '/' + story._id + '/chapter/' + chapter._id + '/edit'} >Editer</Link>
+                <Link to={this.props.match.url + '/chapter/' + chapter._id + '/edit'} >Editer</Link>
                 {chapter.status ? <div>{chapter.status.label}</div> : null }
                 <button id={chapter._id} onClick={e => this.handleChangeStatus(e.target.id)}>Publier le chapitre</button>
             </div>
