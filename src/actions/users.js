@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import io from 'socket.io-client';
 import {
     ME_FROM_TOKEN,
     ME_FROM_TOKEN_FAILURE,
@@ -25,7 +25,10 @@ export const meFromToken = (tokenFromStorage) => (dispatch) => {
             console.log("me from token", res)
             const { token } = res.data;
             localStorage.setItem('jwtToken', token);
-            dispatch({type: ME_FROM_TOKEN_SUCCESS, payload: res.data.user})
+
+            var socket = io.connect('http://localhost:4001');
+            socket.emit('currentUser', res.data.user);
+            dispatch({type: ME_FROM_TOKEN_SUCCESS, payload: {user: res.data.user, socket: socket}})
         })
         .catch(err => {
             console.log(err)

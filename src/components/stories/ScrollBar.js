@@ -47,17 +47,22 @@ class ManageScrollBar extends React.Component {
     }
 
     ScrollRateCalculation() {
-        let innerHeight = window.innerHeight; //A
+        const selectedChapter = this.props.selectedChapter
         let bodyElement = document.getElementById('contenu');//B1
-        let rect = bodyElement.getBoundingClientRect();//B2
-        let heightIsHtml = rect.height; //B3
-        let scrollMax = Math.ceil( heightIsHtml - innerHeight ); //C = B3 - A
-        let scrollY = document.documentElement.scrollTop || document.body.scrollTop;//D
-        let scrollRate = parseInt( (scrollY / scrollMax) * 100, 10 ); //E = (D / C) *100
-        this.setState({
-            scrollY: scrollY,
-            scrollBarRate: scrollRate
-        });
+        if (bodyElement) {
+
+            let innerHeight = window.innerHeight; //A
+
+            let rect = bodyElement.getBoundingClientRect();//B2
+            let heightIsHtml = rect.height; //B3
+            let scrollMax = Math.ceil( heightIsHtml - innerHeight ); //C = B3 - A
+            let scrollY = document.documentElement.scrollTop || document.body.scrollTop;//D
+            let scrollRate = parseInt( (scrollY / scrollMax) * 100, 10 ); //E = (D / C) *100
+            this.setState({
+                scrollY: scrollY,
+                scrollBarRate: scrollRate
+            });
+        }
     }
 
     componentDidMount() {
@@ -69,6 +74,7 @@ class ManageScrollBar extends React.Component {
     }
 
     render() {
+
         return (
             <div>
                 <ScrollBar className="scrollbar" width={this.state.scrollBarRate}/>

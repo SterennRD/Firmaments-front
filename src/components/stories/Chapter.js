@@ -17,6 +17,7 @@ class Chapter extends Component {
         this.handleNext = this.handleNext.bind(this)
         this.handlePrev = this.handlePrev.bind(this)
         this.handleScroll = this.handleScroll.bind(this)
+        this.ScrollRateCalculation = this.ScrollRateCalculation.bind(this);
     }
 
     fetchData(id, idChapter) {
@@ -36,7 +37,7 @@ class Chapter extends Component {
         const id =this.props.match.params.id;
         const idChapter =this.props.match.params.idchapter;
         this.fetchData(id, idChapter);
-        window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('scroll', this.ScrollRateCalculation);
     }
     handleScroll(event) {
 
@@ -52,6 +53,24 @@ class Chapter extends Component {
         this.setState({scrollY: value});
         if (value > docHeight) {
             console.log('fin du document')
+        }
+    }
+
+    ScrollRateCalculation() {
+        let bodyElement = document.getElementById('contenu');//B1
+        let innerHeight = window.innerHeight; //A
+        if (bodyElement) {
+
+            let rect = bodyElement.getBoundingClientRect();//B2
+            let heightIsHtml = rect.height; //B3
+            let scrollMax = Math.ceil( heightIsHtml - innerHeight ); //C = B3 - A
+            let scrollY = document.documentElement.scrollTop || document.body.scrollTop;//D
+            let scrollRate = parseInt( (scrollY / scrollMax) * 100, 10 ); //E = (D / C) *100
+            this.setState({
+                scrollY: scrollY,
+                scrollBarRate: scrollRate
+            });
+            console.log("scrollY", scrollY, "scrollBarRate", scrollRate)
         }
     }
     handlePrev() {
@@ -118,7 +137,7 @@ class Chapter extends Component {
 
         return (
             <div>
-                <ManageScrollBar className="scroll-bar"/>
+                <ManageScrollBar className="scroll-bar" selectedChapter={selectedChapter}/>
                 <Link to={'/stories/toc/' + story._id}>Retour</Link>
                 <h1>{selectedChapter.title}</h1>
                 <div>{nbComments} <i className="fas fa-comment"></i> {nbRead} <i className="far fa-eye"></i> {readingTime} min <i className="far fa-clock"></i></div>

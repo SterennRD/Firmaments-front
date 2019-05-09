@@ -16,8 +16,7 @@ import {
     ADD_TO_READING_LIST, ADD_TO_READING_LIST_SUCCESS, ADD_TO_READING_LIST_ERROR,
     ADD_COMMENT, ADD_COMMENT_SUCCESS, ADD_COMMENT_ERROR, RESET_ADDED_COMMENT,
 } from './types';
-import io from 'socket.io-client';
-var socket = io.connect('http://localhost:4001');
+
 const jwt = require('jsonwebtoken');
 
 
@@ -471,7 +470,7 @@ export const likeStory = (id, idUser, tokenFromStorage) => dispatch => {
 
 }
 
-export const addComment = (props, id, tokenFromStorage) => dispatch => {
+export const addComment = (props, id, tokenFromStorage, socket) => dispatch => {
 
     dispatch({type: ADD_COMMENT})
     axios({
@@ -492,7 +491,7 @@ export const addComment = (props, id, tokenFromStorage) => dispatch => {
                     message: 'Un nouveau commentaire a été posté',
                     user_from: user_from,
                     chapter_id: chapter
-                }, 'coucou');
+                }, user_from);
             } else {
                 dispatch({type: ADD_COMMENT_ERROR, payload: response.data})
             }

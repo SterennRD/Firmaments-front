@@ -3,10 +3,8 @@ import {Field, reduxForm} from "redux-form";
 import renderTextArea from '../forms/renderTextArea';
 import connect from "react-redux/es/connect/connect";
 import {addComment} from "../../actions/StoryAction";
-import io from 'socket.io-client';
-var socket = io.connect('http://localhost:4001');
 
-socket.on("essai", (msg) => console.info("je reçois la notif", msg));
+
 class CommentForm extends Component {
     constructor(props) {
         super(props);
@@ -25,8 +23,9 @@ class CommentForm extends Component {
 
         const id = state.chapter.selectedChapter._id;
         const token = localStorage.getItem('jwtToken');
+        const socket = state.auth.socket;
 
-        return dispatch(addComment(newValues, id, token))
+        return dispatch(addComment(newValues, id, token, socket))
     }
     componentDidUpdate(prevProps) {
         if (this.props.chapter.newComment.comment) {
@@ -41,6 +40,10 @@ class CommentForm extends Component {
         }
     }
     render() {
+        if (this.props.auth.socket) {
+            console.log(this.props.auth.socket)
+            this.props.auth.socket.on("essai", (msg) => console.info("je reçois la notif", msg));
+        }
         const {handleSubmit, submitting, pristine, previousPage, mode } = this.props;
         console.log("comments", this.props)
         return (
