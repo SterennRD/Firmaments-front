@@ -16,6 +16,8 @@ import {
     ADD_TO_READING_LIST, ADD_TO_READING_LIST_SUCCESS, ADD_TO_READING_LIST_ERROR,
     ADD_COMMENT, ADD_COMMENT_SUCCESS, ADD_COMMENT_ERROR, RESET_ADDED_COMMENT,
 } from './types';
+import io from 'socket.io-client';
+var socket = io.connect('http://localhost:4001');
 const jwt = require('jsonwebtoken');
 
 
@@ -482,7 +484,15 @@ export const addComment = (props, id, tokenFromStorage) => dispatch => {
     })
         .then((response) => {
             if (response.status === 200){
+                console.log("add comment", response)
                 dispatch({type: ADD_COMMENT_SUCCESS, payload: response.data})
+                let user_from = response.data.comments[0].author._id;
+                let chapter = response.data._id;
+                socket.emit('message', {
+                    message: 'Un nouveau commentaire a été posté',
+                    user_from: user_from,
+                    chapter_id: chapter
+                });
             } else {
                 dispatch({type: ADD_COMMENT_ERROR, payload: response.data})
             }
