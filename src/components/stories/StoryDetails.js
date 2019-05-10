@@ -112,7 +112,7 @@ class StoryDetails extends Component {
         return (
             <div>
                 Les détails
-                { story.cover ? <img src={ROOT_URL + story.cover} className="w-25"/> : <div>Pas d'image</div>}
+                { story.cover ? <img src={process.env.REACT_APP_UPLOADS + '/' + story.cover} className="w-25"/> : <div>Pas d'image</div>}
                 <div>{isAuthenticated && isMyStory ? edit : ''}</div>
                 <button onClick={this.props.history.goBack}>Retour</button>
                 <Like {...this.props}/>

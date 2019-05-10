@@ -7,6 +7,7 @@ import Register from "./Register";
 import Story from "../containers/StoryContainer";
 import Profile from "../containers/ProfileContainer";
 import User from "./user/User";
+require('dotenv').config()
 
 
 class App extends Component {
