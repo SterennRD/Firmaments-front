@@ -9,6 +9,7 @@ import Profile from "../containers/ProfileContainer";
 import User from "./user/User";
 import {meFromToken} from "../actions/users";
 import Notification from "../containers/NotificationContainer";
+import Search from "../containers/SearchContainer";
 require('dotenv').config()
 
 
@@ -73,6 +74,7 @@ class App extends Component {
                     <Route exact path="/login" component={ Login } />
                     <Route path="/stories" component={ Story } />
                     <Route path="/user" component={ User } />
+                    <Route path="/search" component={ Search } />
                 </div>
 
 
