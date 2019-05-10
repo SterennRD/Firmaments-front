@@ -7,16 +7,65 @@ import Register from "./Register";
 import Story from "../containers/StoryContainer";
 import Profile from "../containers/ProfileContainer";
 import User from "./user/User";
+import {meFromToken} from "../actions/users";
+import Notification from "../containers/NotificationContainer";
 require('dotenv').config()
 
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentWillMount() {
+
+        console.log("je reçois des props", this.props.auth.socket)
+        if (this.props.auth.socket) {
+            console.log(this.props.auth.socket)
+            this.props.auth.socket.on("essai", (msg) => {
+                console.log("je reçois la notif", msg)
+            });
+        }
+
+    }
+    componentDidUpdate() {
+
+        if (this.props.auth.socket) {
+            console.log(this.props.auth.socket)
+            this.props.auth.socket.on("essai", (msg) => {
+                console.log("je reçois la notif", msg)
+            });
+            this.props.auth.socket.on("receiveComment", (data) => {
+                console.log("Nouveau commentaire", data)
+                this.props.receiveComment(data)
+            });
+        }
+
+    }
+    componentDidMount() {
+        const token = localStorage.getItem('jwtToken');
+
+        if (token) {
+            //store.dispatch(setCurrentUser(jwt_decode(token)))
+            this.props.meFromToken(token)
+        }
+        console.log("le composant se monte", this.props.auth)
+        if (this.props.auth.socket) {
+            console.log(this.props.auth.socket)
+            this.props.auth.socket.on("essai", (msg) => {
+                console.log("je reçois la notif", msg)
+            });
+        }
+    }
     render() {
+        if (this.props.auth.loadingUser) {
+            return <div>Load</div>
+        }
         return (
             <BrowserRouter>
 
                 <Navbar/>
-
+                <Notification notification={this.props.notifications}/>
                 <Route exact path="/" component={ Home } />
 
                 <div className="container">
@@ -25,6 +74,7 @@ class App extends Component {
                     <Route path="/stories" component={ Story } />
                     <Route path="/user" component={ User } />
                 </div>
+
 
             </BrowserRouter>
         );

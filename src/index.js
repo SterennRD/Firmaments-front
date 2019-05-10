@@ -7,7 +7,7 @@ import { Router, browserHistory } from "react-router-dom";
 import {Provider} from "react-redux";
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-import App from './components/App';
+import App from './containers/AppContainer';
 import reducer from "./reducers";
 import {SET_CURRENT_USER} from "./actions/types";
 import { setCurrentUser} from './actions/authentication';
@@ -20,12 +20,12 @@ const store = createStore(
     applyMiddleware(thunk),
 )
 
-const token = localStorage.getItem('jwtToken');
+/*const token = localStorage.getItem('jwtToken');
 
 if (token) {
     //store.dispatch(setCurrentUser(jwt_decode(token)))
     store.dispatch(meFromToken(token))
-}
+}*/
 
 ReactDOM.render(
     <Provider store={store}>

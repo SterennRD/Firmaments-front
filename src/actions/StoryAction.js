@@ -487,7 +487,7 @@ export const addComment = (props, id, tokenFromStorage, socket) => dispatch => {
                 dispatch({type: ADD_COMMENT_SUCCESS, payload: response.data})
                 let user_from = response.data.comments[0].author._id;
                 let chapter = response.data._id;
-                socket.emit('message', {
+                socket.emit('newComment', {
                     message: 'Un nouveau commentaire a été posté',
                     user_from: user_from,
                     chapter_id: chapter

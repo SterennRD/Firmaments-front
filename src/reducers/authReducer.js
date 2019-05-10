@@ -10,7 +10,8 @@ import isEmpty from '../validation/is-empty';
 const initialState = {
     isAuthenticated: false,
     user: {},
-    loadingUser: false
+    loadingUser: false,
+    socket: null
 }
 
 export default function(state = initialState, action ) {

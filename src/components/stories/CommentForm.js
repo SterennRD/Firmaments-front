@@ -41,8 +41,8 @@ class CommentForm extends Component {
     }
     render() {
         if (this.props.auth.socket) {
-            console.log(this.props.auth.socket)
-            this.props.auth.socket.on("essai", (msg) => console.info("je reçois la notif", msg));
+            //console.log(this.props.auth.socket)
+            //this.props.auth.socket.on("essai", (msg) => console.info("je reçois la notif", msg));
         }
         const {handleSubmit, submitting, pristine, previousPage, mode } = this.props;
         console.log("comments", this.props)
