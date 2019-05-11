@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {
-
+    SEARCH, SEARCH_SUCCESS, SEARCH_ERROR, RESET_SEARCH
 } from './types';
 
 const jwt = require('jsonwebtoken');
@@ -9,28 +9,28 @@ const jwt = require('jsonwebtoken');
 
 const ROOT_URL = process.env.REACT_APP_STORIES;
 
-export const addComment = (search) => dispatch => {
-
-    dispatch({type: ADD_COMMENT})
-    axios({
-        method: 'get',
-        url: `${ROOT_URL}/stories/${id}/add-comment`,
-    })
+export const searchStory = (text, page) => dispatch => {
+    console.log("Je lance la recherche")
+    dispatch({type: SEARCH})
+    if (page == undefined || !page) {
+        page = 1
+    }
+    axios.get(`${ROOT_URL}/search/story/all/${page}/5?search=${text}`)
         .then((response) => {
             if (response.status === 200){
                 console.log("search results", response)
-                //dispatch({type: ADD_COMMENT_SUCCESS, payload: response.data})
+                dispatch({type: SEARCH_SUCCESS, payload: response.data})
             } else {
-                //dispatch({type: ADD_COMMENT_ERROR, payload: response.data})
+                dispatch({type: SEARCH_ERROR, payload: response.data})
             }
         })
         .catch((error) => {
-            //dispatch({type: ADD_COMMENT_ERROR, payload: error})
+            dispatch({type: SEARCH_ERROR, payload: error})
         })
 
 }
 export const resetAddedComment = () => {
     return {
-        type: RESET_ADDED_COMMENT
+        //type: RESET_ADDED_COMMENT
     }
 }

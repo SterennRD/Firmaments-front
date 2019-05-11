@@ -5,6 +5,7 @@ import userReducer from './userReducer';
 import storyReducer from './storyReducer';
 import chapterReducer from './chapterReducer';
 import notifsReducer from "./notifsReducer";
+import searchReducer from "./searchReducer";
 import { reducer as formReducer } from 'redux-form';
 import { CREATE_STORY_SUCCESS, RESET_FORM } from '../actions/types'
 
@@ -27,5 +28,6 @@ export default combineReducers({
     user: userReducer,
     stories: storyReducer,
     chapter: chapterReducer,
-    notifications: notifsReducer
+    notifications: notifsReducer,
+    search: searchReducer
 });
