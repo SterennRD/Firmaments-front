@@ -38,7 +38,7 @@ export default function(state = INITIAL_STATE, action) {
         case ME_FROM_TOKEN:// loading currentUser("me") from jwttoken in local/session storage storage,
             return { ...state, user: null, status:'storage', error:null, loading: true};
         case ME_FROM_TOKEN_SUCCESS://return user, status = authenticated and make loading = false
-            return { ...state, user: action.payload, status:'authenticated',isAuthenticated: true, error:null, loading: false}; //<-- authenticated
+            return { ...state, user: action.payload.user, status:'authenticated',isAuthenticated: true, error:null, loading: false}; //<-- authenticated
         case ME_FROM_TOKEN_FAILURE:// return error and make loading = false
             error = action.payload.data || {message: action.payload.message};//2nd one is network or server down errors
             return { ...state, user: null, status:'storage', error:error, loading: false};

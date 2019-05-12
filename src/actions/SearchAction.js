@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {
-    SEARCH, SEARCH_SUCCESS, SEARCH_ERROR, RESET_SEARCH
+    SEARCH, SEARCH_STORY_SUCCESS, SEARCH_USER_SUCCESS, SEARCH_ERROR, RESET_SEARCH
 } from './types';
 
 const jwt = require('jsonwebtoken');
@@ -19,7 +19,7 @@ export const searchStory = (text, page) => dispatch => {
         .then((response) => {
             if (response.status === 200){
                 console.log("search results", response)
-                dispatch({type: SEARCH_SUCCESS, payload: response.data})
+                dispatch({type: SEARCH_STORY_SUCCESS, payload: response.data})
             } else {
                 dispatch({type: SEARCH_ERROR, payload: response.data})
             }

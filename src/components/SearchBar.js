@@ -28,6 +28,11 @@ class SearchBar extends Component {
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleClickOutside);
     }
+    componentDidUpdate(prevProps) {
+        if (prevProps.search.search !== this.props.search.search) {
+            this.setState({results: this.props.search.search})
+        }
+    }
 
     handleClickOutside(event) {
         if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
@@ -96,8 +101,8 @@ class SearchBar extends Component {
         let results;
         let resultsLink;
         const {search, loading, error, totalResults} = this.props.search;
-        if (search && search.length > 0) {
-            results = search.map( e => (
+        if (this.state.results.length > 0) {
+            results = this.state.results.map( e => (
                 <div key={e._id} className="d-flex justify-content-space-between">
                     <Link to={'/stories/see/' + e._id}>{e.title}</Link>
                     <div>Par {e.author.username_display}</div>
