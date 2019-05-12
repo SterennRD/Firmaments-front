@@ -61,11 +61,15 @@ class ChapterList extends Component {
         const chapters  = this.props.chapters.map(chapter => (
             <div key={chapter._id} className="border mb-2">
                 <Link to={'/stories/'+ story._id + '-' + chapter._id } >{chapter.title}</Link> {chapter._id}
-                <div className="">{chapter.comments.length} <i className="fas fa-comment"></i></div>
+                <div className="">
+                    {chapter.comments.length} <i className="fas fa-comment"></i>
+                    {chapter.read.length} <i className="fas fa-eye"></i>
+                    {chapter.annotations.length} <i className="fas fa-pen"></i>
+                </div>
                 <button id={chapter._id} onClick={(e) => this.handleDeleteConfirm(e.target.id)}>Supprimer</button>
                 <Link to={'/stories/'+ story._id +'/chapter/' + chapter._id + '/edit'} >Editer</Link>
                 {chapter.status ? <div>{chapter.status.label}</div> : null }
-                <button id={chapter._id} onClick={e => this.handleChangeStatus(e.target.id)}>Publier le chapitre</button>
+                <button id={chapter._id} onClick={e => this.handleChangeStatus(e.target.id)}>{chapter.status.label === "Brouillon" ? "Publier le chapitre" : "Mode brouillon"}</button>
             </div>
             )
         );
