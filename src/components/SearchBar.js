@@ -29,8 +29,8 @@ class SearchBar extends Component {
         document.removeEventListener('mousedown', this.handleClickOutside);
     }
     componentDidUpdate(prevProps) {
-        if (prevProps.search.search !== this.props.search.search) {
-            this.setState({results: this.props.search.search})
+        if (prevProps.search.searchStory !== this.props.search.searchStory) {
+            this.setState({results: this.props.search.searchStory})
         }
     }
 
@@ -49,6 +49,7 @@ class SearchBar extends Component {
             this.props.searchStory(this.state.searchText)
         } else {
             this.setState({results: [], nbResults: 0})
+            this.props.resetMe()
         }
         if (this.state.searchText !== '') {
             //this.fetchData(this.state.searchText)
@@ -100,8 +101,8 @@ class SearchBar extends Component {
     render() {
         let results;
         let resultsLink;
-        const {search, loading, error, totalResults} = this.props.search;
-        if (this.state.results.length > 0) {
+        const {searchStory, loading, error, totalResults} = this.props.search;
+        if (this.state.results && this.state.results.length > 0) {
             results = this.state.results.map( e => (
                 <div key={e._id} className="d-flex justify-content-space-between">
                     <Link to={'/stories/see/' + e._id}>{e.title}</Link>

@@ -41,6 +41,16 @@ export default function(state = initialState, action ) {
             }
             return {...newState}
 
+        case RESET_SEARCH:
+            return {...state,
+                loading: false,
+                error: null,
+                totalResults: null,
+                searchStory: null,
+                searchUser: null,
+                searchText: null
+            }
+
         default:
             return state;
     }

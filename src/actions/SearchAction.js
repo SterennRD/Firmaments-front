@@ -29,8 +29,8 @@ export const searchStory = (text, page) => dispatch => {
         })
 
 }
-export const resetAddedComment = () => {
+export const resetSearch = () => {
     return {
-        //type: RESET_ADDED_COMMENT
+        type: RESET_SEARCH
     }
 }
