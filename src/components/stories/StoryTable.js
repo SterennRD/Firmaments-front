@@ -36,7 +36,7 @@ class StoryTable extends Component {
         return (
             <div>
                 <div className="d-flex">
-                    <Link to={this.props.match.url + '/edit/' + story._id}><h2>Informations de l'histoire</h2></Link>
+                    <Link to={'/stories/edit/' + story._id}><h2>Informations de l'histoire</h2></Link>
                     <h2>Table des matières</h2>
                 </div>
                 {story.title}

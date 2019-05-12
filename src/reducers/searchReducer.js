@@ -18,7 +18,8 @@ export default function(state = initialState, action ) {
                 error: null,
                 totalResults: action.payload.totalResults,
                 searchStory: action.payload.result.stories,
-                searchText: action.payload.searchText
+                searchText: action.payload.searchText,
+                resultsPerPage: action.payload.resultsPerPage
             }
         case SEARCH_ERROR:
             return {...state,

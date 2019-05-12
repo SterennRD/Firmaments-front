@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import StoryCard from "../stories/StoryCard";
 import StoryModal from "../stories/StoryModal";
+import StoryAllList from "../stories/StoryAllList";
+import Pagination from "react-js-pagination";
+import SearchResults from "./SearchResults";
+import {category} from "../stories/constants";
+
 
 class Search extends Component {
 
@@ -8,11 +13,55 @@ class Search extends Component {
         super(props);
         this.state = {
             showModal: false,
-            story: {}
+            story: {},
+            searchText: '',
+            activePage: 1,
+            totalPages: 0,
+            selectedStories: [],
+            selectedCategories: [],
+            stories: []
         }
         this.handleModal = this.handleModal.bind(this)
+        this.handleChange = this.handleChange.bind(this)
+        this.launchSearch = this.launchSearch.bind(this)
+        this.handleFilters = this.handleFilters.bind(this)
+        this.updateFilters = this.updateFilters.bind(this)
+    }
+    handlePageChange(pageNumber) {
+        console.log(`active page is ${pageNumber}`);
+        console.log(`search text is ${this.state.searchText}`);
+        this.props.searchStory(this.state.searchText, pageNumber)
+        const totalPages = Math.ceil(this.props.search.totalResults / this.props.search.resultsPerPage);
+        this.setState({activePage: pageNumber, totalPages: totalPages});
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.state.stories !== this.props.search.searchStory) {
+            console.log("je change le state de search")
+            this.setState({stories : this.props.search.searchStory})
+        }
+    }
+
+    launchSearch() {
+        console.log(this.state.searchText)
+        var myString = this.state.searchText;
+        var withoutSpace = myString.replace(/ /g,"");
+        var nbLetters = withoutSpace.length;
+        if (nbLetters >= 2) {
+            this.props.searchStory(this.state.searchText)
+        } else {
+            this.setState({results: [], nbResults: 0})
+            //this.props.resetMe()
+        }
+        if (this.state.searchText !== '') {
+            //this.fetchData(this.state.searchText)
+        }
+    }
+
+    handleChange(event) {
+        const myValue = event.target.value;
+        this.setState({searchText: myValue});
+    }
 
     handleModal(story) {
         console.log(story)
@@ -22,58 +71,151 @@ class Search extends Component {
     hideModal() {
         this.setState({ showModal: false, story: {} })
     }
-    render() {
-        const {searchStory, loading, error, totalResults, searchText} = this.props.search;
 
-        if (loading) {
-            return <div>Loading</div>
-        }
-        if (error) {
-            return <div>{error.message}</div>
-        }
-        if (!searchStory || !searchText) {
-            return <span/>
-        }
+    handleFilters(e) {
+        console.log(e.target.value)
+    }
 
-        let resultsStories;
-        if (searchStory.length > 0) {
-            resultsStories = searchStory.map((story) => {
+    essai () {
+        console.log("selected categoies", this.state.selectedCategories)
+        const currState = [...this.state.stories];
+        var filtered = currState.filter(story => {
+            // Use map to get a simple array of "val" values. Ex: [1,4]
+            let yFilter = story.map(itemY => { return itemY.category; });
 
-                return (
-                    <div key={story._id} className="col-sm-3" onClick={e => this.handleModal(story)}>
-                        <StoryCard
-                            id={story._id}
-                            title={story.title}
-                            author={story.author}
-                            description={story.description}
-                            rating={story.rating.label}
-                            categories={story.category}
-                            nb_likes={story.nb_likes}
-                            nb_favorites={story.nb_favorites}
-                            nb_comments={story.nb_comments}
-                            status={story.status.label}
-                        />
-                    </div>
+            // Use filter and "not" includes to filter the full dataset by the filter dataset's val.
+            let filteredX = yFilter.filter(c => c.id.includes(this));
+
+            // Print the result.
+            console.log(filteredX);
+            }
+        );
+        console.log(filtered);
+        const newState = currState.filter(story =>
+            story.category.filter(c =>
+                this.state.selectedCategories.every(genreId => {
+                        if (c.id === genreId) {
+                            return true
+                        }
+                        return false;
+                    }
                 )
-            })
-        }
+            )
+        );
+        console.log(newState)
+    }
+
+    updateFilters(e) {
+        console.log(e.target.name)
+            if (e.target.checked) {
+                /*this.setState({selectedCategories: [...this.state.selectedCategories, e.target.name]}, () =>{
+                    this.essai()
+                })*/
+                //const currState = [...this.state.stories];
+                this.setState({selectedCategories: [...this.state.selectedCategories, e.target.name]})
+                const currState = this.props.search.searchStory;
+                console.log(currState)
+                console.log(currState.map(s => s.category.id))
+                const newState = currState.filter(story => {
+                    for (let i = 0; i < story.category.length; i++) {
+                        console.log(story.category[i])
+                        console.log(story.category[i].id)
+                        if (story.category[i].id === parseInt(e.target.name)) {
+                            return true
+                        }
+                    }
+                    return false
+                });
+                var mergedArrayWithoutDuplicates = newState.concat(
+                    this.state.selectedStories.filter(seccondArrayItem => !newState.includes(seccondArrayItem))
+                );
+                console.log(mergedArrayWithoutDuplicates)
+                console.log(newState)
+                console.log("déjà sélectionné", this.state.selectedStories)
+                console.log("on merge", [...this.state.selectedStories, ...newState])
+                this.setState({selectedStories: [...new Set([...this.state.selectedStories, ...newState])]});
+                /*this.setState(prevState => ({
+                    selectedStories:  [...newState, ...prevState.selectedStories]
+                }));*/
+                console.log("NOUVELLE SELECTION", this.state.selectedStories)
+            } else {
+                if(this.state.movies.length === 1) {
+                    this.setState ({ movies: this.state.defaultData, selectedMovies: [] });
+                } else {
+                    const currState = [...this.state.movies];
+                    const newState = currState.filter(movies => !(movies.genre_ids.includes(parseInt(e.target.name))));
+                    this.setState(prevState => ({
+                        movies:newState,
+                        selectedMovies: []
+                    }));
+                }
+            }
+
+    }
+    render() {
+        const {searchStory, loading, error, totalResults, searchText, resultsPerPage} = this.props.search;
 
         const modal = <StoryModal
             hideModal={this.hideModal.bind(this)}
             story={this.state.story}
             auth={this.props.auth}
         />;
+        const totalPages = Math.ceil(totalResults / resultsPerPage);
 
+        const categories = category.map(c => <div key={c.id}><label htmlFor={c.id}>{c.label}</label><input id={c.id} name={c.id} onChange={this.updateFilters} type="checkbox"/></div>)
+        console.log("this.state.selectedCategories", this.state.selectedCategories)
         return (
             <div>
                 { this.state.showModal ? modal : null }
                 <h2>{searchText}</h2>
                 <div>{totalResults} résultat{totalResults > 1 ? 's' : null}</div>
-                <div className="container">
-                    <div className="row">
-                        {resultsStories}
+                <input onChange={this.handleChange} type="text" id="search" placeholder="Tapez votre recherche..." value={this.state.searchText}/>
+                <a onClick={this.launchSearch}>Lancer la recherche</a>
+
+                {this.props.search.searchStory ?
+                    <div>Page {this.state.activePage} sur {this.state.totalPages === 0 ? totalPages : this.state.totalPages}</div>
+                    :
+                    null
+                }
+                {this.state.stories ?
+                    <div>
+                        {categories}
+                    </div>
+                    :
+                    null
+                }
+                <div>
+                    <label htmlFor="tri">Trier par</label>
+                    <select onChange={this.handleFilters} name="tri">
+                        <option value="0">Toutes les catégories</option>
+                        <option value="1">Date croissante</option>
+                    </select>
+                </div>
+                <div>
+                    <div>
+                        <label htmlFor="tout">Tout</label>
+                        <input type="radio" id="tout" name="tri-statut"/>
+                    </div>
+                    <div>
+                        <label htmlFor="en-cours">En cours</label>
+                        <input type="radio" id="en-cours" name="tri-statut"/>
+                    </div>
+                    <div>
+                        <label htmlFor="termine">Terminé</label>
+                        <input type="radio" id="termine" name="tri-statut"/>
                     </div>
                 </div>
+
+                {this.state.selectedCategories.length < 1 ? 'aucune catégoruie sélectionnée' : 'catégrie sélectionnée '}
+                <SearchResults results={this.state.selectedCategories.length < 1 ? this.props.search.searchStory : this.state.selectedStories} stories={this.props.search} handleModal={e => this.handleModal(e)}/>
+                <Pagination
+                    activePage={this.state.activePage}
+                    activeClass="active"
+                    itemsCountPerPage={resultsPerPage}
+                    totalItemsCount={totalResults}
+                    pageRangeDisplayed={5}
+                    onChange={this.handlePageChange.bind(this)}
+                />
             </div>
         );
     }
