@@ -59,9 +59,7 @@ class App extends Component {
         }
     }
     render() {
-        if (this.props.auth.loadingUser) {
-            return <div>Load</div>
-        }
+
         return (
             <BrowserRouter>
 

@@ -135,6 +135,14 @@ class Chapter extends Component {
             console.log("total", totalChapters)
         }
 
+        let isMyChapter = false;
+
+        if (this.props.auth.isAuthenticated) {
+            if (this.props.auth.user._id === this.props.chapter.story.author) {
+                isMyChapter = true;
+            }
+        }
+
         return (
             <div>
                 <ManageScrollBar className="scroll-bar" selectedChapter={selectedChapter}/>
@@ -147,7 +155,12 @@ class Chapter extends Component {
                 { currentChapter + 1 < totalChapters ? <div onClick={this.handleNext}>Chapitre suivant</div> : null}
                 <hr />
                 <h2>Commentaires</h2>
-                <CommentForm/>
+                {story.comment_authorized ?
+                    <CommentForm/>
+                    :
+                    <div>Vous ne pouvez pas commenter l'histoire</div>
+                }
+                <hr />
                 {comments}
             </div>
         );
