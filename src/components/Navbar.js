@@ -44,7 +44,7 @@ class Navbar extends Component {
         </ul>
       )
         return(
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <nav className="navBar navbar navbar-expand-lg navbar-light bg-light">
                 <Link className="navbar-brand" to="/">Mon app</Link>
                 <ul className="navbar-nav ml-auto">
                     <li className="nav-item">

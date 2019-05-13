@@ -2,7 +2,6 @@ import React, {Component, PropTypes} from 'react';
 import {Link, Route} from "react-router-dom";
 import io from 'socket.io-client';
 import Modal from '../forms/renderModal';
-import '../style/story-panel.scss';
 
 class StoryList extends Component {
     constructor(props) {

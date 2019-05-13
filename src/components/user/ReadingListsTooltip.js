@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {category} from "../stories/constants";
-import "../style/readinglist-tooltip.scss";
 
 class ReadingListsTooltip extends Component {
     constructor(props) {

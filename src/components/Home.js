@@ -66,7 +66,7 @@ class Home extends Component {
             lastStories = storyList.stories.map((story) => {
 
                 return (
-                    <div key={story._id} className="col-sm-3" onClick={e => this.handleModal(story)}>
+                    <div key={story._id} className="col-md-4" onClick={e => this.handleModal(story)}>
                         <StoryCard
                             id={story._id}
                             title={story.title}
@@ -78,6 +78,7 @@ class Home extends Component {
                             nb_favorites={story.nb_favorites}
                             nb_comments={story.nb_comments}
                             status={story.status.label}
+                            cover={story.cover}
                         />
                     </div>
                 )
@@ -91,16 +92,14 @@ class Home extends Component {
         />;
 
         return (
-            <div>
+            <div className="container">
                 {hello}
                 <h2>Dernières histoires</h2>
                 { this.state.showModal ? modal : null }
-                <div className="container">
-                    <div className="row">
-                        {lastStories}
-                    </div>
-                    <Link to={'/stories/all'}>Voir plus</Link>
+                <div className="row">
+                    {lastStories}
                 </div>
+                <Link to={'/stories/all'}>Voir plus</Link>
             </div>
         );
     }

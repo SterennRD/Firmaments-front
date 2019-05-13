@@ -1,0 +1,70 @@
+.storyCard {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px #f1f1f1;
+  cursor: pointer;
+  height: 220px;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  padding: 10px;
+  transition: box-shadow 0.3s ease-in-out;
+  &:hover {
+    box-shadow: 0 2px 8px #dad0ff;
+  }
+  &__left {
+    max-width: 120px;
+    min-width: 120px;
+    padding-top: 150px;
+    position: relative;
+  }
+  &__cover {
+    background-color: $color-blue;
+    border-radius: 3px;
+    color: $color-pink;
+    font-size: 40px;
+    height: 170px;
+    overflow: hidden;
+    position: absolute;
+    top: -30px;
+    width: 100%;
+    img {
+      height: 100%;
+      vertical-align: middle;
+    }
+  }
+  &__status {
+    color: $color-violet;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.6em;
+    text-transform: uppercase;
+  }
+  &__title {
+      font-size: 1em;
+    &_link {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 800;
+    }
+  }
+  &__badge {
+    font-size: 0.5em;
+    vertical-align: middle;
+  }
+  &__author {
+    font-size: 0.7em;
+    font-weight: normal;
+  }
+  &__description {
+    font-size: 0.8em;
+    line-height: 1.3em;
+  }
+  &__stats {
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.6em;
+    font-weight: 800;
+  }
+}
+@media screen and (min-width: 768px) {
+  .storyCard {
+
+  }
+}

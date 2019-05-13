@@ -10,6 +10,7 @@ import User from "./user/User";
 import {meFromToken} from "../actions/users";
 import Notification from "../containers/NotificationContainer";
 import Search from "../containers/SearchContainer";
+import "../App.scss"
 require('dotenv').config()
 
 

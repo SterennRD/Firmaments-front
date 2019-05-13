@@ -18,14 +18,28 @@
   }
   &__window {
     background-color: #fff;
+    border-radius: 5px;
     display: flex;
     flex-wrap: wrap;
     height: 300px;
+    padding: 20px;
     position: relative;
     width: 600px;
   }
+  &__left {
+    width: 180px;
+  }
   &__cover {
-    width: 200px;
+    background-color: $color-blue;
+    border-radius: 3px;
+    color: $color-pink;
+    font-size: 2em;
+    height: 220px;
+    overflow: hidden;
+    img {
+      height: 100%;
+      width: auto;
+    }
   }
   &__info {
     display: flex;
@@ -34,6 +48,22 @@
     &_status {
       width: 100%;
     }
+  }
+  &__stats {
+    font-size: 0.7em;
+  }
+  &__title {
+    &_link {
+      font-family: "Montserrat";
+      font-weight: 800;
+    }
+    &_badge {
+      font-size: 0.3em;
+      vertical-align: middle;
+    }
+  }
+  &__description {
+    font-size: 0.8em;
   }
   &__rl {
     position: relative;

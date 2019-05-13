@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import '../style/story-modal.scss';
 import {Link} from "react-router-dom";
 import ReadingListsTooltip from "../../containers/ReadingListsTooltipContainer";
 const ROOT_URL = window.location.href.indexOf('localhost') > 0 ? 'http://localhost:3000/images/uploads/' : '/images/uploads/';
@@ -29,18 +28,34 @@ class StoryModal extends Component {
         const { isAuthenticated } = this.props.auth;
         const {story} = this.props;
         const category = story.category.map(c => <span key={c.label}>{c.label}</span>)
-        const cover = story.cover ? <img src={ROOT_URL + story.cover} className="w-25"/> : <div><i className="fas fa-book"></i> </div>;
+
         return (
             <div className="storyModal">
                 <div className="storyModal__overlay" onClick={this.props.hideModal}></div>
                 <div className="storyModal__window">
-                    <div className="storyModal__cover">{cover}</div>
+                    <div className="storyModal__left mr-3">
+                        <div className="storyModal__cover">
+                            {story.cover ?
+                                <img src={ROOT_URL + story.cover} alt={story.title} />
+                                :
+                                <i className="fas fa-book"></i>
+                            }
+                        </div>
+                        <div>{story.status.label}</div>
+                    </div>
                     <div className="storyModal__info">
-                        <div className="storyModal__stats">{story.nb_likes} <i className="fas fa-heart"></i> {story.nb_favorites} <i className="fas fa-star"></i> {story.nb_comments} <i className="fas fa-comment"></i></div>
-                        <h2><Link to={"/stories/see/" + story._id}>{story.title}</Link> <span className="badge badge-primary">{story.rating.label}</span></h2>
-                        <div>Par <Link to={"/user/profile/" + story.author._id}>{story.author.username_display}</Link></div>
+                        <div className="storyModal__stats d-flex">
+                            <span className="mr-2">{story.nb_likes} <i className="fas fa-heart"></i></span>
+                            <span className="mr-2">{story.nb_favorites} <i className="fas fa-star"></i></span>
+                            <span>{story.nb_comments} <i className="fas fa-comment"></i></span>
+                        </div>
+                        <h2 className="storyModal__title mb-0">
+                            <Link to={"/stories/see/" + story._id} className="storyModal__title_link mr-3">{story.title}</Link>
+                            <span className="storyModal__title_badge badge badge-primary">{story.rating.label}</span>
+                        </h2>
+                        <div className="storyModal__author">Par <Link to={"/user/profile/" + story.author._id}>{story.author.username_display}</Link></div>
                         <div>{category}</div>
-                        <p>{story.description}</p>
+                        <p className="storyModal__description">{story.description}</p>
                         <div>
                             <Link to={"/stories/see/" + story._id} className="btn btn-primary">Lire</Link>
                             <div className="storyModal__rl">
