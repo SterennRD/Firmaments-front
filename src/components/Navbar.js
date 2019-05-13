@@ -8,9 +8,25 @@ import SearchBar from "../containers/SearchBarContainer";
 
 class Navbar extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            showPanel: false
+        }
+        this.showPanel = this.showPanel.bind(this)
+    }
+
     onLogout(e) {
         e.preventDefault();
         this.props.logoutUser(this.props.history);
+    }
+
+    showPanel() {
+        if (this.state.showPanel) {
+            this.setState({showPanel : false})
+        } else {
+            this.setState({showPanel : true})
+        }
     }
 
     render() {
@@ -23,6 +39,25 @@ class Navbar extends Component {
                 <li className="nav-item">
                     <Link className="nav-link" to={"/user/profile/" + user._id}>{user.username}</Link>
                 </li>
+                <li className="nav-item navBar__panel">
+                    {user.image ?
+                        <img className="navBar__img" src="" alt={user.username} onClick={this.showPanel}/>
+                    :
+                        <div onClick={this.showPanel} className="navBar__img d-flex align-items-center justify-content-center"><i className="fas fa-user"></i></div>
+                    }
+                    {this.state.showPanel ?
+                        <div className="navBar__panel_window">
+                            <ul>
+                                <li><Link className="navBar__link" to={"/user/profile/" + user._id}>Profil</Link></li>
+                                <li><Link className="navBar__link" to={"/user/profile/" + user._id}>Paramètres</Link></li>
+                                <li><a href="" className="navBar__link" onClick={this.onLogout.bind(this)}>Déconnexion</a></li>
+                            </ul>
+                        </div>
+                        :
+                        null
+                    }
+                </li>
+
                 <li>
                     <a href="" className="nav-link" onClick={this.onLogout.bind(this)}>
                         <img src="" alt={user.name} title={user.name}

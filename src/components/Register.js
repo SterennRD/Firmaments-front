@@ -14,7 +14,7 @@ class Register extends Component {
             email: '',
             password: '',
             password_confirm: '',
-            birth_date: '',
+            birth_date: new Date(),
             date_day: '',
             date_mth: '',
             date_year: '',

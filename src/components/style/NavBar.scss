@@ -1,4 +1,27 @@
 .navBar {
   font-size: 0.8em;
   font-weight: 700;
+  &__img {
+    background-color: $color-blue;
+    border-radius: 50%;
+    color: $color-pink;
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+  }
+  &__panel {
+    position: relative;
+    &_window {
+      background-color: #fff;
+      left: calc(-150px / 2 + 15px);
+      padding: 10px;
+      position: absolute;
+      width: 150px;
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
 }
