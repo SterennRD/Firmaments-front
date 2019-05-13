@@ -56,10 +56,11 @@ class Login extends Component {
         <div className="container" style={{ marginTop: '50px', width: '700px'}}>
             <h2 style={{marginBottom: '40px'}}>Login</h2>
             <form onSubmit={ this.handleSubmit }>
+                {errors.message && (<div className="alert alert-danger">{errors.message}</div>)}
                 <div className="form-group">
                     <input
-                    type="email"
-                    placeholder="Email"
+                    type="text"
+                    placeholder="Email ou nom d'utilisateur"
                     className={classnames('form-control form-control-lg', {
                         'is-invalid': errors.email
                     })}
