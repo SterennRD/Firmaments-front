@@ -19,13 +19,15 @@ class Search extends Component {
             totalPages: 0,
             selectedStories: [],
             selectedCategories: [],
-            stories: []
+            stories: [],
+            checked: false
         }
         this.handleModal = this.handleModal.bind(this)
         this.handleChange = this.handleChange.bind(this)
         this.launchSearch = this.launchSearch.bind(this)
         this.handleFilters = this.handleFilters.bind(this)
         this.updateFilters = this.updateFilters.bind(this)
+        this.updateMovies = this.updateMovies.bind(this)
     }
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
@@ -36,11 +38,46 @@ class Search extends Component {
     }
 
     componentDidUpdate(prevProps) {
+        console.log("prevprops", prevProps)
         if (this.state.stories !== this.props.search.searchStory) {
             console.log("je change le state de search")
-            this.setState({stories : this.props.search.searchStory})
+            this.setState({stories : this.props.search.searchStory, defaultData: this.props.search.searchStory})
         }
     }
+
+    updateMovies = (e) => {
+        if (e.target.checked) {
+            this.setState({selectedCategories: [...this.state.selectedCategories, e.target.name]})
+            console.log("cat sélec", this.state.selectedCategories)
+            const currState = this.props.search.searchStory;
+            const newState = currState.filter(story => {
+                for (let i = 0; i < story.category.length; i++) {
+                    if (story.category[i].id === parseInt(e.target.name)) {
+                        return true
+                    }
+                }
+                return false
+            });
+            console.log("je sélectionne", newState)
+            this.setState({selectedStories: [...new Set([...this.state.selectedStories, ...newState])]});
+        } else {
+            const currState = [...this.state.selectedCategories];
+            const newState = currState.filter(story => !story.includes(parseInt(e.target.name)));
+            this.setState({selectedCategories: newState});
+            console.log("cat sélec", this.state.selectedCategories)
+            const currStories = [...this.state.selectedStories];
+            const newStateStories = currStories.filter(story => {
+                console.log(story)
+                for (let i = 0; i < story.category.length; i++) {
+                    if (story.category[i].id !== parseInt(e.target.name)) {
+                        return true
+                    }
+                }
+                return false
+            });
+            this.setState({selectedStories: newStateStories});
+        }
+    };
 
     launchSearch() {
         console.log(this.state.searchText)
@@ -139,16 +176,26 @@ class Search extends Component {
                 }));*/
                 console.log("NOUVELLE SELECTION", this.state.selectedStories)
             } else {
-                if(this.state.movies.length === 1) {
-                    this.setState ({ movies: this.state.defaultData, selectedMovies: [] });
-                } else {
-                    const currState = [...this.state.movies];
-                    const newState = currState.filter(movies => !(movies.genre_ids.includes(parseInt(e.target.name))));
+
+                    const currState = [...this.state.selectedStories];
+
+                const newState = currState.filter(story => {
+                    for (let i = 0; i < story.category.length; i++) {
+                        console.log(story.category[i])
+                        console.log(story.category[i].id)
+                        if (story.category[i].id !== parseInt(e.target.name)) {
+                            return true
+                        }
+                    }
+                    return false
+                });
+                console.log("avant", currState)
+                console.log("après", newState)
                     this.setState(prevState => ({
                         movies:newState,
-                        selectedMovies: []
+                        selectedStories: []
                     }));
-                }
+
             }
 
     }
@@ -162,7 +209,7 @@ class Search extends Component {
         />;
         const totalPages = Math.ceil(totalResults / resultsPerPage);
 
-        const categories = category.map(c => <div key={c.id}><label htmlFor={c.id}>{c.label}</label><input id={c.id} name={c.id} onChange={this.updateFilters} type="checkbox"/></div>)
+        const categories = category.map(c => <div key={c.id}><label htmlFor={c.id}>{c.label}</label><input id={c.id} name={c.id} onChange={this.updateMovies} type="checkbox"/></div>)
         console.log("this.state.selectedCategories", this.state.selectedCategories)
         return (
             <div>
@@ -208,6 +255,7 @@ class Search extends Component {
 
                 {this.state.selectedCategories.length < 1 ? 'aucune catégoruie sélectionnée' : 'catégrie sélectionnée '}
                 <SearchResults results={this.state.selectedCategories.length < 1 ? this.props.search.searchStory : this.state.selectedStories} stories={this.props.search} handleModal={e => this.handleModal(e)}/>
+                {/*<SearchResults results={this.state.stories} stories={this.props.search} handleModal={e => this.handleModal(e)}/>*/}
                 <Pagination
                     activePage={this.state.activePage}
                     activeClass="active"

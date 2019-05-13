@@ -80,7 +80,7 @@ class Parameters extends Component {
 
 Parameters = reduxForm({
     form: 'ParametersForm',  // a unique identifier for this form
-    destroyOnUnmount: false, // <------ preserve form data
+
     forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
     enableReinitialize: true,
 }, editUser)(Parameters);
