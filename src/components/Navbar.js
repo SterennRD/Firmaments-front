@@ -49,7 +49,7 @@ class Navbar extends Component {
                         <div className="navBar__panel_window">
                             <ul>
                                 <li><Link className="navBar__link" to={"/user/profile/" + user._id}>Profil</Link></li>
-                                <li><Link className="navBar__link" to={"/user/profile/" + user._id}>Paramètres</Link></li>
+                                <li><Link className="navBar__link" to={"/user/profile/" + user._id + "/parameters"}>Paramètres</Link></li>
                                 <li><a href="" className="navBar__link" onClick={this.onLogout.bind(this)}>Déconnexion</a></li>
                             </ul>
                         </div>

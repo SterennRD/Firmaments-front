@@ -48,6 +48,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => ({
     auth: state.auth,
     stories: state.stories,
+    chapter: state.chapter
     //newStory: state.stories.newStory,
 });
 

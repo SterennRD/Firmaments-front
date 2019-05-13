@@ -3,6 +3,7 @@ import {Link, Route} from "react-router-dom";
 import Profile from "../../containers/ProfileContainer";
 import ReadingListDetail from "../../containers/ReadingListDetailContainer";
 import ReadingListForm from "../../containers/ReadingListFormContainer";
+import Parameters from "../../containers/ParametersContainer";
 
 class User extends Component {
     render() {
@@ -10,6 +11,9 @@ class User extends Component {
             <div>
                 {/* See profile */}
                 <Route exact path={this.props.match.url + '/profile/:id'} component={Profile} />
+
+                {/* Edit parameters */}
+                <Route exact path={this.props.match.url + '/profile/:id/parameters'} component={Parameters} />
 
                 {/* See profile wall */}
                 <Route exact path={this.props.match.url + '/profile/:id/wall'} component={Profile} />

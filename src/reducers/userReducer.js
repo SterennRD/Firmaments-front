@@ -8,6 +8,7 @@ import {
     CREATE_READING_LIST, CREATE_READING_LIST_SUCCESS, CREATE_READING_LIST_ERROR, RESET_NEW_READING_LIST,
     EDIT_READING_LIST, EDIT_READING_LIST_SUCCESS, EDIT_READING_LIST_ERROR, RESET_EDIT_READING_LIST,
     DELETE_READING_LIST, DELETE_READING_LIST_SUCCESS, DELETE_READING_LIST_ERROR, RESET_DELETE_READING_LIST,
+    EDIT_USER, EDIT_USER_SUCCESS, EDIT_USER_ERROR, RESET_EDITED_USER,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -19,6 +20,7 @@ const INITIAL_STATE = {
     newReadingList: {loading: false, error: null, readingList: null},
     editReadingList: {loading: false, error: null, readingList: null},
     deletedReadingList: {loading: false, error: null, readingList: null},
+    editUser: {loading: false, error: null, user: null}
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -245,6 +247,11 @@ export default function(state = INITIAL_STATE, action) {
             return {...state, deletedReadingList: { loading: false, error: action.payload, readingList: null}}
         case RESET_DELETE_READING_LIST:
             return {...state, deletedReadingList: { loading: false, error: null, readingList: null}}
+
+        case EDIT_USER:
+            return {...state, editUser: {...state.editUser, loading: true}}
+        case EDIT_USER_ERROR:
+            return {...state, editUser: {loading: false, error: action.payload, user: null}}
 
         default:
             return state;

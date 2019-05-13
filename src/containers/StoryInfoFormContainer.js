@@ -19,7 +19,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => ({
     auth: state.auth,
     stories: state.stories,
-    initialValues: state.stories.selectedStory.story
+    initialValues: state.stories.selectedStory.story,
+    chapter: state.chapter
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StoryInfoForm);

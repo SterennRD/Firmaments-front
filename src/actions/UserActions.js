@@ -1,5 +1,7 @@
 import axios from 'axios';
+import { reduxForm, SubmissionError } from 'redux-form'
 import {
+    GET_ERRORS,
     GET_USER_BY_ID, GET_USER_SUCCESS, GET_USER_ERROR, RESET_SELECTED_USER,
     FOLLOW_USER, FOLLOW_USER_SUCCESS, FOLLOW_USER_ERROR,
     GET_READING_LISTS, GET_READING_LISTS_SUCCESS, GET_READING_LISTS_ERROR, RESET_READING_LISTS,
@@ -8,6 +10,7 @@ import {
     CREATE_READING_LIST, CREATE_READING_LIST_SUCCESS, CREATE_READING_LIST_ERROR, RESET_NEW_READING_LIST,
     EDIT_READING_LIST, EDIT_READING_LIST_SUCCESS, EDIT_READING_LIST_ERROR, RESET_EDIT_READING_LIST,
     DELETE_READING_LIST, DELETE_READING_LIST_SUCCESS, DELETE_READING_LIST_ERROR, RESET_DELETE_READING_LIST,
+    EDIT_USER, EDIT_USER_SUCCESS, EDIT_USER_ERROR, RESET_EDITED_USER,
 } from './types';
 
 const ROOT_URL = window.location.href.indexOf('localhost') > 0 ? 'http://localhost:3000/users' : '/users';
@@ -207,6 +210,36 @@ export const deleteReadingList = (id, token) => {
             })
             .catch(function(error) {
                 dispatch({type: DELETE_READING_LIST_ERROR, payload: error})
+            })
+    }
+};
+
+
+export const editUser = (props, token) => {
+
+    return function(dispatch) {
+        dispatch({type: EDIT_USER});
+        return axios({
+            method: 'post',
+            data: props,
+            url: `${ROOT_URL}/edit`,
+            headers: {
+                'x-access-token': token
+            }
+        })
+            .then(function(response) {
+                console.log("edit user response", response)
+                if (response.status === 200){
+                    //dispatch({type: EDIT_USER_SUCCESS, payload: response.data})
+                } else {
+                    //dispatch({type: EDIT_USER_ERROR, payload: response.data})
+                }
+            })
+            .catch(function(error) {
+                console.log(error.response)
+                dispatch({type: EDIT_USER_ERROR, payload: error.response.data})
+
+                throw new SubmissionError(error.response.data)
             })
     }
 };
