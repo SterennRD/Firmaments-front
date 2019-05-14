@@ -69,7 +69,7 @@ class ChapterList extends Component {
                 <button id={chapter._id} onClick={(e) => this.handleDeleteConfirm(e.target.id)}>Supprimer</button>
                 <Link to={'/stories/'+ story._id +'/chapter/' + chapter._id + '/edit'} >Editer</Link>
                 {chapter.status ? <div>{chapter.status.label}</div> : null }
-                <button id={chapter._id} onClick={e => this.handleChangeStatus(e.target.id)}>{chapter.status.label === "Brouillon" ? "Publier le chapitre" : "Mode brouillon"}</button>
+                {/*<button id={chapter._id} onClick={e => this.handleChangeStatus(e.target.id)}>{chapter.status.label === "Brouillon" ? "Publier le chapitre" : "Mode brouillon"}</button>*/}
             </div>
             )
         );

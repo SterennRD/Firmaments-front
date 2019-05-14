@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ChapterForm from '../components/stories/ChapterForm';
 import {
     getChapterById, resetSelectedChapter,
-    editChapter, getStoryById, createChapter
+    editChapter, getStoryById, createChapter, resetNewChapter, resetEditChapter
 } from "../actions/StoryAction";
 
 const mapDispatchToProps = (dispatch) => {
@@ -22,6 +22,8 @@ const mapDispatchToProps = (dispatch) => {
         },
         resetMe: () => {
             dispatch(resetSelectedChapter());
+            dispatch(resetNewChapter());
+            dispatch(resetEditChapter());
         },
     }
 };

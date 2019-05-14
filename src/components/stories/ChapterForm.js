@@ -52,6 +52,7 @@ const validateAndAddChapter = (values, dispatch, state)  => {
     console.log("je crée un chapitre")
     console.log(values)
     const id = state.stories.selectedStory.story._id;
+    const token = localStorage.getItem('jwtToken')
     const newValues = {
         ...values,
         title: values.titleChapter,
@@ -59,7 +60,22 @@ const validateAndAddChapter = (values, dispatch, state)  => {
     };
     delete newValues.titleChapter;
     console.log(newValues)
-    return dispatch(createChapter(newValues, id, localStorage.getItem('jwtToken') ))
+    return dispatch(createChapter(newValues, id, token))
+}
+
+const validateAndPublicChapter= (values, dispatch, state)  => {
+    console.log("je publie un chapitre")
+    console.log(values)
+    const id = state.stories.selectedStory.story._id;
+    const token = localStorage.getItem('jwtToken')
+    const newValues = {
+        ...values,
+        title: values.titleChapter,
+        status: {id: 2, label: 'Publié'}
+    };
+    delete newValues.titleChapter;
+    console.log(newValues)
+    return dispatch(createChapter(newValues, id, token))
 }
 
 const validateAndEditChapter = (values, dispatch, state)  => {
@@ -94,6 +110,9 @@ class ChapterForm extends Component {
         this.props.resetMe();
         const {mode} = this.props;
         if (mode === 'edit') {
+            this.props.destroy();
+        }
+        if (mode === 'create' && this.props.submitSucceeded) {
             this.props.destroy();
         }
     }
@@ -218,7 +237,10 @@ class ChapterForm extends Component {
             buttons = (
                 <div>
                     <button type="submit" disabled={pristine || submitting}>
-                        Créer
+                        Enregistrer
+                    </button>
+                    <button onClick={handleSubmit(validateAndPublicChapter)} disabled={pristine || submitting}>
+                        Publier
                     </button>
                 </div>
             );
@@ -229,12 +251,22 @@ class ChapterForm extends Component {
                     id = this.props.location.pathname.split('/')[2];
                 }
                 let url = "/stories/toc/" + id;
-                return (
-                    <div className="alert alert-success">
-                        Chapitre créé avec succès !
-                        <div><Link to={url}>Retour</Link></div>
-                    </div>
-                );
+                if (chapter.status.id === 1) {
+                    return (
+                        <div className="alert alert-success">
+                            Chapitre enregistré avec succès !
+                            <div><Link to={url}>Retour</Link></div>
+                        </div>
+                    );
+                } else if (chapter.status.id === 2) {
+                    return (
+                        <div className="alert alert-success">
+                            Chapitre publié avec succès !
+                            <div><Link to={url}>Retour</Link></div>
+                        </div>
+                    );
+                }
+
             }
             submit = handleSubmit(validateAndAddChapter)
         } else if (mode === 'edit') {
@@ -308,11 +340,6 @@ class ChapterForm extends Component {
                         label="Contenu *"
                         placeholder="Contenu de l'histoire"
                     />
-
-                    {/*<Editor
-                        text={this.state.text}
-                        onChange={this.handleChange.bind(this)}
-                    />*/}
 
                     {buttons}
 
