@@ -30,7 +30,7 @@ class App extends Component {
         }
 
     }
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
 
         if (this.props.auth.socket) {
             console.log(this.props.auth.socket)
@@ -42,6 +42,12 @@ class App extends Component {
                 this.props.receiveComment(data)
             });
         }
+        const token = localStorage.getItem('jwtToken');
+        if (this.props.auth.user !== prevProps.auth.user) {
+            if (this.props.auth.user) {
+                this.props.getAllUnreadNotifs(this.props.auth.user._id, token)
+            }
+        }
 
     }
     componentDidMount() {
@@ -51,6 +57,7 @@ class App extends Component {
             //store.dispatch(setCurrentUser(jwt_decode(token)))
             this.props.meFromToken(token)
         }
+
         console.log("le composant se monte", this.props.auth)
         if (this.props.auth.socket) {
             console.log(this.props.auth.socket)

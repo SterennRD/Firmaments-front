@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { meFromToken,
 //meFromTokenSuccess, meFromTokenFailure, resetToken
 } from '../actions/users';
-import {receiveComment} from "../actions/NotifAction";
+import {receiveComment, getAllNotifs, getAllUnreadNotifs} from "../actions/NotifAction";
 
 import App from '../components/App.js';
 
@@ -14,7 +14,13 @@ const mapDispatchToProps = (dispatch) => {
         },
         receiveComment: (comment) => {
             dispatch(receiveComment(comment))
-        }
+        },
+        getAllNotifs: (id, token) => {
+            dispatch(getAllNotifs(id, token))
+        },
+        getAllUnreadNotifs: (id, token) => {
+            dispatch(getAllUnreadNotifs(id, token))
+        },
         /*loadUserFromToken: () => {
             let token = sessionStorage.getItem('jwtToken');
             if(!token || token === '') {//if there is no token, dont bother
@@ -43,7 +49,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => ({
     auth: state.auth,
-    notifications: state.notifications
+    notifications: state.notifications,
+    user: state.user
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

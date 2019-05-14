@@ -31,11 +31,18 @@ class Navbar extends Component {
 
     render() {
         const {isAuthenticated, user} = this.props.auth;
+        const {allUnreadNotifs} = this.props.notifications;
         console.log('authenticated navbar')
         console.log(this.props)
 
         const authLinks = isAuthenticated ? (
             <ul className="navbar-nav ml-auto">
+                <li className="nav-item">
+                    <div className="navBar__notif">
+                        <i className="fas fa-bell"></i>
+                        {allUnreadNotifs.notifs ? <div className="navBar__notif_alert">{allUnreadNotifs.notifs.length}</div> : null}
+                    </div>
+                </li>
                 <li className="nav-item">
                     <Link className="nav-link" to={"/user/profile/" + user._id}>{user.username}</Link>
                 </li>
@@ -103,7 +110,8 @@ Navbar.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-    auth: state.auth
+    auth: state.auth,
+    notifications: state.notifications
 })
 
 export default connect(mapStateToProps, { logoutUser })(withRouter(Navbar));
