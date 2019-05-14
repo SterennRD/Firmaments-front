@@ -10,7 +10,7 @@ class SearchBar extends Component {
             searchText: '',
             results: [],
             nbResults: 0,
-            showResults: true
+            showResults: false
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
@@ -110,6 +110,8 @@ class SearchBar extends Component {
                 </div>
                 )
             )
+        } else {
+            results = '...'
         }
         if (totalResults && totalResults > 0) {
             resultsLink = (

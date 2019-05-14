@@ -78,7 +78,7 @@ class App extends Component {
                 <Notification notification={this.props.notifications}/>
                 <Route exact path="/" component={ Home } />
 
-                <div className="container">
+                <div className="container app">
                     <Route exact path="/register" component={ Register } />
                     <Route exact path="/login" component={ Login } />
                     <Route path="/stories" component={ Story } />

@@ -21,7 +21,7 @@
     border-radius: 5px;
     display: flex;
     flex-wrap: wrap;
-    height: 300px;
+    height: 350px;
     padding: 20px;
     position: relative;
     width: 600px;
@@ -30,11 +30,14 @@
     width: 180px;
   }
   &__cover {
+    align-items: center;
     background-color: $color-blue;
-    border-radius: 3px;
+    border-radius: 6px;
     color: $color-pink;
-    font-size: 2em;
+    display: flex;
+    font-size: 4em;
     height: 220px;
+    justify-content: center;
     overflow: hidden;
     img {
       height: 100%;
@@ -51,6 +54,9 @@
   }
   &__stats {
     font-size: 0.7em;
+    i, svg {
+      color: $color-grey
+    }
   }
   &__title {
     &_link {
@@ -67,5 +73,24 @@
   }
   &__rl {
     position: relative;
+  }
+  &__buttons {
+    display: flex;
+    margin-top: auto;
+    &_btn {
+      background-color: $color-blue;
+      border-radius: 20px;
+      color: $color-pink;
+      cursor: pointer;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.8em;
+      margin-right: 10px;
+      padding: 5px 15px;
+      transition: 0.3s;
+      &:hover {
+        background-color: $color-pink;
+        color: $color-blue;
+      }
+    }
   }
 }

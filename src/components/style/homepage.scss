@@ -1,0 +1,23 @@
+.homepage {
+    background-image: url("./bg.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+  &__header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    padding: 0 30px;
+    &_title {
+      color: $color-blue;
+      font-family: "Montserrat", sans-serif;
+      font-size: 4em;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    &_subtitle {
+      font-family: "Montserrat", sans-serif;
+      font-size: 2.3em;
+    }
+  }
+}

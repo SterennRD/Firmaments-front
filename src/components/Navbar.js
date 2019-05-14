@@ -102,8 +102,8 @@ class Navbar extends Component {
         </ul>
       )
         return(
-            <nav className="navBar navbar navbar-expand-lg navbar-light bg-light">
-                <Link className="navbar-brand" to="/">Mon app</Link>
+            <nav className="navBar navbar navbar-expand-lg navbar-light">
+                <Link className="navBar__logo navbar-brand" to="/"><img alt="Firmaments" src={process.env.PUBLIC_URL + '/img/logo-firmaments.svg'} /></Link>
                 <ul className="navbar-nav ml-auto">
                     <li className="nav-item">
                         <Link className="nav-link" to="/stories">Mes histoires</Link>

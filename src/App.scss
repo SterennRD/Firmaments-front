@@ -1,6 +1,7 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
 @import "components/style/colors";
+@import "components/style/homepage";
 @import "components/style/storyCard";
 @import "components/style/modal";
 @import "components/style/story-modal";
@@ -30,4 +31,7 @@ a {
 a:hover {
   color: $color-pink;
   text-decoration: none;
+}
+.app {
+  padding-top: 60px
 }

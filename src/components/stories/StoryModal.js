@@ -56,15 +56,14 @@ class StoryModal extends Component {
                         <div className="storyModal__author">Par <Link to={"/user/profile/" + story.author._id}>{story.author.username_display}</Link></div>
                         <div>{category}</div>
                         <p className="storyModal__description">{story.description}</p>
-                        <div>
-                            <Link to={"/stories/see/" + story._id} className="btn btn-primary">Lire</Link>
+                        <div className="storyModal__buttons">
+                            <Link to={"/stories/see/" + story._id} className="storyModal__buttons_btn">Lire</Link>
                             <div className="storyModal__rl">
-                                <div className="btn btn-primary" onClick={this.handleTooltip}>Ajouter à une liste de lecture</div>
+                                <div className="storyModal__buttons_btn" onClick={this.handleTooltip}>Ajouter à une liste de lecture</div>
                                 {isAuthenticated && this.state.showTooltip ? <ReadingListsTooltip id={story._id} /> : null}
                             </div>
                         </div>
                     </div>
-                    <div className="storyModal__info_status">{story.status.label}</div>
                 </div>
             </div>
         );

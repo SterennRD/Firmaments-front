@@ -92,14 +92,19 @@ class Home extends Component {
         />;
 
         return (
-            <div className="container">
-                {hello}
-                <h2>Dernières histoires</h2>
-                { this.state.showModal ? modal : null }
-                <div className="row">
-                    {lastStories}
+            <div className="homepage">
+                <div className="homepage__header">
+                    <h1 className="homepage__header_title">Firmaments</h1>
+                    <h2 className="homepage__header_subtitle">La nébuleuse d'histoires</h2>
                 </div>
-                <Link to={'/stories/all'}>Voir plus</Link>
+                <div className="container">
+                    <h2>Dernières histoires</h2>
+                    { this.state.showModal ? modal : null }
+                    <div className="row">
+                        {lastStories}
+                    </div>
+                    <Link to={'/stories/all'}>Voir plus</Link>
+                </div>
             </div>
         );
     }

@@ -16,10 +16,18 @@
     overflow: auto;
   }
   &__item {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid $color-grey;
+    cursor: pointer;
     display: flex;
     justify-content: space-between;
-    padding: 5px
+    padding: 5px;
+    transition: 0.3s;
+    span {
+      color: $color-violet;
+    }
+    &:hover {
+      color: $color-pink;
+    }
   }
   &__form {
     height: 30px;
