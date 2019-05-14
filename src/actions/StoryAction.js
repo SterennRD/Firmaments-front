@@ -238,27 +238,18 @@ export function resetNewStory() {
 }*/
 
 export const editStory = (props, tokenFromStorage) => dispatch => {
-    console.log("j'édite une histoire")
-    console.log(props)
 
     var postData = JSON.stringify(props);
 
     let formData = new FormData()
     if (props.cover) {
-        console.log(props.cover[0])
         formData.append('cover', props.cover[0])
     }
     formData.append("postData",postData );
 
-    /*for ( var key in props ) {
-        formData.append(key, props[key]);
-    }*/
-    console.log(formData)
-
     for(var pair of formData.entries()) {
         console.log(pair[0]+', '+pair[1]);
     }
-
 
     dispatch({type: EDIT_STORY})
     axios({
@@ -279,8 +270,7 @@ export const editStory = (props, tokenFromStorage) => dispatch => {
             }
         })
         .catch((error) => {
-            console.log(error)
-            dispatch({type: EDIT_STORY_FAILURE, payload: error})
+            dispatch({type: EDIT_STORY_FAILURE, payload: error.response.data})
         })
 }
 export const resetEditStory = () => {
