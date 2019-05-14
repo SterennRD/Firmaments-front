@@ -71,6 +71,9 @@ class Navbar extends Component {
                     {this.state.showPanel ?
                         <div className="navBar__panel_window">
                             <ul>
+                                <li className="navBar__panel_window_usernamed">{user.username_display}</li>
+                                <li className="navBar__panel_window_username">{user.username}</li>
+                                <hr/>
                                 <li><Link className="navBar__link" to={"/user/profile/" + user._id}>Profil</Link></li>
                                 <li><Link className="navBar__link" to={"/user/profile/" + user._id + "/parameters"}>Paramètres</Link></li>
                                 <li><a href="" className="navBar__link" onClick={this.onLogout.bind(this)}>Déconnexion</a></li>

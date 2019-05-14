@@ -5,6 +5,7 @@ import StoryAllList from "../stories/StoryAllList";
 import Pagination from "react-js-pagination";
 import SearchResults from "./SearchResults";
 import {category} from "../stories/constants";
+require("bootstrap/scss/bootstrap.scss");
 
 
 class Search extends Component {
@@ -113,35 +114,6 @@ class Search extends Component {
         console.log(e.target.value)
     }
 
-    essai () {
-        console.log("selected categoies", this.state.selectedCategories)
-        const currState = [...this.state.stories];
-        var filtered = currState.filter(story => {
-            // Use map to get a simple array of "val" values. Ex: [1,4]
-            let yFilter = story.map(itemY => { return itemY.category; });
-
-            // Use filter and "not" includes to filter the full dataset by the filter dataset's val.
-            let filteredX = yFilter.filter(c => c.id.includes(this));
-
-            // Print the result.
-            console.log(filteredX);
-            }
-        );
-        console.log(filtered);
-        const newState = currState.filter(story =>
-            story.category.filter(c =>
-                this.state.selectedCategories.every(genreId => {
-                        if (c.id === genreId) {
-                            return true
-                        }
-                        return false;
-                    }
-                )
-            )
-        );
-        console.log(newState)
-    }
-
     updateFilters(e) {
         console.log(e.target.name)
             if (e.target.checked) {
@@ -209,61 +181,82 @@ class Search extends Component {
         />;
         const totalPages = Math.ceil(totalResults / resultsPerPage);
 
-        const categories = category.map(c => <div key={c.id}><label htmlFor={c.id}>{c.label}</label><input id={c.id} name={c.id} onChange={this.updateMovies} type="checkbox"/></div>)
+        const categories = category.map(c => <div key={c.id} className="search__filters_checkboxes_item"><label htmlFor={c.id}>{c.label}</label><input id={c.id} name={c.id} onChange={this.updateMovies} type="checkbox"/></div>)
         console.log("this.state.selectedCategories", this.state.selectedCategories)
         return (
-            <div>
+            <div className="search">
                 { this.state.showModal ? modal : null }
-                <h2>{searchText}</h2>
-                <div>{totalResults} résultat{totalResults > 1 ? 's' : null}</div>
-                <input onChange={this.handleChange} type="text" id="search" placeholder="Tapez votre recherche..." value={this.state.searchText}/>
-                <a onClick={this.launchSearch}>Lancer la recherche</a>
-
-                {this.props.search.searchStory ?
-                    <div>Page {this.state.activePage} sur {this.state.totalPages === 0 ? totalPages : this.state.totalPages}</div>
-                    :
-                    null
-                }
-                {this.state.stories ?
-                    <div>
-                        {categories}
-                    </div>
-                    :
-                    null
-                }
-                <div>
-                    <label htmlFor="tri">Trier par</label>
-                    <select onChange={this.handleFilters} name="tri">
-                        <option value="0">Toutes les catégories</option>
-                        <option value="1">Date croissante</option>
-                    </select>
-                </div>
-                <div>
-                    <div>
-                        <label htmlFor="tout">Tout</label>
-                        <input type="radio" id="tout" name="tri-statut"/>
-                    </div>
-                    <div>
-                        <label htmlFor="en-cours">En cours</label>
-                        <input type="radio" id="en-cours" name="tri-statut"/>
-                    </div>
-                    <div>
-                        <label htmlFor="termine">Terminé</label>
-                        <input type="radio" id="termine" name="tri-statut"/>
+                <div className="search__header">
+                    <h2 className="search__title">{searchText}</h2>
+                    {totalResults > 1 ? <div className="search__results">{totalResults} résultat{totalResults > 1 ? 's' : null}</div> : null}
+                    <div className="search__bar">
+                        <input className="search__bar_input" onChange={this.handleChange} type="text" id="search" placeholder="Tapez votre recherche..." value={this.state.searchText}/>
+                        <a className="search__bar_btn" onClick={this.launchSearch}><i className="fas fa-search"></i></a>
                     </div>
                 </div>
 
-                {this.state.selectedCategories.length < 1 ? 'aucune catégoruie sélectionnée' : 'catégrie sélectionnée '}
-                <SearchResults results={this.state.selectedCategories.length < 1 ? this.props.search.searchStory : this.state.selectedStories} stories={this.props.search} handleModal={e => this.handleModal(e)}/>
-                {/*<SearchResults results={this.state.stories} stories={this.props.search} handleModal={e => this.handleModal(e)}/>*/}
-                <Pagination
-                    activePage={this.state.activePage}
-                    activeClass="active"
-                    itemsCountPerPage={resultsPerPage}
-                    totalItemsCount={totalResults}
-                    pageRangeDisplayed={5}
-                    onChange={this.handlePageChange.bind(this)}
-                />
+                <div className="search__content container">
+
+                    {this.props.search.searchStory ?
+                        <div>Page {this.state.activePage} sur {this.state.totalPages === 0 ? totalPages : this.state.totalPages}</div>
+                        :
+                        null
+                    }
+                    {this.state.stories ?
+                        <div className="search__filters">
+                            <div className="search__filters_checkboxes">
+                                <h3 className="search__filters_title">Catégories</h3>
+                                <div className="search__filters_checkboxes">
+                                {categories}
+                                </div>
+                            </div>
+                            <div className="search__filters_radio">
+                                <h3 className="search__filters_title">Statut</h3>
+                                <div className="search__filters_radio">
+                                    <div>
+                                        <label htmlFor="tout">Tout</label>
+                                        <input type="radio" id="tout" name="tri-statut"/>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="en-cours">En cours</label>
+                                        <input type="radio" id="en-cours" name="tri-statut"/>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="termine">Terminé</label>
+                                        <input type="radio" id="termine" name="tri-statut"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="search__filters_dropdown">
+                                <h3 className="search__filters_title">Filtrer par</h3>
+                                <select onChange={this.handleFilters} name="tri">
+                                    <option value="0">Toutes les catégories</option>
+                                    <option value="1">Date croissante</option>
+                                </select>
+                            </div>
+                        </div>
+                        :
+                        null
+                    }
+
+
+
+                    {this.state.selectedCategories.length < 1 ? 'aucune catégoruie sélectionnée' : 'catégrie sélectionnée '}
+                    <SearchResults results={this.state.selectedCategories.length < 1 ? this.props.search.searchStory : this.state.selectedStories} stories={this.props.search} handleModal={e => this.handleModal(e)}/>
+                    {/*<SearchResults results={this.state.stories} stories={this.props.search} handleModal={e => this.handleModal(e)}/>*/}
+                    {this.state.stories ? (
+                            <Pagination
+                                activePage={this.state.activePage}
+                                activeClass="active"
+                                itemsCountPerPage={resultsPerPage}
+                                totalItemsCount={totalResults}
+                                pageRangeDisplayed={5}
+                                onChange={this.handlePageChange.bind(this)}
+                            />
+                        ) :
+                        null
+                    }
+                </div>
             </div>
         );
     }

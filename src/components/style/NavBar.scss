@@ -59,7 +59,9 @@
     position: relative;
     &_window {
       background-color: #fff;
+      border-radius: 5px;
       left: calc(-150px / 2 + 15px);
+      margin-top: 20px;
       padding: 10px;
       position: absolute;
       width: 150px;
@@ -67,6 +69,15 @@
         list-style: none;
         margin: 0;
         padding: 0;
+      }
+      &_usernamed {
+        font-size: 1.6em;
+        font-weight: bold;
+      }
+      &_username {
+        color: $color-grey;
+        font-size: 0.8em;
+        font-weight: normal;
       }
     }
   }

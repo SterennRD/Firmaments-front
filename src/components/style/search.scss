@@ -1,0 +1,86 @@
+.search {
+  &__header {
+    align-items: center;
+    background-image: url('./bg-gradient.svg');
+    background-size: contain;
+    display: flex;
+    flex-direction: column;
+    height: calc(80vh + 60px);
+    justify-content: center;
+    padding-top: 60px;
+  }
+  &__title {
+    color: #fff;
+    font-family: "Montserrat", sans-serif;
+    font-size: 2em;
+    font-weight: 900;
+  }
+  &__results {
+    color: #fff;
+    font-family: "Montserrat", sans-serif;
+  }
+  &__bar {
+    align-items: center;
+    display: flex;
+    margin-top: 70px;
+    &_input {
+      border: 1px solid $color-grey;
+      border-radius: 10px;
+      margin-right: 10px;
+      padding: 3px 10px;
+      width: 300px;
+    }
+    &_btn {
+      cursor: pointer;
+      svg {
+        color: $color-blue;
+        transition: 0.3s;
+      }
+      &:hover {
+        svg {
+          color: $color-pink;
+        }
+      }
+      &:focus {
+        outline: 0;
+      }
+    }
+  }
+  &__filters {
+    display: flex;
+    flex-wrap: wrap;
+    &_title {
+      font-family: "Montserrat", sans-serif;
+      font-weight: bold;
+      font-size: 0.8em;
+      margin-right: 20px;
+    }
+    &_checkboxes {
+      display: flex;
+      flex: 1;
+      flex-wrap: wrap;
+      &_item {
+        align-items: center;
+        border: 1px solid $color-grey;
+        border-radius: 10px;
+        display: flex;
+        margin-bottom: 10px;
+        margin-right: 10px;
+        padding: 2px 8px;
+        label {
+          font-size: 0.8em;
+          margin: 0;
+        }
+      }
+    }
+    &_radio {
+      display: flex;
+    }
+    &_dropdown {
+      width: 100%;
+    }
+  }
+  &__content {
+    min-height: 100vh;
+  }
+}

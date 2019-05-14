@@ -10,6 +10,8 @@
 @import "components/style/NavBar";
 @import "components/style/searchBar";
 @import "components/style/notification";
+@import "components/style/search";
+@import "components/style/pagination";
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800,900|Roboto:400,700');
 body {
@@ -34,5 +36,5 @@ a:hover {
   text-decoration: none;
 }
 .app {
-  padding-top: 60px
+  //padding-top: 60px
 }
