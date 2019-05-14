@@ -97,7 +97,7 @@ class StoryDetails extends Component {
         if (story.last_comments.length > 0) {
             last_comments = story.last_comments.map( c => (
                 <div key={c._id}>
-                    Par <Link to={"/user/profile/" + c.author._id}>{c.author.username_display}</Link> sur <Link to={"/stories/" + story._id + "-" + c._id}>{c.title}</Link>
+                    Par <Link to={"/user/profile/" + c.author._id}>{c.author.username_display}</Link> sur <Link to={"/stories/" + story._id + "-" + c.chapter_id}>{c.title}</Link>
                     <div>{moment(c.created_at).format('LLL')}</div>
                     <p>{c.content}</p>
                 </div>

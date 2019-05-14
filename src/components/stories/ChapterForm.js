@@ -343,32 +343,12 @@ class ChapterForm extends Component {
                 { this.renderEdit(editChapter) }
                 { this.renderNew(newChapter) }
                 {title}
-                {statusValue}
                 <form onSubmit={submit}>
                     <Field
                         name="titleChapter"
                         type="text"
                         component={ renderField }
                         label="Titre *" />
-                    {/*<Field
-                        name="content"
-                        component={ renderTextArea }
-                        label="Contenu *"
-                        placeholder="Contenu de l'histoire"
-                    />*/}
-                    {/*<Field
-                        name="content"
-                        component={ renderWysiwyg }
-                        onChange={this.handleChange.bind(this)}
-                        label="Contenu *"
-                        placeholder="Contenu de l'histoire"
-                    />*/}
-                    {/*<Field
-                        name="content"
-                        component={ WysiwygEditor }
-                        label="Contenu *"
-                        placeholder="Contenu de l'histoire"
-                    />*/}
                     <Field
                         name="content"
                         component={ renderWysiwyg }

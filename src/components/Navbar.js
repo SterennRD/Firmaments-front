@@ -11,9 +11,11 @@ class Navbar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showPanel: false
+            showPanel: false,
+            showNotif: false
         }
         this.showPanel = this.showPanel.bind(this)
+        this.showNotif = this.showNotif.bind(this)
     }
 
     onLogout(e) {
@@ -25,7 +27,15 @@ class Navbar extends Component {
         if (this.state.showPanel) {
             this.setState({showPanel : false})
         } else {
-            this.setState({showPanel : true})
+            this.setState({showPanel : true, showNotif: false})
+        }
+    }
+
+    showNotif() {
+        if (this.state.showNotif) {
+            this.setState({showNotif : false})
+        } else {
+            this.setState({showNotif : true, showPanel: false})
         }
     }
 
@@ -38,9 +48,15 @@ class Navbar extends Component {
         const authLinks = isAuthenticated ? (
             <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                    <div className="navBar__notif">
+                    <div className="navBar__notif" onClick={this.showNotif}>
                         <i className="fas fa-bell"></i>
                         {allUnreadNotifs.notifs ? <div className="navBar__notif_alert">{allUnreadNotifs.notifs.length}</div> : null}
+                        {this.state.showNotif ? (
+                            <div className="navBar__notif_panel">
+                                {allUnreadNotifs.notifs.slice(0,5).map(notif => <div key={notif._id} className="navBar__notif_panel_item">{notif.message}</div>)}
+                                <Link to={"/notifications"}>Voir tout</Link>
+                            </div>
+                        ): null}
                     </div>
                 </li>
                 <li className="nav-item">

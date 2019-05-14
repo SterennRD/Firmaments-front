@@ -1,6 +1,39 @@
 .navBar {
   font-size: 0.8em;
   font-weight: 700;
+  &__notif {
+    color: $color-grey;
+    font-size: 20px;
+    position: relative;
+    &_alert {
+      background-color: $color-violet;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.5em;
+      left: 50%;
+      padding: 1px 4px;
+      position: absolute;
+      text-align: center;
+      top: 0;
+    }
+    &_panel {
+      background-color: #fff;
+      border-radius: 3px;
+      box-shadow: 0 2px 8px #f1f1f1;
+      color: $color-blue;
+      font-size: 10px;
+      font-weight: normal;
+      padding: 10px;
+      position: absolute;
+      right: -20px;
+      width: 200px;
+      z-index: 10;
+      &_item {
+        border-bottom: 1px solid $color-grey;
+        padding: 5px 0;
+      }
+    }
+  }
   &__img {
     background-color: $color-blue;
     border-radius: 50%;
