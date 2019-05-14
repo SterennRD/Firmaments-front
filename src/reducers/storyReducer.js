@@ -154,7 +154,8 @@ export default function(state = INITIAL_STATE, action) {
         case LIKE_STORY:
             return {...state, likeList: {...state.likeList, loading: true, error: null}}
         case LIKE_STORY_SUCCESS:
-            return {...state, likeList: {likes: action.payload, loading: false, error: null}}
+            console.log(action.payload)
+            return {...state, selectedStory: {...state.selectedStory, story: {...state.selectedStory.story, nb_likes: action.payload.length}},likeList: {likes: action.payload, loading: false, error: null}}
         case LIKE_STORY_ERROR:
             error = action.payload || {message: action.payload.message};
             return {...state, likeList: {...state.likeList, loading: false, error: error}}

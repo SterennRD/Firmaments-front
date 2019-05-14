@@ -1,0 +1,90 @@
+.storyDetails {
+  &__header {
+    background-color: $color-violet;
+    height: 80vh;
+    margin-bottom: 50px;
+    .container, .row {
+      height: 100%;
+    }
+  }
+  &__stats {
+    display: flex;
+  }
+  &__cover {
+    align-items: center;
+    background-color: $color-blue;
+    display: flex;
+    height: 500px;
+    justify-content: center;
+    transform: translate(0, - 200px);
+    img {
+      height: calc(100% + 1px);
+      width: calc(100% + 1px);
+    }
+  }
+  &__categories {
+    &_item {
+      background-color: $color-grey;
+      border-radius: 5px;
+      margin-right: 5px;
+      padding: 2px 5px;
+    }
+  }
+  &__title {
+    align-items: center;
+    color: $color-blue;
+    display: flex;
+    font-family: "Montserrat", sans-serif;
+    font-size: 3em;
+    font-weight: 800;
+    &_badge {
+      background-color: $color-violet;
+      font-size: 0.3em;
+      margin-left: 10px;
+    }
+  }
+  &__description {
+    font-size: 0.9em;
+    margin: 20px 0;
+  }
+  &__buttons {
+    margin-bottom: 20px;
+    &_btn {
+      background-color: $color-blue;
+      border-radius: 5px;
+      color: $color-pink;
+      font-family: "Montserrat";
+      padding: 5px 10px;
+    }
+  }
+  &__subtitle {
+    color: $color-blue;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1em;
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  &__chapter {
+    background-color: #fff;
+    border: 1px solid $color-grey;
+    border-radius: 5px;
+    padding: .75rem 1.25rem;
+    margin-bottom: 5px;
+  }
+  &__comment {
+    &_author {
+      font-size: 0.8em;
+      a {
+        font-weight: bold;
+      }
+    }
+    &_date {
+      color: $color-violet;
+      font-size: 0.7em;
+    }
+    &_content {
+
+    }
+  }
+}
