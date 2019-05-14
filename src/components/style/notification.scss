@@ -1,0 +1,31 @@
+.notification {
+  background: #fff;
+  border-radius: 5px;
+  bottom: 30px;
+  box-shadow: 0 2px 8px #f1f1f1;
+  font-size: 0.8em;
+  left: 30px;
+  padding: 10px;
+  position: fixed;
+  width: 320px;
+  z-index: 10;
+  &::before {
+    color: $color-pink;
+    content: "\ec0e";
+    font-family: "honeybee";
+    position: absolute;
+    right: 10px;
+    top: 6px;
+  }
+  &__message {
+    color: $color-blue;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  &__link {
+    color: $color-blue;
+    display: flex;
+    font-weight: bold;
+    justify-content: flex-end;
+  }
+}

@@ -57,6 +57,17 @@
     font-size: 0.8em;
     line-height: 1.3em;
   }
+  &__category {
+    display: flex;
+    justify-content: flex-end;
+    &_item {
+      background-color: $color-grey;
+      border-radius: 3px;
+      font-size: 0.8em;
+      margin-left: 5px;
+      padding: 0 5px;
+    }
+  }
   &__stats {
     font-family: "Montserrat", sans-serif;
     font-size: 0.6em;
