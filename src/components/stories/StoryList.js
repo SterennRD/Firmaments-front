@@ -10,16 +10,20 @@ class StoryList extends Component {
         //this.socket = io.connect('localhost:4001');
     }
     componentDidMount() {
+        console.log("mes histoires monté")
         const {user} = this.props.auth;
         if (user) {
+        console.log("je cherche mes histoires")
             this.props.getStory(user._id)
         }
     }
-    componentWillMount(nextProps) {
-        console.log(nextProps)
-        const {user} = this.props.auth;
-        if (user) {
-            this.props.getStory(user._id)
+    componentDidUpdate(prevProps) {
+        if (prevProps.auth.user !== this.props.auth.user) {
+
+            const {user} = this.props.auth;
+            if (user) {
+                this.props.getStory(user._id)
+            }
         }
     }
 
@@ -42,8 +46,7 @@ class StoryList extends Component {
 
     render() {
 
-        const {isAuthenticated} = this.props.auth;
-        const {user} = this.props.auth.user;
+        const {isAuthenticated, user} = this.props.auth;
         const {stories, loading, error} = this.props.stories.stories;
 
         if (loading) {
@@ -52,6 +55,8 @@ class StoryList extends Component {
             return  <div className="alert alert-danger">{error.message}</div>
         } else if(!stories) {
             return <span />
+        } else if(!user) {
+            return <div className="alert alert-danger">Connectez-vous pour accéder à vos histoires</div>
         }
 
         let storiesList = ''

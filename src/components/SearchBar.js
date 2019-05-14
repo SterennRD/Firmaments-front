@@ -104,33 +104,33 @@ class SearchBar extends Component {
         const {searchStory, loading, error, totalResults} = this.props.search;
         if (this.state.results && this.state.results.length > 0) {
             results = this.state.results.map( e => (
-                <div key={e._id} className="d-flex justify-content-space-between">
+                <div key={e._id} className="searchBar__item d-flex justify-content-between">
                     <Link to={'/stories/see/' + e._id}>{e.title}</Link>
-                    <div>Par {e.author.username_display}</div>
+                    <div className="searchBar__item_author">Par {e.author.username_display}</div>
                 </div>
                 )
             )
         }
         if (totalResults && totalResults > 0) {
             resultsLink = (
-                    <div className="d-flex justify-content-space-between">
-                        <button type="submit">Voir les {totalResults} résultats</button>
-                    </div>
+                    <button className="searchBar__link" type="submit">Voir les {totalResults} résultats</button>
                 )
         }
         return (
             <div className="navbar-nav ml-auto" ref={this.setWrapperRef}>
                 <form onSubmit={this.handleSearch}>
-                    <input onFocus={this.handleFocus} onBlur={this.handleBlur} type="text" autoComplete="off" name="search-bar" value={this.state.searchText} onChange={this.handleChange}/>
-                    <button type="submit">Recherche</button>
-                    { this.state.showResults ? (
-                        <div className="d-flex flex-column">
-                            {results}
-                            {resultsLink}
-                        </div>
-                    ) : (
-                        null
-                    )}
+                    <div className="searchBar">
+                        <input className="searchBar__input form-control" onFocus={this.handleFocus} onBlur={this.handleBlur} type="text" autoComplete="off" name="search-bar" value={this.state.searchText} onChange={this.handleChange}/>
+                        <button type="submit" className="searchBar__btn"><i className="fas fa-search"></i></button>
+                        { this.state.showResults ? (
+                            <div className="searchBar__panel d-flex flex-column">
+                                {results}
+                                {resultsLink}
+                            </div>
+                        ) : (
+                            null
+                        )}
+                    </div>
                 </form>
             </div>
         );
