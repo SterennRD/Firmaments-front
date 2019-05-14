@@ -3,8 +3,6 @@ import {Field, reduxForm} from "redux-form";
 import connect from "react-redux/es/connect/connect";
 import renderField from "../forms/renderField";
 import {editUser} from "../../actions/UserActions";
-import ParametersForm from "./ParametersForm";
-import ParametersPassword from "../../containers/ParametersPasswordContainer";
 
 const validateAndEditUser = (values, dispatch, state)  => {
     console.log("j'édite un user")
@@ -13,7 +11,7 @@ const validateAndEditUser = (values, dispatch, state)  => {
     return dispatch(editUser(values, token))
 }
 
-class Parameters extends Component {
+class ParametersForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -38,14 +36,40 @@ class Parameters extends Component {
         }
         return (
             <div>
-                <h1>Paramètres</h1>
-                <ParametersForm {...this.props} />
-                    <hr />
-                <ParametersPassword/>
+                <form onSubmit={handleSubmit(validateAndEditUser)}>
+                    <div className="form-group">
+                        <Field
+                            name="username"
+                            type="username"
+                            component={ renderField }
+                            label="Nom utilisateur" />
+                    </div>
+
+                    <Field
+                        name="email"
+                        type="email"
+                        component={ renderField }
+                        label="Adresse email" />
+                    <button type="submit" disabled={pristine || submitting}>
+                        Submit
+                    </button>
+                </form>
             </div>
         );
     }
 }
 
+ParametersForm = reduxForm({
+    form: 'ParametersForm',  // a unique identifier for this form
 
-export default Parameters
+    forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
+    enableReinitialize: true,
+}, editUser)(ParametersForm);
+
+ParametersForm = connect(
+    state => ({
+        initialValues: state.user.user,
+    })
+)(ParametersForm);
+
+export default ParametersForm

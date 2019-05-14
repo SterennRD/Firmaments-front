@@ -11,6 +11,7 @@ import {
     EDIT_READING_LIST, EDIT_READING_LIST_SUCCESS, EDIT_READING_LIST_ERROR, RESET_EDIT_READING_LIST,
     DELETE_READING_LIST, DELETE_READING_LIST_SUCCESS, DELETE_READING_LIST_ERROR, RESET_DELETE_READING_LIST,
     EDIT_USER, EDIT_USER_SUCCESS, EDIT_USER_ERROR, RESET_EDITED_USER,
+    CHANGE_PASSWORD, CHANGE_PASSWORD_SUCCESS, CHANGE_PASSWORD_ERROR, CHANGE_PASSWORD_RESET
 } from './types';
 
 const ROOT_URL = window.location.href.indexOf('localhost') > 0 ? 'http://localhost:3000/users' : '/users';
@@ -241,5 +242,37 @@ export const editUser = (props, token) => {
 
                 throw new SubmissionError(error.response.data)
             })
+    }
+};
+
+export const changePassword = (props, token) => {
+
+    return function(dispatch) {
+        dispatch({type: CHANGE_PASSWORD});
+        console.log("change pass", props)
+        axios({
+            method: 'post',
+            data: props,
+            url: `${ROOT_URL}/editpassword`,
+            headers: {
+                'x-access-token': token
+            }
+        })
+            .then(function(response) {
+                if (response.status === 200){
+                    dispatch({type: CHANGE_PASSWORD_SUCCESS, payload: response.data})
+                } else {
+                    dispatch({type: CHANGE_PASSWORD_ERROR, payload: response.data})
+                }
+            })
+            .catch(function(error) {
+                console.log(error.response)
+               dispatch({type: CHANGE_PASSWORD_ERROR, payload: error.response.data})
+            })
+    }
+};
+export function resetChangePassword() {
+    return {
+        type: CHANGE_PASSWORD_RESET
     }
 };

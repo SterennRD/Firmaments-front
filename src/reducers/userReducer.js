@@ -9,6 +9,7 @@ import {
     EDIT_READING_LIST, EDIT_READING_LIST_SUCCESS, EDIT_READING_LIST_ERROR, RESET_EDIT_READING_LIST,
     DELETE_READING_LIST, DELETE_READING_LIST_SUCCESS, DELETE_READING_LIST_ERROR, RESET_DELETE_READING_LIST,
     EDIT_USER, EDIT_USER_SUCCESS, EDIT_USER_ERROR, RESET_EDITED_USER,
+    CHANGE_PASSWORD, CHANGE_PASSWORD_SUCCESS, CHANGE_PASSWORD_ERROR, CHANGE_PASSWORD_RESET
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -20,7 +21,7 @@ const INITIAL_STATE = {
     newReadingList: {loading: false, error: null, readingList: null},
     editReadingList: {loading: false, error: null, readingList: null},
     deletedReadingList: {loading: false, error: null, readingList: null},
-    editUser: {loading: false, error: null, user: null}
+    editUser: {loading: false, error: null, user: null, changePassword: {loading: false, error: null, password: null}}
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -252,6 +253,15 @@ export default function(state = INITIAL_STATE, action) {
             return {...state, editUser: {...state.editUser, loading: true}}
         case EDIT_USER_ERROR:
             return {...state, editUser: {loading: false, error: action.payload, user: null}}
+
+        case CHANGE_PASSWORD:
+            return {...state, editUser: {...state.editUser, changePassword: {...state.editUser.changePassword, loading: true}}}
+        case CHANGE_PASSWORD_ERROR:
+            return {...state, editUser: {...state.editUser, changePassword: {...state.editUser.changePassword, loading: false, error: action.payload}}}
+        case CHANGE_PASSWORD_SUCCESS:
+            return {...state, editUser: {...state.editUser, changePassword: {...state.editUser.changePassword, loading: false, error: null, password: action.payload}}}
+        case CHANGE_PASSWORD_RESET:
+            return {...state, editUser: {...state.editUser, changePassword: {...state.editUser.changePassword, loading: false, error: null, password: null}}}
 
         default:
             return state;
