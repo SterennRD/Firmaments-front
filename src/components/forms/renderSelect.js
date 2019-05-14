@@ -67,11 +67,11 @@ const renderSelect = ({ input, label, type, meta: { touched, error, invalid, war
                     noOptionsMessage={noOptionsMessage}
                     name={input.name}
                     options={categories}
-                    className="basic-multi-select"
+                    className={`basic-multi-select form-control ${touched && invalid ? 'is-invalid' : ''}`}
                     classNamePrefix="select"
                     placeholder="Choisissez une catégorie..."
                 />
-                <div className="help-block">
+                <div className="invalid-feedback">
                     {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
                 </div>
             </div>
@@ -87,7 +87,7 @@ const renderSelect = ({ input, label, type, meta: { touched, error, invalid, war
                     <select className="form-control" id={input.name} {...input} onBlur={() => input.onBlur(input.value)}>
                         {options.map(renderSelectOptions)}
                     </select>
-                    <div className="help-block">
+                    <div className="invalid-feedback">
                         {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
                     </div>
                 </div>
