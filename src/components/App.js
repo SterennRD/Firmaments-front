@@ -48,6 +48,9 @@ class App extends Component {
                 this.props.getAllUnreadNotifs(this.props.auth.user._id, token)
             }
         }
+        if (this.props.notifications.notifComment !== prevProps.notifications.notifComment) {
+                this.props.getAllUnreadNotifs(this.props.auth.user._id, token)
+        }
 
     }
     componentDidMount() {

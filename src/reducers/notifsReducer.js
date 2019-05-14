@@ -1,7 +1,7 @@
 import {
     GET_ALL_NOTIFS, GET_ALL_NOTIFS_SUCCESS, GET_ALL_NOTIFS_ERROR,
     GET_ALL_UNREAD_NOTIFS, GET_ALL_UNREAD_NOTIFS_SUCCESS, GET_ALL_UNREAD_NOTIFS_ERROR,
-    NOTIF_NEW_COMMENT
+    NOTIF_NEW_COMMENT, RESET_NOTIF_NEW_COMMENT,
 } from '../actions/types';
 
 const initialState = {
@@ -15,6 +15,8 @@ export default function(state = initialState, action ) {
     switch(action.type) {
         case NOTIF_NEW_COMMENT:
             return {...state, notifComment: {notif: action.payload}}
+        case RESET_NOTIF_NEW_COMMENT:
+            return {...state, notifComment: { notif: null}}
 
         case GET_ALL_NOTIFS:
             return {...state, allNotifs: {...state.allNotifs, loading: true}}

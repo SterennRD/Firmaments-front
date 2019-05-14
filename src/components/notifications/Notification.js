@@ -7,6 +7,11 @@ class Notification extends Component {
         this.handleRead = this.handleRead.bind(this)
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.notifications.notifComment !== this.props.notifications.notifComment) {
+            setTimeout(this.props.resetMe, 10000);
+        }
+    }
     handleRead(id) {
 
     }
@@ -21,7 +26,7 @@ class Notification extends Component {
                 <div>
                     <p>{notification.message}</p>
                     {notification.user_from.username_display} a laissé un commentaire sur <Link to={'/stories/see/' + notification.story_id._id}>{notification.story_id.title}</Link>
-                    <a id={notification._id} onClick={e => this.handleRead(e.target.id)}>Lu</a>
+                    <a id={notification._id} onClick={e => this.handleRead(e.target.id)}>Marquer comme lu</a>
                 </div>
             )
         }
