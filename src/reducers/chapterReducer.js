@@ -3,6 +3,7 @@ import {
     EDIT_CHAPTER, EDIT_CHAPTER_SUCCESS, EDIT_CHAPTER_FAILURE, RESET_EDIT_CHAPTER,
     CREATE_CHAPTER, CREATE_CHAPTER_SUCCESS, CREATE_CHAPTER_FAILURE, RESET_NEW_CHAPTER,
     ADD_COMMENT, ADD_COMMENT_SUCCESS, ADD_COMMENT_ERROR, RESET_ADDED_COMMENT,
+    DELETE_CHAPTER, DELETE_CHAPTER_SUCCESS, DELETE_CHAPTER_FAILURE, RESET_DELETED_CHAPTER,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -13,7 +14,8 @@ const INITIAL_STATE = {
     loading: false,
     newChapter:{chapter:null, error: null, loading: false},
     editChapter:{chapter:null, error: null, loading: false},
-    newComment:{comment: null, error:null, loading: false}
+    newComment:{comment: null, error:null, loading: false},
+    deleteChapter:{chapter: null, error:null, loading: false}
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -42,6 +44,7 @@ export default function(state = INITIAL_STATE, action) {
             error = action.payload || {message: action.payload.message};//2nd one is network or server down errors
             return {...state, newChapter: {chapter:null, error:error, loading: false}}
         case RESET_NEW_CHAPTER:
+            console.log("reset new chapter********")
             return {...state,  newChapter:{chapter:null, error:null, loading: false}}
 
         case EDIT_CHAPTER:
@@ -70,6 +73,16 @@ export default function(state = INITIAL_STATE, action) {
             return { ...state, newComment: {loading: false, error: error, comment: null}};
         case RESET_ADDED_COMMENT:
             return { ...state, newComment: {loading: false, error: null, comment: null}};
+
+        case DELETE_CHAPTER:
+            return {...state, deleteChapter:{loading: true, chapter: null, error: null}}
+        case DELETE_CHAPTER_SUCCESS:
+            return {...state, deleteChapter:{loading: false, chapter: action.payload, error: null}}
+        case DELETE_CHAPTER_FAILURE:
+            return {...state, deleteChapter:{loading: false, chapter: null, error: action.payload}}
+        case RESET_DELETED_CHAPTER:
+            return {...state, deleteChapter:{loading: false, chapter: null, error: null}}
+
 
         default:
             return state;

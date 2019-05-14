@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import StoryTable from '../components/stories/StoryTable';
 import {
-    editChapter, getStoryById, resetSelectedChapter
+    deleteChapter,
+    editChapter, getStoryById, resetSelectedChapter, resetDeletedChapter
 } from "../actions/StoryAction";
 
 const mapDispatchToProps = (dispatch) => {
@@ -13,9 +14,13 @@ const mapDispatchToProps = (dispatch) => {
         editChapter: (props, id, token) => {
             dispatch(editChapter(props, id, token))
         },
+        deleteChapter: (id) => {
+            dispatch(deleteChapter(id))
+        },
         resetMe: () => {
             console.log("je démonte story table")
             dispatch(resetSelectedChapter());
+            dispatch(resetDeletedChapter());
         },
     }
 };

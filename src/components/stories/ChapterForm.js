@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router-dom';
-import { reduxForm, Field, SubmissionError } from 'redux-form';
+import { reduxForm, Field, SubmissionError, formValueSelector } from 'redux-form';
 import renderField from '../forms/renderField';
 import renderTextArea from '../forms/renderTextArea';
 import renderSelect from '../forms/renderSelect';
@@ -38,7 +38,37 @@ const validateAndCreatePost = (values, dispatch)  => {
         chapters: [
             {
                 title: values.titleChapter,
-                content: values.content
+                content: values.content,
+                status: {
+                    id: 1,
+                    label: "Brouillon"
+                }
+            }
+        ]
+    }
+    delete newValues.titleChapter;
+    delete newValues.content;
+    console.log(newValues)
+    return dispatch(createStory(newValues, localStorage.getItem('jwtToken')))
+}
+
+const validateAndCreatePublicStory = (values, dispatch)  => {
+    const selectedCategory = category.find( el => el.id === parseInt(values.category));
+    const selectedRating = rating.find( el => el.id === parseInt(values.rating));
+    const selectedStatus = status.find( el => el.id === parseInt(values.status));
+    const newValues = {
+        ...values,
+        rating: selectedRating,
+        status: selectedStatus,
+        category: selectedCategory,
+        chapters: [
+            {
+                title: values.titleChapter,
+                content: values.content,
+                status: {
+                    id: 2,
+                    label: "Publié"
+                }
             }
         ]
     }
@@ -215,7 +245,7 @@ class ChapterForm extends Component {
     }
 
     render() {
-        const {handleSubmit, submitting, pristine, previousPage, mode } = this.props;
+        const {handleSubmit, submitting, pristine, previousPage, mode,statusValue } = this.props;
         const { story } = this.props.stories.selectedStory;
         const { editChapter, newChapter } = this.props.chapter;
         console.log("chapter")
@@ -251,14 +281,15 @@ class ChapterForm extends Component {
                     id = this.props.location.pathname.split('/')[2];
                 }
                 let url = "/stories/toc/" + id;
-                if (chapter.status.id === 1) {
+                debugger;
+                if (chapter.status.label === "Brouillon") {
                     return (
                         <div className="alert alert-success">
                             Chapitre enregistré avec succès !
                             <div><Link to={url}>Retour</Link></div>
                         </div>
                     );
-                } else if (chapter.status.id === 2) {
+                } else if (chapter.status.label === "Publié") {
                     return (
                         <div className="alert alert-success">
                             Chapitre publié avec succès !
@@ -292,8 +323,11 @@ class ChapterForm extends Component {
                     <button type="button" className="previous" onClick={previousPage}>
                         Previous
                     </button>
-                    <button type="submit" disabled={pristine || submitting}>
-                        Submit
+                    <button type="submit" disabled={parseInt(statusValue) === 1 || parseInt(statusValue) === 2 || pristine || submitting}>
+                        Enregistrer
+                    </button>
+                    <button onClick={handleSubmit(validateAndCreatePublicStory)} disabled={pristine || submitting}>
+                        Publier le chapitre
                     </button>
                 </div>
             );
@@ -309,6 +343,7 @@ class ChapterForm extends Component {
                 { this.renderEdit(editChapter) }
                 { this.renderNew(newChapter) }
                 {title}
+                {statusValue}
                 <form onSubmit={submit}>
                     <Field
                         name="titleChapter"
@@ -365,12 +400,13 @@ ChapterForm = reduxForm({
     enableReinitialize: true,
     validate
 })(ChapterForm);
-
+const selector = formValueSelector('StoryForm')
 // You have to connect() to any reducers that you wish to connect to yourself
-ChapterForm = connect(
-    state => ({
-        //initialValues: state.chapter.selectedChapter
-    })
-)(ChapterForm);
 
+ChapterForm = connect(state => {
+    const statusValue = selector(state, 'status')
+    return {
+        statusValue
+    }
+})(ChapterForm)
 export default ChapterForm

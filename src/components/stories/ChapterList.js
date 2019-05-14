@@ -21,8 +21,7 @@ class ChapterList extends Component {
         this.props.editChapter(selectedChapter, this.props.stories.selectedStory.story._id, localStorage.getItem('jwtToken'))
     }
     handleDelete(id) {
-        const confirm = window.confirm("Voulez-vous vraiment supprimer l'histoire ?")
-        console.log("je supprime");
+        this.props.deleteChapter(id)
         this.setState({showModal: false, idModal: null})
     }
 
@@ -34,6 +33,7 @@ class ChapterList extends Component {
     }
     render() {
         let {story} = '';
+        let {chapter, loading, error} = this.props.chapter.deleteChapter;
         if (!this.props.story || this.props.story === undefined) {
             story = this.props.stories.selectedStory.story
         } else {
@@ -77,6 +77,9 @@ class ChapterList extends Component {
             <div>
                 <h2>Liste des chapitres</h2>
                 {this.state.showModal ? modal : null}
+                {loading ? "Chargement" : null}
+                {chapter ? <div className="alert alert-success">Chapitre supprimé</div> : null}
+                {error ? <div className="alert alert-danger">{error}</div> : null}
                 {chapters}
             </div>
         );

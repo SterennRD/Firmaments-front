@@ -15,6 +15,7 @@ import {
     LIKE_STORY, LIKE_STORY_SUCCESS, LIKE_STORY_ERROR,
     ADD_TO_READING_LIST, ADD_TO_READING_LIST_SUCCESS, ADD_TO_READING_LIST_ERROR,
     ADD_COMMENT, ADD_COMMENT_SUCCESS, ADD_COMMENT_ERROR, RESET_ADDED_COMMENT,
+    DELETE_CHAPTER, DELETE_CHAPTER_SUCCESS, DELETE_CHAPTER_FAILURE, RESET_DELETED_CHAPTER,
 } from './types';
 
 const jwt = require('jsonwebtoken');
@@ -504,5 +505,35 @@ export const addComment = (props, id, tokenFromStorage, socket) => dispatch => {
 export const resetAddedComment = () => {
     return {
         type: RESET_ADDED_COMMENT
+    }
+}
+
+export const deleteChapter = (id) => dispatch => {
+    const token = localStorage.getItem('jwtToken');
+    dispatch({type: DELETE_CHAPTER})
+    axios({
+        method: 'post',
+        url: `${ROOT_URL}/chapter/delete/${id}`,
+        headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': token
+        }
+    })
+        .then(res => {
+            console.log(res)
+            if (res.status === 200) {
+                dispatch({type: DELETE_CHAPTER_SUCCESS, payload: res.data})
+            } else {
+                dispatch({type: DELETE_CHAPTER_FAILURE, payload: res.data})
+            }
+        })
+        .catch(err => {
+            dispatch({type: DELETE_CHAPTER_FAILURE, payload: err.response.data.message})
+        });
+
+}
+export function resetDeletedChapter() {
+    return {
+        type: RESET_DELETED_CHAPTER
     }
 }

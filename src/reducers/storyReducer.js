@@ -12,7 +12,7 @@ import {
     LIKE_STORY, LIKE_STORY_SUCCESS, LIKE_STORY_ERROR,
     ADD_TO_READING_LIST_SUCCESS,
     EDIT_READING_LIST,
-    EDIT_CHAPTER_SUCCESS,
+    EDIT_CHAPTER_SUCCESS, DELETE_CHAPTER_SUCCESS
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -197,6 +197,11 @@ export default function(state = INITIAL_STATE, action) {
             console.log("story reducer")
             return {...state}
 
+        case DELETE_CHAPTER_SUCCESS:
+            let chapterlist = state.selectedStory.story.chapters.filter(c => c._id !== action.payload)
+            console.log("avant", state.selectedStory.story.chapters)
+            console.log("après", chapterlist)
+            return {...state, selectedStory: {...state.selectedStory, story: {...state.selectedStory.story, chapters: chapterlist}}}
 
         default:
             return state;
