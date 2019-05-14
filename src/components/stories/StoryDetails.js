@@ -116,6 +116,8 @@ class StoryDetails extends Component {
                 <div>{isAuthenticated && isMyStory ? edit : ''}</div>
                 <button onClick={this.props.history.goBack}>Retour</button>
                 <Like {...this.props}/>
+                <a target="_blank" href={"https://twitter.com/intent/tweet?text=" + story.title + "&url=" + this.props.location.pathname +"&via=TheDesignCat"}>Tweet</a>
+                <a target="_blank" href={"https://www.facebook.com/sharer/sharer.php?u="+ this.props.location.pathname}>Share on Facebook</a>
                 <ul>
                     <li>{story._id}</li>
                     <li>Titre : {story.title}</li>
