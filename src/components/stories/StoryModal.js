@@ -27,7 +27,7 @@ class StoryModal extends Component {
     render() {
         const { isAuthenticated } = this.props.auth;
         const {story} = this.props;
-        const category = story.category.map(c => <span key={c.label}>{c.label}</span>)
+        const category = story.category.map(c => <span className="storyModal__category_item" key={c.label}>{c.label}</span>)
 
         return (
             <div className="storyModal">
@@ -41,7 +41,7 @@ class StoryModal extends Component {
                                 <i className="fas fa-book"></i>
                             }
                         </div>
-                        <div>{story.status.label}</div>
+                        <div className="storyModal__status">{story.status.label}</div>
                     </div>
                     <div className="storyModal__info">
                         <div className="storyModal__stats d-flex">
@@ -54,7 +54,7 @@ class StoryModal extends Component {
                             <span className="storyModal__title_badge badge badge-primary">{story.rating.label}</span>
                         </h2>
                         <div className="storyModal__author">Par <Link to={"/user/profile/" + story.author._id}>{story.author.username_display}</Link></div>
-                        <div>{category}</div>
+                        <div className="storyModal__category">{category}</div>
                         <p className="storyModal__description">{story.description}</p>
                         <div className="storyModal__buttons">
                             <Link to={"/stories/see/" + story._id} className="storyModal__buttons_btn">Lire</Link>

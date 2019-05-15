@@ -15,7 +15,6 @@
     position: absolute;
     top: 0;
     width: 100%;
-    z-index: 10;
   }
   &__window {
     background-color: #fff;
@@ -28,6 +27,8 @@
     width: 600px;
   }
   &__left {
+    display: flex;
+    flex-direction: column;
     width: 180px;
   }
   &__cover {
@@ -39,11 +40,20 @@
     font-size: 4em;
     height: 220px;
     justify-content: center;
+    margin-bottom: 10px;
     overflow: hidden;
     img {
       height: 100%;
       width: auto;
     }
+  }
+  &__status {
+    align-self: flex-start;
+    border: 1px solid $color-blue;
+    border-radius: 5px;
+    color: $color-blue;
+    padding: 0 5px;
+    text-transform: uppercase;
   }
   &__info {
     display: flex;
@@ -69,11 +79,22 @@
       vertical-align: middle;
     }
   }
+  &__category {
+    margin-bottom: 15px;
+    &_item {
+      background-color: $color-grey;
+      border-radius: 3px;
+      font-size: 0.8em;
+      margin-right: 10px;
+      padding: 3px 8px;
+    }
+  }
   &__description {
     font-size: 0.8em;
   }
   &__rl {
     position: relative;
+    width: 300px;
   }
   &__buttons {
     display: flex;
@@ -87,6 +108,7 @@
       font-size: 0.8em;
       margin-right: 10px;
       padding: 5px 15px;
+      text-align: center;
       transition: 0.3s;
       &:hover {
         background-color: $color-pink;

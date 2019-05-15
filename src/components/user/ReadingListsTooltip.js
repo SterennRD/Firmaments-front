@@ -65,16 +65,16 @@ class ReadingListsTooltip extends Component {
         }
 
         const form = (
-            <form onSubmit={this.handleSubmit}>
-                <input type="text" name="title" value={this.state.title} onChange={this.handleChange} placeholder="Créer une liste de lecture" />
-                <button type="submit">Créer</button>
+            <form className="rl-tooltip__form" onSubmit={this.handleSubmit}>
+                <input type="text" className="rl-tooltip__form_input" name="title" value={this.state.title} onChange={this.handleChange} placeholder="Créer une liste de lecture" />
+                <button className="rl-tooltip__form_btn" type="submit">Créer</button>
             </form>
         );
 
         return (
             <div className="rl-tooltip">
                 <div className="rl-tooltip__list">{list}</div>
-                <div className="rl-tooltip__form">{newReadingList.loading ? 'chargement' : form}</div>
+                <div>{newReadingList.loading ? 'chargement' : form}</div>
             </div>
         );
     }
