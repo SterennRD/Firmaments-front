@@ -13,7 +13,8 @@ class Chapter extends Component {
         this.state = {
             currentChapter: '',
             scrollY: 0,
-            scrolled: 0
+            scrolled: 0,
+            read: false
         }
         this.handleNext = this.handleNext.bind(this)
         this.handlePrev = this.handlePrev.bind(this)
@@ -28,6 +29,7 @@ class Chapter extends Component {
             const id =this.props.match.params.id;
             const idChapter =this.props.match.params.idchapter;
             this.fetchData(id, idChapter);
+            this.setState({read: false})
         }
     }
     componentWillUnmount() {
@@ -38,7 +40,6 @@ class Chapter extends Component {
         const id =this.props.match.params.id;
         const idChapter =this.props.match.params.idchapter;
         this.fetchData(id, idChapter);
-        window.addEventListener('scroll', this.ScrollRateCalculation);
         window.addEventListener("scroll", this.scrollProgress);
     }
     scrollProgress() {
@@ -51,6 +52,22 @@ class Chapter extends Component {
             this.setState({
                 scrolled: parseInt(scrolled)
             });
+            if (this.props.auth.isAuthenticated) {
+                const read = this.props.chapter.selectedChapter.read.includes(this.props.auth.user._id)
+                if (this.state.scrolled > 100 && !read && !this.state.read) {
+                    console.log("read", read)
+                    console.log("chapter read", this.props.chapter.selectedChapter.read, this.props.auth.user._id)
+                    console.log("chapter id", this.props.chapter.selectedChapter._id)
+                    const token = localStorage.getItem('jwtToken');
+                    const id = this.props.auth.user._id
+                    const idChapter = this.props.chapter.selectedChapter._id
+                    const socket = this.props.auth.socket
+                    this.setState({read: true})
+                    console.log("*****************************************")
+                    this.props.addChapterToRead(id, idChapter, token, socket)
+                }
+            }
+
         }
 
     };
@@ -117,11 +134,8 @@ class Chapter extends Component {
         if (story) {
             readingTime = Math.round(selectedChapter.content.split(' ').length / 300);
             let nbWords = selectedChapter.content.split(' ').length;
-            console.log("nombre de mots :", nbWords, "temps de lecture: ", readingTime)
             currentChapter = story.chapters.map(function(e) { return e._id; }).indexOf(selectedChapter._id);
             totalChapters = story.chapters.length;
-            console.log("current", currentChapter)
-            console.log("total", totalChapters)
         }
 
         let isMyChapter = false;

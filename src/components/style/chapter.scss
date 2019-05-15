@@ -17,6 +17,7 @@
     padding: 6px 10px;
   }
   &__content {
+    min-height: calc(100vh - 70px);
     &_header {
       align-items: center;
       display: flex;

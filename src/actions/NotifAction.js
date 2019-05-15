@@ -3,6 +3,7 @@ import {
     GET_ALL_NOTIFS, GET_ALL_NOTIFS_SUCCESS, GET_ALL_NOTIFS_ERROR,
     GET_ALL_UNREAD_NOTIFS, GET_ALL_UNREAD_NOTIFS_SUCCESS, GET_ALL_UNREAD_NOTIFS_ERROR,
     NOTIF_NEW_COMMENT, RESET_NOTIF_NEW_COMMENT,
+    NOTIF_READ, RESET_NOTIF_READ,
 } from './types';
 
 const ROOT_URL = process.env.REACT_APP_NOTIFS
@@ -12,6 +13,12 @@ export const receiveComment = (comment) => dispatch => {
 }
 export const resetNotifComment = () => dispatch => {
     dispatch({type: RESET_NOTIF_NEW_COMMENT })
+}
+export const readChapterAdded = (notif) => dispatch => {
+    dispatch({type: NOTIF_READ, payload: notif })
+}
+export const resetNotifRead = () => dispatch => {
+    dispatch({type: RESET_NOTIF_READ })
 }
 
 

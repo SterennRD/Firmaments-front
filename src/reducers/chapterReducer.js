@@ -4,6 +4,7 @@ import {
     CREATE_CHAPTER, CREATE_CHAPTER_SUCCESS, CREATE_CHAPTER_FAILURE, RESET_NEW_CHAPTER,
     ADD_COMMENT, ADD_COMMENT_SUCCESS, ADD_COMMENT_ERROR, RESET_ADDED_COMMENT,
     DELETE_CHAPTER, DELETE_CHAPTER_SUCCESS, DELETE_CHAPTER_FAILURE, RESET_DELETED_CHAPTER,
+    ADD_CHAPTER_TO_READ,ADD_CHAPTER_TO_READ_SUCCESS, ADD_CHAPTER_TO_READ_ERROR, ADD_CHAPTER_TO_READ_RESET,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -15,7 +16,8 @@ const INITIAL_STATE = {
     newChapter:{chapter:null, error: null, loading: false},
     editChapter:{chapter:null, error: null, loading: false},
     newComment:{comment: null, error:null, loading: false},
-    deleteChapter:{chapter: null, error:null, loading: false}
+    deleteChapter:{chapter: null, error:null, loading: false},
+    read:{chapter: null, error:null, loading: false}
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -82,6 +84,16 @@ export default function(state = INITIAL_STATE, action) {
             return {...state, deleteChapter:{loading: false, chapter: null, error: action.payload}}
         case RESET_DELETED_CHAPTER:
             return {...state, deleteChapter:{loading: false, chapter: null, error: null}}
+
+        case ADD_CHAPTER_TO_READ:
+            return {...state, read: {...state.read, loading: true}}
+        case ADD_CHAPTER_TO_READ_SUCCESS:
+            console.log("ADD CHAPTER TO READ SUCCESS", action.payload)
+            return {...state, read: {error: null, chapter: action.payload._id,loading: false}, selectedChapter: {...state.selectedChapter, read: action.payload.read, nbRead: action.payload.read.length}}
+        case ADD_CHAPTER_TO_READ_ERROR:
+            return {...state}
+        case ADD_CHAPTER_TO_READ_RESET:
+            return {...state}
 
 
         default:

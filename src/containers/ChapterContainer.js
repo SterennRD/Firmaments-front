@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Chapter from '../components/stories/Chapter';
 import {
-    getChapterById, resetSelectedChapter
+    getChapterById, resetSelectedChapter, addChapterToRead
 } from "../actions/StoryAction";
 
 const mapDispatchToProps = (dispatch) => {
@@ -13,6 +13,9 @@ const mapDispatchToProps = (dispatch) => {
         resetMe: () => {
             dispatch(resetSelectedChapter());
         },
+        addChapterToRead: (id, idChapter, token, socket) => {
+            dispatch(addChapterToRead(id, idChapter, token, socket))
+        }
     }
 };
 

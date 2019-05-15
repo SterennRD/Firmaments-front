@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { meFromToken,
 //meFromTokenSuccess, meFromTokenFailure, resetToken
 } from '../actions/users';
-import {receiveComment, getAllNotifs, getAllUnreadNotifs} from "../actions/NotifAction";
+import {receiveComment, getAllNotifs, getAllUnreadNotifs, readChapterAdded} from "../actions/NotifAction";
 
 import App from '../components/App.js';
 
@@ -14,6 +14,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         receiveComment: (comment) => {
             dispatch(receiveComment(comment))
+        },
+        readChapterAdded: (notif) => {
+            dispatch(readChapterAdded(notif))
         },
         getAllNotifs: (id, token) => {
             dispatch(getAllNotifs(id, token))

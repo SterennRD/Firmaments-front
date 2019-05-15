@@ -16,6 +16,7 @@ import {
     ADD_TO_READING_LIST, ADD_TO_READING_LIST_SUCCESS, ADD_TO_READING_LIST_ERROR,
     ADD_COMMENT, ADD_COMMENT_SUCCESS, ADD_COMMENT_ERROR, RESET_ADDED_COMMENT,
     DELETE_CHAPTER, DELETE_CHAPTER_SUCCESS, DELETE_CHAPTER_FAILURE, RESET_DELETED_CHAPTER,
+    ADD_CHAPTER_TO_READ,ADD_CHAPTER_TO_READ_SUCCESS, ADD_CHAPTER_TO_READ_ERROR, ADD_CHAPTER_TO_READ_RESET,
 } from './types';
 
 const jwt = require('jsonwebtoken');
@@ -525,5 +526,44 @@ export const deleteChapter = (id) => dispatch => {
 export function resetDeletedChapter() {
     return {
         type: RESET_DELETED_CHAPTER
+    }
+}
+
+export const addChapterToRead = (id, idChapter, token, socket) => dispatch => {
+    dispatch({type: ADD_CHAPTER_TO_READ})
+    console.log("je lance l'action lire")
+    axios({
+        method: 'post',
+        url: `${ROOT_URL}/chapter/read/${idChapter}/${id}`,
+        headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': token
+        }
+    })
+        .then(res => {
+            console.log("chapitre lu", res)
+            if (res.status === 200) {
+                console.log("code 200")
+                const chapter = res.data.chapters.filter(c => c._id === idChapter)
+                dispatch({type: ADD_CHAPTER_TO_READ_SUCCESS, payload: chapter[0]})
+                socket.emit('readChapter', {
+                    message: 'Chapitre ajouté aux chapitres lus',
+                    user_from: id,
+                    user_to: id,
+                    chapter_id: idChapter
+                });
+            } else {
+                //dispatch({type: ADD_CHAPTER_TO_READ_ERROR, payload: res.data})
+            }
+        })
+        .catch(err => {
+            console.log("lu erreur", err.response)
+            //dispatch({type: ADD_CHAPTER_TO_READ_ERROR, payload: err.response.data.message})
+        });
+
+}
+export function resetReadChapter() {
+    return {
+        type: ADD_CHAPTER_TO_READ_RESET
     }
 }

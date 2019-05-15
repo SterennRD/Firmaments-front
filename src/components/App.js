@@ -33,6 +33,10 @@ class App extends Component {
     componentDidUpdate(prevProps) {
 
         if (this.props.auth.socket) {
+            this.props.auth.socket.on("readChapterAdded", (data) => {
+                console.log("chapitre ajouté aux lus", data)
+                this.props.readChapterAdded(data)
+            });
             console.log(this.props.auth.socket)
             this.props.auth.socket.on("essai", (msg) => {
                 console.log("je reçois la notif", msg)
