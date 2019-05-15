@@ -6,10 +6,29 @@
     .container, .row {
       height: 100%;
     }
+    &_back {
+      background-color: transparent;
+      border: 1px solid $color-blue;
+      border-radius: 5px;
+      font-size: .7em;
+      padding: 4px 10px;
+      text-transform: uppercase;
+      transition: .3s;
+      &:hover {
+        border-color: $color-pink;
+      }
+    }
   }
   &__stats {
     display: flex;
     margin: 10px 0;
+    div {
+      font-weight: bold;
+      margin-right: 10px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
   &__like {
     background-color: $color-blue;

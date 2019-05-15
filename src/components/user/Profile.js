@@ -64,7 +64,16 @@ class Profile extends Component {
 
         let stories;
         if (user.stories.length > 0) {
-            stories = user.stories.map(story => (
+            let filtered_stories = user.stories.filter(e => {
+                let result = true;
+                if (e.status.id === 3 && !isMyProfile) {
+                    result = false
+                } else if (isMyProfile) {
+                    result = true
+                }
+                return result
+            });
+            stories = filtered_stories.map(story => (
                 <div key={story._id} className="col-sm-4" onClick={e => this.handleModal(story)}>
                     <StoryCard
                         id={story._id}
@@ -138,7 +147,7 @@ class Profile extends Component {
 
                     <div className="profile__flex">
                         <h2 className="profile__title">Histoires de {user.username_display}</h2>
-                        <Link className="profile__btn" to={"/user/reading-list/"}>Voir plus</Link>
+                        {user.nb_stories > 6 ? <Link className="profile__btn" to={"/user/reading-list/"}>Voir plus</Link> : null}
                     </div>
                     <div className="container">
                         <div className="row">

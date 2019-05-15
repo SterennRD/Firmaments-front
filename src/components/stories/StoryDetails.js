@@ -71,6 +71,21 @@ class StoryDetails extends Component {
             return  <div className="alert alert-danger">{error.message}</div>
         } else if(!story) {
             return <span />
+        } else if (!isMyStory && story && story.status.id === 3) {
+            return (
+                <div className="storyDetails">
+                    <div className="storyDetails__header">
+                        <div className="container">
+                            <div className="row align-items-center justify-content-center">
+                                <div>
+                                    <div className="storyDetails__subtitle">Vous ne pouvez pas visionner cette histoire</div>
+                                    <button className="storyDetails__header_back" onClick={this.props.history.goBack}><i className="fas fa-arrow-left"></i> Retour</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    )
         }
 
         let status = ''
@@ -84,11 +99,6 @@ class StoryDetails extends Component {
 
 
 
-        if (like) {
-            if (like.loading) {
-
-            }
-        }
         const chapters = story.chapters.map(c => (
             <div key={c._id} className="storyDetails__chapter">
                 <Link to={"/stories/" + story._id + "-" + c._id}>{c.title}</Link>
@@ -122,7 +132,7 @@ class StoryDetails extends Component {
                         <div className="row align-items-end justify-content-end">
                             <div className="col-md-8">
                                 <div>{isAuthenticated && isMyStory ? edit : ''}</div>
-                                <button onClick={this.props.history.goBack}>Retour</button>
+                                <button className="storyDetails__header_back" onClick={this.props.history.goBack}><i className="fas fa-arrow-left"></i> Retour</button>
                                 <div className="storyDetails__stats">
                                     <div>{story.nb_likes} <i className="fas fa-heart"></i></div>
                                     <div>{story.nb_favorites} <i className="fas fa-star"></i></div>
