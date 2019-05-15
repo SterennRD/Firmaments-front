@@ -34,14 +34,23 @@ class StoryTable extends Component {
         console.log("story")
         console.log(story)
         return (
-            <div>
-                <div className="d-flex">
-                    <Link to={'/stories/edit/' + story._id}><h2>Informations de l'histoire</h2></Link>
-                    <h2>Table des matières</h2>
+            <div className="storyTable">
+                <div className="storyTable__header">
+                    <h1 className="storyTable__header_title">Table des matières</h1>
+                    <div className="storyTable__header_tabs">
+                        <Link to={'/stories/edit/' + story._id}>
+                            <h2 className="storyTable__header_subtitle">Informations de l'histoire</h2>
+                        </Link>
+                        <h2 className="storyTable__header_subtitle storyTable__header_subtitle--active">Table des matières</h2>
+                    </div>
                 </div>
-                {story.title}
-                <Link to={'/stories/' + story._id + '/chapter/new'} className="btn btn-primary">Ajouter un chapitre</Link>
-                <ChapterList {...this.props} chapters={story.chapters}/>
+                <div className="container storyTable__content">
+                    <div className="storyTable__content_header">
+                        <div className="storyTable__content_title">{story.title}</div>
+                        <Link to={'/stories/' + story._id + '/chapter/new'} className="storyTable__btn btn btn-primary"><i className="fas fa-plus"></i> Ajouter un chapitre</Link>
+                    </div>
+                        <ChapterList {...this.props} chapters={story.chapters}/>
+                </div>
             </div>
         );
     }

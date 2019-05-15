@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
-import '../style/scrollbar.scss';
 
 class ScrollBar extends React.Component {
     render() {

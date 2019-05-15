@@ -1,6 +1,11 @@
 .scrollbar {
   left: 0;
+  height: 3px;
   position: fixed;
-  top: 0;
+  top: 60px;
   width: 100%;
+  &__progress {
+    background-color: $color-violet;
+    height: 100%;
+  }
 }

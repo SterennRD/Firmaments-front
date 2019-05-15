@@ -29,7 +29,7 @@ class StoryFormWizard extends Component {
         const { page } = this.state;
 
         return (
-            <div>
+            <div className="storyForm">
                 {page === 1 && <StoryInfoForm
                     {...this.props}
                     onSubmit={this.nextPage}

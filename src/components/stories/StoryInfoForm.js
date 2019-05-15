@@ -138,7 +138,7 @@ class StoryInfoForm extends Component {
                 </div>
             );
         } else {
-            return <span></span>
+            return null
         }
     }
 
@@ -156,7 +156,7 @@ class StoryInfoForm extends Component {
                 </div>
             );
         } else {
-            return <span></span>
+            return null
         }
     }
 
@@ -186,16 +186,32 @@ class StoryInfoForm extends Component {
         const selectedDisplay = selectedCategory.map(item => <div key={item.id} id={item.id} onClick={(e) => this.handleDeselect(e.target.id)}>{item.label}</div>);
 
         let edit = (
-            <div className="d-flex">
-                <h2>Informations de l'histoire</h2>
-                <h2>Table des matières</h2>
+            <div>
+                <h2 className="storyForm__header_title">Editer une histoire</h2>
+                <div className="storyForm__header_tabs">
+                    <h3 className="storyForm__header_subtitle storyForm__header_subtitle--active">Informations de l'histoire</h3>
+                    <h3 className="storyForm__header_subtitle">Table des matières</h3>
+                </div>
+            </div>
+        );
+        let create = (
+            <div>
+                <h2 className="storyForm__header_title">Créer une histoire</h2>
+                <div className="storyForm__header_tabs">
+                    <h3 className="storyForm__header_subtitle storyForm__header_subtitle--active">Informations de l'histoire</h3>
+                </div>
             </div>
         );
         if (this.props.initialValues) {
             edit = (
-                <div className="d-flex">
-                    <h2>Informations de l'histoire</h2>
-                    <Link to={this.props.match.url + '/toc/' + this.props.initialValues._id}><h2>Table des matières</h2></Link>
+                <div>
+                    <h2 className="storyForm__header_title">Editer une histoire</h2>
+                    <div className="storyForm__header_tabs">
+                        <h3 className="storyForm__header_subtitle storyForm__header_subtitle--active">Informations de l'histoire</h3>
+                        <Link to={this.props.match.url + '/toc/' + this.props.initialValues._id}>
+                            <h3 className="storyForm__header_subtitle">Table des matières</h3>
+                        </Link>
+                    </div>
                 </div>
             )
         }
@@ -211,75 +227,92 @@ class StoryInfoForm extends Component {
         const maxLength350 = maxLength(350)
 
         return (
-            <div className='container'>
-                { this.renderError(newPost) }
-                { this.renderEdit(editStory) }
-                <div><button onClick={this.props.history.goBack}>Go Back</button></div>
-                <h2>{ mode === 'edit' ? edit : 'Create' }</h2>
-                <form onSubmit={ mode === 'edit' ? handleSubmit(validateAndCreatePost) : handleSubmit } encType="multipart/form-data">
-                    <Field
-                        name="title"
-                        type="text"
-                        component={ renderField }
-                        label="Titre *" />
-                    <Field
-                        name="cover"
-                        type="file"
-                        component={ renderFile }
-                        dataAllowedFileExtensions="jpg png bmp"
-                        label="Couverture" />
-                    <Field
-                        name="description"
-                        component={ renderTextArea }
-                        label="Description *"
-                        placeholder="Description de l'histoire"
-                        validate={[ maxLength350 ]}
-                        showMax={350}
-                    />
-                    <Field
-                        name="category"
-                        component={ renderSelect }
-                        label="Catégorie *"
-                        type="select-multiple"
-                        options={category}
-                        multiple={true}
+            <div>
+                <div className="storyForm__header">
+                    { this.renderError(newPost) }
+                    { this.renderEdit(editStory) }
+                    <div className="storyForm__header_back" onClick={this.props.history.goBack}><i className="fas fa-arrow-left"></i></div>
+                    { mode === 'edit' ? edit : 'Create' }
+                </div>
+                <form
+                    className="container storyForm__form"
+                    onSubmit={ mode === 'edit' ? handleSubmit(validateAndCreatePost) : handleSubmit }
+                    encType="multipart/form-data">
+                    <div className="row">
+                        <div className="col-md-4">
+                            <Field
+                                name="cover"
+                                type="file"
+                                component={ renderFile }
+                                dataAllowedFileExtensions="jpg png bmp"
+                                label="Couverture" />
+                        </div>
+                        <div className="col-md-8">
+                            <Field
+                                name="title"
+                                type="text"
+                                component={ renderField }
+                                label="Titre *" />
 
-                    />
-                    <Field
-                        name="rating"
-                        component={ renderSelect }
-                        label="Rating *"
-                        type="select"
-                        options={rating}
-                    />
-                    <Field
-                        name="status"
-                        component={ renderSelect }
-                        label="Statut *"
-                        type="select"
-                        options={status}
-                    />
-                    <div className="form-check">
-                        <label htmlFor="comment_authorized">Autoriser les commentaires</label>
-                        <Field name="comment_authorized" id="comment_authorized" component="input" type="checkbox"/>
-                    </div>
-                    <div className="form-check">
-                        <label htmlFor="annotation_authorized">Autoriser les annotations</label>
-                        <Field name="annotation_authorized" id="annotation_authorized" component="input" type="checkbox"/>
-                    </div>
-                    {mode === 'edit' ? (
-                        <div>
-                            <button type="submit">
-                                Modifier
-                            </button>
+                            <Field
+                                name="description"
+                                component={ renderTextArea }
+                                label="Description *"
+                                placeholder="Description de l'histoire"
+                                validate={[ maxLength350 ]}
+                                showMax={350}
+                            />
+                            <div className="storyForm__form_multi-select">
+                            <Field
+                                name="category"
+                                component={ renderSelect }
+                                label="Catégorie *"
+                                type="select-multiple"
+                                options={category}
+                                multiple={true}
+                            />
+                            </div>
+                            <Field
+                                name="rating"
+                                component={ renderSelect }
+                                label="Rating *"
+                                type="select"
+                                options={rating}
+                            />
+                            <Field
+                                name="status"
+                                component={ renderSelect }
+                                label="Statut *"
+                                type="select"
+                                options={status}
+                            />
+                            <div className="storyForm__form_checkboxes">
+                                <div className="storyForm__form_check-item">
+                                    <label htmlFor="comment_authorized">Autoriser les commentaires</label>
+                                    <Field name="comment_authorized" id="comment_authorized" component="input" type="checkbox"/>
+                                </div>
+                                <div className="storyForm__form_check-item">
+                                    <label htmlFor="annotation_authorized">Autoriser les annotations</label>
+                                    <Field name="annotation_authorized" id="annotation_authorized" component="input" type="checkbox"/>
+                                </div>
+                            </div>
+
+                            {mode === 'edit' ? (
+                                <div className="storyForm__buttons">
+                                    <button type="submit" className="storyForm__buttons_btn">
+                                        Modifier
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="storyForm__buttons">
+                                    <button type="submit" className="storyForm__buttons_btn next">
+                                        Next
+                                    </button>
+                                </div>
+                            )}
                         </div>
-                    ) : (
-                        <div>
-                            <button type="submit" className="next">
-                                Next
-                            </button>
-                        </div>
-                    )}
+                    </div>
+
                 </form>
             </div>
         )

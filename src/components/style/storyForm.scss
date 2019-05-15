@@ -1,0 +1,119 @@
+.storyForm {
+  &__header {
+    background-image: linear-gradient(to left bottom, #1d009a, #330ba8, #4516b5, #5620c3, #662ad1, #5248e3, #3860f2, #0074ff, #0092ff, #00abff, #00c2ff, #24d6fc);
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+    padding: 0 60px;
+    &_back {
+      align-self: flex-start;
+      color: $color-blue;
+      cursor: pointer;
+      margin-top: auto;
+      transition: 0.3s;
+      &:hover {
+        color: $color-pink;
+      }
+    }
+    &_title {
+      color: $color-blue;
+      font-family: "Montserrat", sans-serif;
+      font-size: 2em;
+      font-weight: 800;
+    }
+    &_subtitle {
+      color: $color-blue;
+      font-family: "Montserrat", sans-serif;
+      font-size: 1em;
+      margin-bottom: 0;
+      padding: 0 15px 15px;
+      &--active {
+        box-shadow: 0 -3px 0 inset $color-violet;
+      }
+    }
+    &_tabs {
+      display: flex;
+      margin-top: 30px;
+    }
+  }
+  &__form {
+    margin-top: 80px;
+    &_label {
+      color: $color-blue;
+      font-weight: bold;
+    }
+    .form-control:focus {
+      border-color: $color-pink;
+      box-shadow: none;
+    }
+    &_count {
+      font-size: 0.7em;
+    }
+    &_checkboxes {
+      display: flex;
+    }
+    &_check-item {
+      align-items: center;
+      display: flex;
+      margin-right: 15px;
+      label {
+        margin-bottom: 0;
+        margin-right: 5px;
+      }
+    }
+    &_multi-select {
+      .form-control {
+        border: 0;
+        box-shadow: none;
+        padding: 0;
+        &:focus {
+          box-shadow: none;
+          outline: 0;
+        }
+      }
+      .select__control {
+        background-color: transparent;
+        box-shadow: none!important;
+        &:focus {
+          box-shadow: none;
+          outline: 0;
+        }
+        &:hover {
+          border-color: $color-blue;
+        }
+        &--is-focused {
+          border-color: #ced4da;
+        }
+      }
+      .select__value-container {
+        &:focus {
+          box-shadow: none;
+          outline: 0;
+        }
+      }
+      .is-invalid {
+        .select__control {
+          border-color: $color-violet;
+        }
+        .select__indicator {
+          color: transparent;
+        }
+      }
+    }
+  }
+  &__buttons {
+    margin: 30px 0;
+    &_btn {
+      background: $color-blue;
+      border: 0;
+      border-radius: 20px;
+      color: $color-pink;
+      font-family: "Montserrat", sans-serif;
+      padding: 5px 12px;
+      outline: 0;
+      &:focus {
+        outline: 0;
+      }
+    }
+  }
+}

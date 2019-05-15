@@ -3,7 +3,7 @@ import {generatePath} from 'react-router-dom';
 import moment from "moment/min/moment-with-locales.min";
 import {Link} from "react-router-dom";
 import CommentForm from "../../containers/CommentFormContainer";
-import ManageScrollBar from "./ScrollBar";
+import ScrollProgress from "./ScrollProgress";
 
 
 
@@ -12,12 +12,14 @@ class Chapter extends Component {
         super(props);
         this.state = {
             currentChapter: '',
-            scrollY: 0
+            scrollY: 0,
+            scrolled: 0
         }
         this.handleNext = this.handleNext.bind(this)
         this.handlePrev = this.handlePrev.bind(this)
         this.handleScroll = this.handleScroll.bind(this)
         this.ScrollRateCalculation = this.ScrollRateCalculation.bind(this);
+        this.scrollProgress = this.scrollProgress.bind(this);
     }
 
     fetchData(id, idChapter) {
@@ -32,13 +34,25 @@ class Chapter extends Component {
     }
     componentWillUnmount() {
         this.props.resetMe()
+        window.removeEventListener("scroll", this.scrollProgress);
     }
     componentDidMount() {
         const id =this.props.match.params.id;
         const idChapter =this.props.match.params.idchapter;
         this.fetchData(id, idChapter);
         window.addEventListener('scroll', this.ScrollRateCalculation);
+        window.addEventListener("scroll", this.scrollProgress);
     }
+    scrollProgress() {
+        const scrollPx = document.documentElement.scrollTop;
+        const docHeight = document.getElementById('contenu').clientHeight;
+        const scrolled = `${scrollPx / docHeight * 100}%`;
+
+        this.setState({
+            scrolled: parseInt(scrolled)
+        });
+
+    };
     handleScroll(event) {
 
 
@@ -91,6 +105,10 @@ class Chapter extends Component {
         moment.locale('fr');
         console.log("le chapitre")
         console.log(this.props)
+
+        const progressBarStyle = {
+            width: this.state.scrolled + "%"
+        };
 
         const {isAuthenticated} = this.props.auth;
         const { selectedChapter, loading, error, story } = this.props.chapter;
@@ -148,7 +166,7 @@ class Chapter extends Component {
 
         return (
             <div className="chapter">
-                <ManageScrollBar className="scroll-bar" selectedChapter={selectedChapter}/>
+                <ScrollProgress style={progressBarStyle} width={this.state.scrolled} height={3}/>
                 <div className="chapter__header">
                     <div>
                         <Link to={'/stories/toc/' + story._id}><i className="fas fa-arrow-left"></i> Retour</Link>

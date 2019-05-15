@@ -54,7 +54,7 @@ const renderSelect = ({ input, label, type, meta: { touched, error, invalid, war
     if (multiple) {
         return (
             <div className={`form-group ${touched && invalid ? 'has-error' : ''}`}>
-                <label htmlFor={input.name}>{label} </label>
+                <label htmlFor={input.name} className="storyForm__form_label">{label}</label>
 
                 <Select
                     {...input}
@@ -82,7 +82,7 @@ const renderSelect = ({ input, label, type, meta: { touched, error, invalid, war
         if (newValue) input.value = newValue;
         return (
                 <div className={`form-group ${touched && invalid ? 'has-error' : ''}`}>
-                    <label htmlFor={input.name}>{label} </label>
+                    <label htmlFor={input.name} className="storyForm__form_label">{label} </label>
 
                     <select className="form-control" id={input.name} {...input} onBlur={() => input.onBlur(input.value)}>
                         {options.map(renderSelectOptions)}

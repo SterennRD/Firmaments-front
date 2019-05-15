@@ -10,12 +10,67 @@
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 101;
   }
   &__window {
     background-color: #fff;
     border-radius: 5px;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
     height: 200px;
-    padding: 15px;
+    padding: 25px;
+    position: relative;
     width: 500px;
   }
+  &__close {
+    color: $color-grey;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    transition: 0.3s;
+    &:hover {
+      color: $color-blue;
+    }
+  }
+  &__title {
+    color: $color-blue;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.3em;
+    font-weight: 800;
+  }
+  &__text {
+    font-size: 0.9em;
+  }
+  &__buttons {
+    display: flex;
+    margin-top: auto;
+    &_btn {
+      background-color: $color-blue;
+      border: 0;
+      border-radius: 10px;
+      color: $color-pink;
+      font-size: 0.8em;
+      margin-right: 10px;
+      padding: 4px 10px;
+      transition: 0.3s;
+      &--confirm {
+        background-color: transparent;
+        border: 1px solid $color-blue;
+        color: $color-blue;
+        &:hover {
+          border-color: $color-pink;
+        }
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+      &:hover {
+        background-color: $color-pink;
+        color: $color-blue;
+      }
+    }
+  }
+
 }
