@@ -54,7 +54,7 @@ class Navbar extends Component {
                         {this.state.showNotif ? (
                             <div className="navBar__notif_panel">
                                 {allUnreadNotifs.notifs.slice(0,5).map(notif => <div key={notif._id} className="navBar__notif_panel_item">{notif.message}</div>)}
-                                <Link to={"/notifications"}>Voir tout</Link>
+                                <Link to={"/user/profile/" + user._id + "/notifications"}>Voir tout</Link>
                             </div>
                         ): null}
                     </div>

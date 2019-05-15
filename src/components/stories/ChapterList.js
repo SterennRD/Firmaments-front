@@ -50,6 +50,7 @@ class ChapterList extends Component {
         this.setState({showModal: false, idModal: null})
     }
     render() {
+        moment.locale('fr');
         let {story} = '';
         let {chapter, loading, error} = this.props.chapter.deleteChapter;
         if (!this.props.story || this.props.story === undefined) {

@@ -4,6 +4,7 @@ import Profile from "../../containers/ProfileContainer";
 import ReadingListDetail from "../../containers/ReadingListDetailContainer";
 import ReadingListForm from "../../containers/ReadingListFormContainer";
 import Parameters from "../../containers/ParametersContainer";
+import NotificationList from "../../containers/NotificationListContainer";
 
 class User extends Component {
     render() {
@@ -29,6 +30,9 @@ class User extends Component {
 
                 {/* Edit reading list */}
                 <Route path={this.props.match.url + '/reading-list/:id/edit'} component={ ReadingListForm } />
+
+                {/* See all notifications */}
+                <Route path={this.props.match.url + '/profile/:id/notifications'} component={ NotificationList } />
             </div>
         );
     }
