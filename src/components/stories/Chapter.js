@@ -17,8 +17,6 @@ class Chapter extends Component {
         }
         this.handleNext = this.handleNext.bind(this)
         this.handlePrev = this.handlePrev.bind(this)
-        this.handleScroll = this.handleScroll.bind(this)
-        this.ScrollRateCalculation = this.ScrollRateCalculation.bind(this);
         this.scrollProgress = this.scrollProgress.bind(this);
     }
 
@@ -44,49 +42,19 @@ class Chapter extends Component {
         window.addEventListener("scroll", this.scrollProgress);
     }
     scrollProgress() {
-        const scrollPx = document.documentElement.scrollTop;
-        const docHeight = document.getElementById('contenu').clientHeight;
-        const scrolled = `${scrollPx / docHeight * 100}%`;
+        if (document.getElementById('contenu')) {
 
-        this.setState({
-            scrolled: parseInt(scrolled)
-        });
+            const scrollPx = document.documentElement.scrollTop;
+            const docHeight = document.getElementById('contenu').clientHeight;
+            const scrolled = `${scrollPx / docHeight * 100}%`;
+
+            this.setState({
+                scrolled: parseInt(scrolled)
+            });
+        }
 
     };
-    handleScroll(event) {
 
-
-        // Annoying to compute doc height due to browser inconsistency
-        var winHeight = window.innerHeight;
-        var docHeight = document.getElementById('contenu').clientHeight;
-        var max = docHeight - winHeight;
-
-        var value = document.documentElement.scrollTop;
-
-        console.log("doc heigh", winHeight, "element height", docHeight, "max", max, "scroll", value)
-        this.setState({scrollY: value});
-        if (value > docHeight) {
-            console.log('fin du document')
-        }
-    }
-
-    ScrollRateCalculation() {
-        let bodyElement = document.getElementById('contenu');//B1
-        let innerHeight = window.innerHeight; //A
-        if (bodyElement) {
-
-            let rect = bodyElement.getBoundingClientRect();//B2
-            let heightIsHtml = rect.height; //B3
-            let scrollMax = Math.ceil( heightIsHtml - innerHeight ); //C = B3 - A
-            let scrollY = document.documentElement.scrollTop || document.body.scrollTop;//D
-            let scrollRate = parseInt( (scrollY / scrollMax) * 100, 10 ); //E = (D / C) *100
-            this.setState({
-                scrollY: scrollY,
-                scrollBarRate: scrollRate
-            });
-            console.log("scrollY", scrollY, "scrollBarRate", scrollRate)
-        }
-    }
     handlePrev() {
         let currentChapter = this.props.chapter.story.chapters.map(function(e) { return e._id; }).indexOf(this.props.chapter.selectedChapter._id);
         let prevChapter = this.props.chapter.story.chapters[currentChapter - 1];
