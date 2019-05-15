@@ -115,7 +115,7 @@ class Chapter extends Component {
                     </div>
                 ))
             } else {
-                comments = <div>Pas de commentaires</div>
+                comments = <div className="chapter__comments_nocomment">Pas de commentaires</div>
             }
             if (selectedChapter.read) {
                 nbRead = selectedChapter.read.length
@@ -153,7 +153,7 @@ class Chapter extends Component {
                     <div>
                         <Link to={'/stories/see/' + story._id}><i className="fas fa-arrow-left"></i> Retour</Link>
                         <div>
-                            {story.title}
+                            <div className="chapter__header_title">{story.title}</div>
                             <div>Par {story.author.username_display}</div>
                         </div>
                     </div>

@@ -77,6 +77,7 @@ class Profile extends Component {
                         nb_favorites={story.nb_favorites}
                         nb_comments={story.nb_comments}
                         status={story.status.label}
+                        cover={story.cover}
                     />
                 </div>
             ))

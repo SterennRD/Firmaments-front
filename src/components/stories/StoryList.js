@@ -58,7 +58,7 @@ class StoryList extends Component {
         let storiesList = ''
         if (stories.length > 0) {
             storiesList = stories.map( s => (
-                <div className="myStories__item col-xs-12" key={s._id}>
+                <div className="myStories__item col-lg-12" key={s._id}>
                     <div className="myStories__item_stats">
                         <div>{s.nb_likes} <i className="fas fa-heart"></i></div>
                         <div>{s.nb_favorites} <i className="fas fa-star"></i></div>
@@ -70,10 +70,11 @@ class StoryList extends Component {
                     </div>
                     <div className="myStories__item_date">Mis à jour le {moment(s.updated_at).format('LLL')}</div>
                     <div className="myStories__item_chapters">{ s.chapters.length } chapitre{ s.chapters.length > 1 ? 's' : ''}</div>
+                    <div className="myStories__item_status">{ s.status.label }</div>
                     <Link to={this.props.match.url + '/toc/' + s._id}>TOC</Link>
                     <div className="myStories__item_buttons">
                         <button className="myStories__item_buttons_btn myStories__item_buttons_btn--border" id={s._id} onClick={(e) => this.handleDeleteConfirm(e.target.id)}><i className="fas fa-trash"></i> Supprimer</button>
-                        <button className="myStories__item_buttons_btn" id={s._id} onClick={(e) => this.handleDeleteConfirm(e.target.id)}><i className="fas fa-pencil-alt"></i> Supprimer</button>
+                        <button className="myStories__item_buttons_btn" id={s._id} onClick={(e) => this.handleDeleteConfirm(e.target.id)}><i className="fas fa-pencil-alt"></i> Editer</button>
                     </div>
                 </div>
             ))
@@ -98,8 +99,7 @@ class StoryList extends Component {
         );
 
         const authLinks = (
-            <div>
-            <div>Coucou</div>
+            <div className="row">
                 {this.state.showModal ? modal : null}
                 {storiesList}
             </div>
@@ -115,9 +115,9 @@ class StoryList extends Component {
                     <Link to={this.props.match.url + '/new'} className="btn btn-primary">Créer une histoire</Link>
                 </div>
                 <div className="container">
-                    <div className="row">
+
                     {isAuthenticated ? authLinks : guestLinks}
-                    </div>
+
                 </div>
             </div>
         );
