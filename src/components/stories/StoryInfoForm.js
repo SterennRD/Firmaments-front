@@ -229,8 +229,7 @@ class StoryInfoForm extends Component {
         return (
             <div>
                 <div className="storyForm__header">
-                    { this.renderError(newPost) }
-                    { this.renderEdit(editStory) }
+
                     <div className="storyForm__header_back" onClick={this.props.history.goBack}><i className="fas fa-arrow-left"></i></div>
                     { mode === 'edit' ? edit : 'Create' }
                 </div>
@@ -296,7 +295,8 @@ class StoryInfoForm extends Component {
                                     <Field name="annotation_authorized" id="annotation_authorized" component="input" type="checkbox"/>
                                 </div>
                             </div>
-
+                            { this.renderError(newPost) }
+                            { this.renderEdit(editStory) }
                             {mode === 'edit' ? (
                                 <div className="storyForm__buttons">
                                     <button type="submit" className="storyForm__buttons_btn">

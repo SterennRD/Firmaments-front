@@ -58,7 +58,7 @@ class StoryList extends Component {
         let storiesList = ''
         if (stories.length > 0) {
             storiesList = stories.map( s => (
-                <div className="myStories__item" key={s._id}>
+                <div className="myStories__item col-xs-12" key={s._id}>
                     <div className="myStories__item_stats">
                         <div>{s.nb_likes} <i className="fas fa-heart"></i></div>
                         <div>{s.nb_favorites} <i className="fas fa-star"></i></div>
@@ -115,7 +115,9 @@ class StoryList extends Component {
                     <Link to={this.props.match.url + '/new'} className="btn btn-primary">Créer une histoire</Link>
                 </div>
                 <div className="container">
+                    <div className="row">
                     {isAuthenticated ? authLinks : guestLinks}
+                    </div>
                 </div>
             </div>
         );

@@ -13,6 +13,8 @@ const mapDispatchToProps = (dispatch) => {
         },
         resetMe: () => {
             dispatch(resetNotifComment())
+        },
+        resetNotifRead: () => {
             dispatch(resetNotifRead())
         }
     }

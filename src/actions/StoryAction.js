@@ -89,7 +89,7 @@ export const getStoryById = (story) => {
                 }
             })
             .catch(function(error) {
-                console.log(error)
+                console.log(error.response)
 
                 dispatch({type: GET_STORY_ERROR, payload: error.data})
             })

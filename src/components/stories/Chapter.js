@@ -102,8 +102,8 @@ class Chapter extends Component {
         let comments;
         let readingTime;
         if (selectedChapter) {
+                selectedChapter.comments ? nbComments = selectedChapter.comments.length : nbComments = 0
             if (selectedChapter.comments && selectedChapter.comments.length > 0 ) {
-                nbComments = selectedChapter.comments.length
                 comments = selectedChapter.comments.map(c => (
                     <div key={c._id} className="chapter__comments_comment">
                         {c.author.image ? 'image' : <div className="chapter__comments_img chapter__comments_img--small"><i className="fas fa-user"></i></div> }
@@ -151,7 +151,7 @@ class Chapter extends Component {
                 <ScrollProgress style={progressBarStyle} width={this.state.scrolled} height={3}/>
                 <div className="chapter__header">
                     <div>
-                        <Link to={'/stories/toc/' + story._id}><i className="fas fa-arrow-left"></i> Retour</Link>
+                        <Link to={'/stories/see/' + story._id}><i className="fas fa-arrow-left"></i> Retour</Link>
                         <div>
                             {story.title}
                             <div>Par {story.author.username_display}</div>

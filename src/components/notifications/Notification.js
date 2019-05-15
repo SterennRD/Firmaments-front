@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
+import {resetNotifRead} from "../../actions/NotifAction";
 
 class Notification extends Component {
     constructor(props) {
@@ -10,6 +11,9 @@ class Notification extends Component {
     componentDidUpdate(prevProps) {
         if (prevProps.notifications.notifComment !== this.props.notifications.notifComment) {
             //etTimeout(this.props.resetMe, 10000);
+        }
+        if (prevProps.notifications.notifRead !== this.props.notifications.notifRead) {
+            setTimeout(this.props.resetNotifRead, 10000);
         }
     }
     handleRead(id) {

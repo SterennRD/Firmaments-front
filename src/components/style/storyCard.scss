@@ -59,6 +59,7 @@
   }
   &__category {
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-end;
     &_item {
       background-color: $color-grey;

@@ -157,7 +157,7 @@ class StoryDetails extends Component {
                                 {story.description}
                             </div>
                             <div className="storyDetails__buttons">
-                                <Link className="storyDetails__buttons_btn" to={"/stories/" + story._id + "-" + story.chapters[0]._id}>Lire</Link>
+                                {story.chapters.length > 0 ? <Link className="storyDetails__buttons_btn" to={"/stories/" + story._id + "-" + story.chapters[0]._id}>Lire</Link> : null}
                             </div>
                             <div>{isAuthenticated ? authorizations : null}</div>
                             <hr/>

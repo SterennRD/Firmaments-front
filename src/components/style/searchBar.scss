@@ -1,6 +1,6 @@
 .searchBar {
   align-items: center;
-  display: flex;
+  display: none;
   min-width: 340px;
   position: relative;
   &__input {
@@ -55,5 +55,11 @@
     &:hover {
       background-color: $color-pink;
     }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .searchBar {
+    display: flex;
   }
 }

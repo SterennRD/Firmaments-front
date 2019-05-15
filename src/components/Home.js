@@ -66,7 +66,7 @@ class Home extends Component {
             lastStories = storyList.stories.map((story) => {
 
                 return (
-                    <div key={story._id} className="col-md-4" onClick={e => this.handleModal(story)}>
+                    <div key={story._id} className="col-xs-12 col-md-4" onClick={e => this.handleModal(story)}>
                         <StoryCard
                             id={story._id}
                             title={story.title}
