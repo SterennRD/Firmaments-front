@@ -42,9 +42,6 @@ class Profile extends Component {
 
 
     render() {
-        console.log("profil")
-        console.log(this.props)
-
         const { isAuthenticated } = this.props.auth;
         const currentUser = this.props.auth.user;
         const { user, loading, error } = this.props.user.selectedUser;
@@ -94,6 +91,7 @@ class Profile extends Component {
         />;
 
         let reading_lists = user.reading_lists;
+        let nbRL;
         if (user.reading_lists) {
             let filtered_reading_lists = reading_lists.filter(e => {
                 let result = false;
@@ -103,13 +101,14 @@ class Profile extends Component {
                     result = true
                 }
                 return result
-            })
-            reading_lists = filtered_reading_lists.map(rl => (
-                <div key={rl._id} className="border">
-                    {/*<Link onClick={() => this.props.history.push('/reading-lists/' + rl._id)}>{rl.title}</Link>*/}
-                    <Link to={"/user/reading-list/" + rl._id}>{rl.title}</Link>
+            });
+            nbRL = filtered_reading_lists.length;
+            reading_lists = filtered_reading_lists.slice(0,5).map(rl => (
+                <div key={rl._id} className="profile__rl">
+                    <Link className="profile__rl_title" to={"/user/reading-list/" + rl._id}>{rl.title}</Link>
+                    <div className="profile__rl_stats">{rl.stories ? rl.stories.length : 0} histoire{rl.stories && rl.stories.length > 1 ? 's' : ''}</div>
                     {rl.private ? 'privée' : null}
-                    <div>{rl.stories ? rl.stories.map(s => <div key={s._id}><Link to={"/stories/see/" + s._id}>{s.title}</Link> par {s.author.username_display}</div>) : null}</div>
+                    <div className="profile__rl_stories">{rl.stories ? rl.stories.slice(0,6).map(s => <div className="profile__rl_story" key={s._id}><div className="profile__rl_story_cover">{s.cover ? <img src={process.env.REACT_APP_UPLOADS + '/' + s.cover} alt={s.title}/> : <i className="fas fa-book"></i>}</div><div><Link className="profile__rl_story_title" to={"/stories/see/" + s._id}>{s.title}</Link></div><div>par <Link className="profile__rl_story_author" to={"/user/profile/"+s.author._id}>{s.author.username_display}</Link></div></div>) : null}</div>
                 </div>
             ));
 
@@ -118,27 +117,41 @@ class Profile extends Component {
         }
 
         return (
-            <div>
+            <div className="profile">
                 { this.state.showModal ? modal : null }
-                <h1>{user.username_display}</h1>
-                <h2>@{user.username}</h2>
-                {user.image ? 'image de profil' : profileImage}
-                <div>{user.followers.length} followers</div>
-                <div>{user.following.length} abonnement{user.following.length > 1 ? 's' : ''}</div>
-                <div>{user.nb_stories} histoire{user.nb_stories > 1 ? 's' : ''}</div>
-                { isMyProfile ? null : isAuthenticated ? <FollowButton {...this.props} /> : null }
-                <hr />
-                <h2>Histoires de {user.username_display}</h2>
-                <div className="container">
-                    <div className="row">
-                        {stories}
-                    </div>
-                    {user.nb_stories > 6 ? <Link to={"/profile/" + user._id + "/stories"}>Voir plus</Link> : null}
+                <div className="profile__header">
+                    {!user.image ? <div className="profile__header_img"><i className="th th-moon"></i></div> : <div className="profile__header_img"><img src={user.image} alt={user.username} /></div>}
+                    <h1 className="profile__header_title">{user.username_display}</h1>
+                    <h2 className="profile__header_subtitle">@{user.username}</h2>
                 </div>
-                <hr />
-                <h2>Listes de lectures de {user.username_display}</h2>
-                {user.reading_lists ? reading_lists.length : 0} listes de lecture
-                <div className="container">{reading_lists}</div>
+                <div className="profile__buttons">
+                    { isMyProfile ? null : isAuthenticated ? <FollowButton {...this.props} /> : null }
+                </div>
+
+                <div className="container">
+                    <div className="profile__stats">
+                        <div className="profile__stats_item"><b>{user.followers.length}</b> followers</div>
+                        <div className="profile__stats_item"><b>{user.following.length}</b> abonnement{user.following.length > 1 ? 's' : ''}</div>
+                        <div className="profile__stats_item"><b>{user.nb_stories}</b> histoire{user.nb_stories > 1 ? 's' : ''}</div>
+                    </div>
+
+                    <div className="profile__flex">
+                        <h2 className="profile__title">Histoires de {user.username_display}</h2>
+                        <Link className="profile__btn" to={"/user/reading-list/"}>Voir plus</Link>
+                    </div>
+                    <div className="container">
+                        <div className="row">
+                            {stories}
+                        </div>
+                        {user.nb_stories > 6 ? <Link to={"/profile/" + user._id + "/stories"}>Voir plus</Link> : null}
+                    </div>
+                    <hr />
+                    <div className="profile__flex">
+                        <h2 className="profile__title">{user.reading_lists ? nbRL : 0} liste{user.reading_lists && user.reading_lists.length > 1 ? 's' : ''} de lecture</h2>
+                        <Link className="profile__btn" to={"/user/reading-list/"}>Voir plus</Link>
+                    </div>
+                    <div className="container">{reading_lists}</div>
+                </div>
             </div>
         );
     }
