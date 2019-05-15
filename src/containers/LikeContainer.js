@@ -17,7 +17,6 @@ const mapStateToProps = (state) => ({
     auth: state.auth,
     stories: state.stories,
     likes: state.stories.likeList
-    //newStory: state.stories.newStory,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Like);

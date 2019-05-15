@@ -19,8 +19,7 @@ class Like extends Component {
         const faved = isAuthenticated ? likes.findIndex(item => item.user === user._id) : null;
         return (
             <div>
-                { faved !== -1 ? 'vous aimez' : 'vous aimez pas'}
-                <button id={story._id} onClick={(e) => this.handleLike(e.target.id)}>Aimer <i id={story._id} className="fa fa-heart"></i></button>
+                <span className={`storyDetails__like ${faved !== -1  ? 'storyDetails__like--liked' : ''}`} id={story._id} onClick={(e) => this.handleLike(e.target.id)}>Aimer <i id={story._id} className="fa fa-heart"></i></span>
             </div>
         );
     }

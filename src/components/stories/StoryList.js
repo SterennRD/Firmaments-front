@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {Link, Route} from "react-router-dom";
 import io from 'socket.io-client';
 import Modal from '../forms/renderModal';
+import moment from "moment/min/moment-with-locales.min";
 
 class StoryList extends Component {
     constructor(props) {
@@ -28,13 +29,8 @@ class StoryList extends Component {
     }
 
     handleDelete(id) {
-        const confirm = window.confirm("Voulez-vous vraiment supprimer l'histoire ?")
-        console.log("je supprime");
-        if (confirm) {
-
         this.props.deleteStory(id);
         this.setState({showModal: false, idModal: null})
-        }
     }
 
     handleDeleteConfirm(id) {
@@ -45,7 +41,7 @@ class StoryList extends Component {
     }
 
     render() {
-
+        moment.locale('fr');
         const {isAuthenticated, user} = this.props.auth;
         const {stories, loading, error} = this.props.stories.stories;
 
@@ -62,13 +58,23 @@ class StoryList extends Component {
         let storiesList = ''
         if (stories.length > 0) {
             storiesList = stories.map( s => (
-                <div className="story" key={s._id}>
-                    <Link to={this.props.match.url + '/see/' + s._id}>{s.title} <span
-                        className="badge badge-primary">{s.rating ? s.rating.label : null}</span></Link>
-                    <button id={s._id} onClick={(e) => this.handleDeleteConfirm(e.target.id)}>Supprimer</button>
-                    <div>{ s.description }</div>
-                    <div>{ s.chapters.length } chapitre{ s.chapters.length > 1 ? 's' : ''}</div>
+                <div className="myStories__item" key={s._id}>
+                    <div className="myStories__item_stats">
+                        <div>{s.nb_likes} <i className="fas fa-heart"></i></div>
+                        <div>{s.nb_favorites} <i className="fas fa-star"></i></div>
+                        <div>{s.nb_comments} <i className="fas fa-comment"></i></div>
+                    </div>
+                    <div className="myStories__item_title">
+                        <Link className="myStories__item_link" to={this.props.match.url + '/see/' + s._id}>{s.title}</Link>
+                        <span className="myStories__item_badge badge badge-primary">{s.rating ? s.rating.label : null}</span>
+                    </div>
+                    <div className="myStories__item_date">Mis à jour le {moment(s.updated_at).format('LLL')}</div>
+                    <div className="myStories__item_chapters">{ s.chapters.length } chapitre{ s.chapters.length > 1 ? 's' : ''}</div>
                     <Link to={this.props.match.url + '/toc/' + s._id}>TOC</Link>
+                    <div className="myStories__item_buttons">
+                        <button className="myStories__item_buttons_btn myStories__item_buttons_btn--border" id={s._id} onClick={(e) => this.handleDeleteConfirm(e.target.id)}><i className="fas fa-trash"></i> Supprimer</button>
+                        <button className="myStories__item_buttons_btn" id={s._id} onClick={(e) => this.handleDeleteConfirm(e.target.id)}><i className="fas fa-pencil-alt"></i> Supprimer</button>
+                    </div>
                 </div>
             ))
         } else {
@@ -103,11 +109,14 @@ class StoryList extends Component {
         );
 
         return (
-            <div>
-                Les histoires
-                <Link to={this.props.match.url + '/new'} className="btn btn-primary">Créer une histoire</Link>
-
-                <div>{isAuthenticated ? authLinks : guestLinks}</div>
+            <div className="myStories">
+                <div className="myStories__header">
+                    <h1 className="myStories__header_title"><i className="th th-shooting-star"></i> Les histoires</h1>
+                    <Link to={this.props.match.url + '/new'} className="btn btn-primary">Créer une histoire</Link>
+                </div>
+                <div className="container">
+                    {isAuthenticated ? authLinks : guestLinks}
+                </div>
             </div>
         );
     }

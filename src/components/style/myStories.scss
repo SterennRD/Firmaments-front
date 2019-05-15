@@ -1,0 +1,74 @@
+.myStories {
+  &__header {
+    align-items: center;
+    display: flex;
+    height: calc(80vh + 60px);
+    justify-content: space-between;
+    padding: 60px 60px 0;
+    &_title {
+      color: $color-blue;
+      font-family: "Montserrat", sans-serif;
+      font-size: 2em;
+      font-weight: 800;
+      i {
+        color: $color-pink;
+      }
+    }
+  }
+  &__item {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #f1f1f1;
+    margin-bottom: 15px;
+    padding: 10px;
+    &_stats {
+      color: $color-grey;
+      display: flex;
+      font-size: 0.8em;
+      justify-content: flex-end;
+      div {
+        margin-left: 10px;
+      }
+    }
+    &_title {
+      align-items: center;
+      display: flex;
+    }
+    &_link {
+      color: $color-blue;
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.3em;
+      font-weight: 800;
+    }
+    &_badge {
+      font-size: 0.6em;
+      margin-left: 10px;
+      padding: 2px 5px;
+    }
+    &_date {
+      color: $color-grey;
+      font-size: 0.7em;
+      text-transform: uppercase;
+    }
+    &_buttons {
+      display: flex;
+      justify-content: flex-end;
+      &_btn {
+        background-color: $color-pink;
+        border: 0;
+        border-radius: 5px;
+        color: $color-blue;
+        font-size: 0.9em;
+        margin-left: 10px;
+        padding: 5px 10px;
+        svg {
+          color: $color-blue;
+        }
+        &--border {
+          background-color: transparent;
+          border: 1px solid $color-pink;
+        }
+      }
+    }
+  }
+}

@@ -45,11 +45,12 @@ class CommentForm extends Component {
             //this.props.auth.socket.on("essai", (msg) => console.info("je reçois la notif", msg));
         }
         const {handleSubmit, submitting, pristine, previousPage, mode } = this.props;
-
+        const {user} = this.props.auth;
         console.log("comments", this.props)
         return (
-            <div>
-                <h2>Laisser un commentaire</h2>
+            <div className="chapter__comments_form">
+                <h3 className="chapter__comments_subtitle">Laisser un commentaire</h3>
+                {user && user.image ? 'image' : <div className="chapter__comments_img"><i className="fas fa-user"></i></div> }
                 <form onSubmit={handleSubmit(this.validateAndAddComment)}>
                     <Field
                         name="content"
@@ -59,7 +60,7 @@ class CommentForm extends Component {
                         onFocus={this.handleAuthentication}
                     />
                     <div>
-                        <button type="submit" disabled={pristine || submitting}>
+                        <button className="chapter__comments_btn" type="submit" disabled={pristine || submitting}>
                             Créer
                         </button>
                     </div>

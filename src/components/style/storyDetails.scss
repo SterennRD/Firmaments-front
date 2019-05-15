@@ -9,6 +9,22 @@
   }
   &__stats {
     display: flex;
+    margin: 10px 0;
+  }
+  &__like {
+    background-color: $color-blue;
+    border-radius: 5px;
+    color: $color-pink;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: 0.3s;
+    svg {
+      pointer-events: none;
+    }
+    &--liked {
+      background-color: $color-pink;
+      color: $color-blue;
+    }
   }
   &__cover {
     align-items: center;
@@ -71,6 +87,11 @@
     border-radius: 5px;
     padding: .75rem 1.25rem;
     margin-bottom: 5px;
+    &_read {
+      color: $color-grey;
+      font-size: 0.6em;
+      text-transform: uppercase;
+    }
   }
   &__comment {
     &_author {
