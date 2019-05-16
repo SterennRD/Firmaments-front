@@ -74,7 +74,7 @@ class StoryList extends Component {
                     <Link to={this.props.match.url + '/toc/' + s._id}>TOC</Link>
                     <div className="myStories__item_buttons">
                         <button className="myStories__item_buttons_btn myStories__item_buttons_btn--border" id={s._id} onClick={(e) => this.handleDeleteConfirm(e.target.id)}><i className="fas fa-trash"></i> Supprimer</button>
-                        <button className="myStories__item_buttons_btn" id={s._id} onClick={(e) => this.handleDeleteConfirm(e.target.id)}><i className="fas fa-pencil-alt"></i> Editer</button>
+                        <Link to={'/stories/edit/' + s._id} className="myStories__item_buttons_btn"><i className="fas fa-pencil-alt"></i> Editer</Link>
                     </div>
                 </div>
             ))

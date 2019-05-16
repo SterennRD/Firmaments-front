@@ -131,8 +131,10 @@ class StoryDetails extends Component {
                     <div className="container">
                         <div className="row align-items-end justify-content-end">
                             <div className="col-md-8">
-                                <div>{isAuthenticated && isMyStory ? edit : ''}</div>
-                                <button className="storyDetails__header_back" onClick={this.props.history.goBack}><i className="fas fa-arrow-left"></i> Retour</button>
+                                <div className="storyDetails__header_buttons">
+                                    <div className="storyDetails__header_buttons_btn">{isAuthenticated && isMyStory ? edit : ''}</div>
+                                    <button className="storyDetails__header_buttons_btn" onClick={this.props.history.goBack}><i className="fas fa-arrow-left"></i> Retour</button>
+                                </div>
                                 <div className="storyDetails__stats">
                                     <div>{story.nb_likes} <i className="fas fa-heart"></i></div>
                                     <div>{story.nb_favorites} <i className="fas fa-star"></i></div>
@@ -152,7 +154,7 @@ class StoryDetails extends Component {
                         <div className="col-md-4">
                             { story.cover ? <div className="storyDetails__cover"><img src={process.env.REACT_APP_UPLOADS + '/' + story.cover} alt={story.title}/></div> : <div className="storyDetails__cover">Pas d'image</div>}
                         </div>
-                        <div className="col-md-8">
+                        <div className="col-md-8 storyDetails__content">
                             <div className="storyDetails__categories">
                                 {categories}
                             </div>

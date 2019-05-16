@@ -107,10 +107,10 @@ class Chapter extends Component {
                 comments = selectedChapter.comments.map(c => (
                     <div key={c._id} className="chapter__comments_comment">
                         {c.author.image ? 'image' : <div className="chapter__comments_img chapter__comments_img--small"><i className="fas fa-user"></i></div> }
-                        <div>
-                        <div className="chapter__comments_comment_author">Par <Link to={"/user/profile/" + c._id}>{c.author.username_display}</Link></div>
-                        <div className="chapter__comments_comment_date">{moment(c.created_at).format('LLL')}</div>
-                        <p className="chapter__comments_comment_content">{c.content}</p>
+                        <div className="chapter__comments_comment_right">
+                            <div className="chapter__comments_comment_author">Par <Link to={"/user/profile/" + c._id}>{c.author.username_display}</Link></div>
+                            <div className="chapter__comments_comment_date">{moment(c.created_at).format('LLL')}</div>
+                            <p className="chapter__comments_comment_content">{c.content}</p>
                         </div>
                     </div>
                 ))
@@ -154,7 +154,7 @@ class Chapter extends Component {
                         <Link to={'/stories/see/' + story._id}><i className="fas fa-arrow-left"></i> Retour</Link>
                         <div>
                             <div className="chapter__header_title">{story.title}</div>
-                            <div>Par {story.author.username_display}</div>
+                            <div className="chapter__header_author">Par {story.author.username_display}</div>
                         </div>
                     </div>
                     <div className="chapter__plus"><i className="fas fa-plus"></i></div>

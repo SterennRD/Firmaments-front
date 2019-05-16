@@ -37,11 +37,16 @@ class Parameters extends Component {
             return <div/>
         }
         return (
-            <div>
-                <h1>Paramètres</h1>
-                <ParametersForm {...this.props} />
-                    <hr />
-                <ParametersPassword/>
+            <div className="parameters">
+                <div className="parameters__header">
+                    <h1 className="parameters__header_title">Paramètres</h1>
+                    <h2 className="parameters__header_subtitle">Modifier vos paramètres</h2>
+                </div>
+                <div className="container parameters__content">
+                    <ParametersForm {...this.props} />
+                        <hr />
+                    <ParametersPassword/>
+                </div>
             </div>
         );
     }

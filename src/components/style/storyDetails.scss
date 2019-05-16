@@ -6,16 +6,20 @@
     .container, .row {
       height: 100%;
     }
-    &_back {
-      background-color: transparent;
-      border: 1px solid $color-blue;
-      border-radius: 5px;
-      font-size: .7em;
-      padding: 4px 10px;
-      text-transform: uppercase;
-      transition: .3s;
-      &:hover {
-        border-color: $color-pink;
+    &_buttons {
+      display: flex;
+      &_btn {
+        background-color: transparent;
+        border: 1px solid $color-blue;
+        border-radius: 5px;
+        font-size: .7em;
+        margin-right: 10px;
+        padding: 4px 10px;
+        text-transform: uppercase;
+        transition: .3s;
+        &:hover {
+          border-color: $color-pink;
+        }
       }
     }
   }
@@ -51,10 +55,12 @@
     display: flex;
     height: 500px;
     justify-content: center;
+    overflow: hidden;
     transform: translate(0, - 200px);
+    width: 350px;
     img {
       height: calc(100% + 1px);
-      width: calc(100% + 1px);
+      width: auto;
     }
   }
   &__categories {
@@ -91,6 +97,9 @@
       font-family: "Montserrat";
       padding: 5px 10px;
     }
+  }
+  &__content {
+    padding-bottom: 80px;
   }
   &__subtitle {
     color: $color-blue;

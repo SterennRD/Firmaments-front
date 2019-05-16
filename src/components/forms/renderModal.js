@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 const renderModal = ({ title, explanation, yesButton, noButton, yesCallback, noCallback, id }) => (
 
-    <div className="modal__overlay" onClick={() => noCallback()}>
+    <div className="modal__overlay">
+        <div className="modal__overlay_close modal__overlay--close" onClick={() => noCallback()}/>
         <div className="modal__window">
             <div className="modal__close" onClick={() => noCallback()}><i className="fas fa-times"></i></div>
             <h2 className="modal__title">{title}</h2>

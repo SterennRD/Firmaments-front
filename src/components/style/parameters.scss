@@ -1,0 +1,27 @@
+.parameters {
+  &__header {
+    background-image: linear-gradient(to left bottom, #1d009a, #330ba8, #4516b5, #5620c3, #662ad1, #5248e3, #3860f2, #0074ff, #0092ff, #00abff, #00c2ff, #24d6fc);
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    justify-content: center;
+    padding: 0 60px;
+    &_title {
+      color: $color-blue;
+      font-family: "Montserrat", sans-serif;
+      font-size: 2em;
+      font-weight: 800;
+    }
+    &_subtitle {
+      color: $color-blue;
+      font-family: "Montserrat", sans-serif;
+      font-size: 1em;
+      margin-bottom: 0;
+      padding: 0 15px 15px;
+    }
+  }
+  &__content {
+    padding-bottom: 80px;
+    padding-top: 80px;
+  }
+}

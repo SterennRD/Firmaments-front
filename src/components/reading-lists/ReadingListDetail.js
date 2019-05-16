@@ -46,7 +46,7 @@ class ReadingListDetail extends Component {
         let stories;
         if (readingList) {
             stories = readingList.stories.map(story => (
-                <div key={story._id} className="col-sm-4" onClick={e => this.handleModal(story)}>
+                <div key={story._id} className="col-sm-4 col-md-6" onClick={e => this.handleModal(story)}>
                     <StoryCard
                         id={story._id}
                         title={story.title}
@@ -79,14 +79,15 @@ class ReadingListDetail extends Component {
         return (
             <div className="readingList">
                 <div className="readingList__header">
-                    { isMyRl ? <Link to={this.props.match.url + "/edit"}>éditer</Link> : null }
+                    { isMyRl ? <Link className="readingList__header_edit" to={this.props.match.url + "/edit"}>éditer</Link> : null }
                     { this.state.showModal ? modal : null }
-                    <h1>{ readingList.title }</h1>
-                    <h2>{readingList.stories.length} histoire{readingList.stories.length > 1 ? 's' : null}</h2>
+                    <h1 className="readingList__header_title">{ readingList.title }</h1>
+                    <h2 className="readingList__header_subtitle">{readingList.stories.length} histoire{readingList.stories.length > 1 ? 's' : null}</h2>
+                    { isMyRl ? <div className="readingList__header_status">{readingList.private ? "Privée" : "Publique"}</div> : null }
                     {readingList.description ? <p>{readingList.description}</p> : null}
                 </div>
                 <div className="container">
-                    <div className="row">
+                    <div className="row readingList__content">
                         {stories}
                     </div>
                 </div>

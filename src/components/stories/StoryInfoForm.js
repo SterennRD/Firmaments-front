@@ -239,6 +239,11 @@ class StoryInfoForm extends Component {
                     encType="multipart/form-data">
                     <div className="row">
                         <div className="col-md-4">
+                            {this.props.initialValues && this.props.initialValues.cover ? (
+                                <div className="storyForm__cover"><img src={process.env.REACT_APP_UPLOADS + '/' + this.props.initialValues.cover} alt={this.props.initialValues.title}/></div>
+                            ) : (
+                                <div>Ajoutez une couverture</div>
+                            )}
                             <Field
                                 name="cover"
                                 type="file"
@@ -247,6 +252,8 @@ class StoryInfoForm extends Component {
                                 label="Couverture" />
                         </div>
                         <div className="col-md-8">
+                            { this.renderError(newPost) }
+                            { this.renderEdit(editStory) }
                             <Field
                                 name="title"
                                 type="text"
@@ -295,8 +302,7 @@ class StoryInfoForm extends Component {
                                     <Field name="annotation_authorized" id="annotation_authorized" component="input" type="checkbox"/>
                                 </div>
                             </div>
-                            { this.renderError(newPost) }
-                            { this.renderEdit(editStory) }
+
                             {mode === 'edit' ? (
                                 <div className="storyForm__buttons">
                                     <button type="submit" className="storyForm__buttons_btn">

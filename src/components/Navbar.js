@@ -84,14 +84,6 @@ class Navbar extends Component {
                     }
                 </li>
 
-                <li>
-                    <a href="" className="nav-link" onClick={this.onLogout.bind(this)}>
-                        <img src="" alt={user.name} title={user.name}
-                            className="rounded-circle"
-                            style={{ width: '25px', marginRight: '5px'}} />
-                                Logout
-                    </a>
-                </li>
             </ul>
         ) : null;
       const guestLinks = (

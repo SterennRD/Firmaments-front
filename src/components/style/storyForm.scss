@@ -36,6 +36,21 @@
       margin-top: 30px;
     }
   }
+  &__cover {
+    align-items: center;
+    background-color: $color-blue;
+    border-radius: 5px;
+    display: flex;
+    height: 400px;
+    justify-content: center;
+    margin-bottom: 10px;
+    overflow: hidden;
+    width: 300px;
+    img {
+      height: calc(100% + 1px);
+      width: auto;
+    }
+  }
   &__form {
     margin-top: 80px;
     &_label {

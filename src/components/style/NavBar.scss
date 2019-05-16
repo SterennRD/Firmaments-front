@@ -1,5 +1,5 @@
 .navBar {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.6);
   font-size: 0.8em;
   font-weight: 700;
   height: 60px;
@@ -64,10 +64,11 @@
     &_window {
       background-color: #fff;
       border-radius: 5px;
-      left: calc(-150px / 2 + 15px);
+      //left: calc(-150px / 2 + 15px);
       margin-top: 20px;
       padding: 10px;
       position: absolute;
+      right: 0;
       width: 150px;
       hr {
         margin: 10px 0;
@@ -86,6 +87,22 @@
         color: $color-grey;
         font-size: 0.8em;
         font-weight: normal;
+      }
+      &::before,
+      &::after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 10px 10px 10px;
+        border-color: transparent transparent #f1f1f1 transparent;
+        position: absolute;
+        top: -10px;
+        right: 10px;
+      }
+      &::after {
+        border-color: transparent transparent #fff transparent;
+        top: -9px;
       }
     }
   }

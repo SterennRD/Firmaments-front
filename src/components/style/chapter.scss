@@ -11,6 +11,9 @@
     &_title {
       font-weight: bold;
     }
+    &_author {
+      font-size: .8em;
+    }
   }
   &__plus {
     border: 1px solid $color-pink;
@@ -59,10 +62,12 @@
       background-color: $color-blue;
       border-radius: 5px;
       color: $color-pink;
+      cursor: pointer;
       font-size: 0.8em;
       padding: 5px 10px;
       &--disabled {
         background-color: $color-grey;
+        cursor: default;
       }
     }
   }
@@ -113,6 +118,9 @@
     &_comment {
       display: flex;
       margin: 20px 0;
+      &_right {
+        flex: 1;
+      }
       &_author {
         font-size: 0.8em;
       }
