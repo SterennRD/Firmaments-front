@@ -4,6 +4,7 @@ import {
     GET_ALL_UNREAD_NOTIFS, GET_ALL_UNREAD_NOTIFS_SUCCESS, GET_ALL_UNREAD_NOTIFS_ERROR,
     NOTIF_NEW_COMMENT, RESET_NOTIF_NEW_COMMENT,
     NOTIF_READ, RESET_NOTIF_READ,
+    MARK_AS_READ, MARK_AS_READ_SUCCESS, MARK_AS_READ_ERROR, MARK_AS_READ_RESET,
 } from './types';
 
 const ROOT_URL = process.env.REACT_APP_NOTIFS
@@ -67,5 +68,25 @@ export const getAllUnreadNotifs = (id, token) => dispatch => {
         .catch((error) => {
             dispatch({type: GET_ALL_UNREAD_NOTIFS_ERROR, payload: error})
         })
-
+}
+export const markAsRead = (id, token) => dispatch => {
+    dispatch({type: MARK_AS_READ})
+    axios({
+        method: 'post',
+        url: `${ROOT_URL}/${id}/read`,
+        headers: {
+            'x-access-token': token
+        }
+    })
+        .then((response) => {
+            console.log("read notifs", response)
+            if (response.status === 200){
+                dispatch({type: MARK_AS_READ_SUCCESS, payload: response.data})
+            } else {
+                dispatch({type: MARK_AS_READ_ERROR, payload: response.data})
+            }
+        })
+        .catch((error) => {
+            dispatch({type: MARK_AS_READ_ERROR, payload: error.response})
+        })
 }

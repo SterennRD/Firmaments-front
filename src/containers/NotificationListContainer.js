@@ -4,7 +4,8 @@ import {
     resetNotifComment,
     resetNotifRead,
     readChapterAdded,
-    getAllNotifs
+    getAllNotifs,
+    markAsRead
 } from "../actions/NotifAction";
 
 import NotificationList from '../components/notifications/NotificationList';
@@ -25,6 +26,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         resetNotifRead: () => {
             dispatch(resetNotifRead())
+        },
+        markAsRead: (id, token) => {
+            dispatch(markAsRead(id, token))
         }
     }
 }

@@ -21,7 +21,8 @@ class NotificationList extends Component {
     }
 
     handleSeen(id) {
-
+        const token = localStorage.getItem('jwtToken');
+        this.props.markAsRead(id, token)
     }
     handleDelete(id) {
         this.props.deleteChapter(id)
